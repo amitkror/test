@@ -1,0 +1,43 @@
+<% title "Comments" %>
+
+<div class="controls">
+  <%= link_to "export", admin_comments_path(format: 'csv'), class: 'button', title: 'export to csv' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @comments %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @comments, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th><%= sortable_header("users.username", "User") %></th>
+    <th>Comment</th>
+    <th>Commented on</th>
+    <th width="160"><%= sortable_header("created_at", "Date", true) %></th>
+    <th width="140"></th>
+  </tr>
+  <% @comments.each do |comment| %>
+  <% if comment.user_id %>
+    <tr<%= cycle(""," class='alt'") %>>
+    <td><%= link_to comment.user_username, edit_admin_comment_path(comment) %></td>
+    <td><%= comment.content %></td>
+    <td><%= comment.commentable_type %> <%= comment.commentable_id %></td>
+    <td><%= l comment.created_at %></td>
+    <td>
+      <span class="actions">
+      <%= commentable_link(comment) %>
+      <%= link_to 'edit', edit_admin_comment_path(comment) %> |
+      <%= link_to 'delete', confirm_destroy_admin_comment_path(comment) %></span>
+    </td>
+    </tr>
+  <% end %>
+  <% end %>
+</table>
+
+<%= will_paginate @comments, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

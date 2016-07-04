@@ -1,0 +1,20 @@
+<% unless instance.copy.blank? %>
+<% handle = instance.copy.gsub('@', '') %>
+<div class="block twitter">
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+    version: 2, type: 'profile', rpp: 3, interval: 30000, width: 210, height: 300,
+    theme: {
+        shell: { background: '#fff', color: '#0c83ab' },
+        tweets: { background: '#e6f6fb', color: '#1a1a1a', links: '#1a1a1a' }
+    },
+    features: { scrollbar: false, loop: false, live: false, behavior: 'all' }
+}).render().setUser('<%= handle %>').start();
+</script>
+  <a href="http://twitter.com/<%= handle %>" class="follow">
+    Follow us<br/>
+    <strong>@<%= handle %></strong>
+  </a>
+</div>
+<% end %>

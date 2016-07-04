@@ -1,0 +1,20 @@
+<%= form_for [:admin, folder] do |f| %>
+
+  <%= render 'shared/errors', m: folder %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: folder,
+      cancel_path: admin_folders_path,
+      delete_path: confirm_destroy_admin_folder_path(folder) %>
+
+  <p class="indent">
+    Folder created by: <strong><%= link_to folder.user.username, edit_admin_user_path(folder.user) %></strong>
+    on <%= l folder.created_at %>
+    <br/>
+  </p>
+  <div class="indent">
+    <% folder.user.folders.each do |folder| %>
+      <p><%= link_to folder.name, edit_admin_user_path(folder.user) %></p>
+      <% end %>
+  </div>
+<% end %>

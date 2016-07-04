@@ -1,0 +1,84 @@
+<% editing ||= false %>
+
+<%= javascript_include_tag :defaults, "nested_form" %>
+
+<%= simple_form_for [:admin, @blog_post] do |f| %>
+
+	<%= render 'shared/errors', m: @blog_post %>
+
+	<%= render 'admissions/shared/action_buttons',
+      m: @blog_post,
+      cancel_path: admin_blog_posts_path,
+      view_path: @blog_post.new_record? ? nil : blog_post_path(@blog_post),
+      delete_path: @blog_post.new_record? ? nil : confirm_destroy_admin_blog_post_path(@blog_post),
+      bottom: false %>
+
+	<% if editing %>
+		<p>
+			<%= f.label :user %>
+			<%= select :blog_post, :user_id, Hash[User.admins.map{|r|[r.username, r.id]}] %>
+		</p>
+	<% end %>
+	<p>
+		<%= f.label :title %>
+		<%= f.text_field :title %>
+	</p>
+	<p>
+		<%= f.label :status_id %>
+		<%= select :blog_post, :status_id, Page::STATUSES %></p>
+	</p>
+	<p>
+		<%= f.association :tags, input_html: { class: 'chosen' } %>
+	</p>
+	<p>
+	  <%= f.label :meta_title %>
+	  <%= f.text_field :meta_title %>
+	</p>
+	<p>
+	  <%= f.label :meta_keywords %>
+	  <%= f.text_field :meta_keywords %>
+	</p>
+	<p>
+	  <%= f.label :meta_description %>
+	  <%= f.text_area :meta_description %>
+	</p>
+	<p>
+		<%= f.label :image, ((('Replace ' if editing && !@blog_post.image.blank?) || '')+'Featured image') %>
+		<%= f.file_field :image %>
+		<% if editing && !@blog_post.image.blank? %>
+			<%= image_tag @blog_post.image.thumb('150x150#').url %><br>
+			<label>Clear Image?</label>
+			<input type="checkbox" name="clear_image" value="true">
+		<% end %>
+	</p>
+	<p>
+		<%= f.label :tagline, "Tagline - a short (less than 250 character) description to be used as a summary." %>
+		<%= f.text_area :tagline %>
+	</p>
+	<p>
+		<%= f.label :body %>
+		<%= f.text_area :body, class: "tinymce" %>
+	</p>
+
+	<div class="indent">
+    <strong>Audiences</strong>
+    <ul class="check-list clearfix">
+      <% Audience.all.each do |s| %>
+        <li><label><%= check_box_tag "blog_post[audience_ids][]",
+                  s.id, has_audience?(@blog_post, s) %> <%= s.name_plural %></label></li>
+      <% end %>
+    </ul>
+  </div>
+
+	<% unless editing %>
+		<p>
+			<%= f.label :permalink %>
+			<%= f.text_field :permalink %>
+		</p>
+		<p class="indent">You should leave this blank and let the system generate one, unless validation fails.</p>
+	<% end %>
+	<p>
+		<%= f.submit "Save Blog Post" %>
+	</p>
+
+<% end %>

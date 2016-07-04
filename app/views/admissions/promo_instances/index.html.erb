@@ -1,0 +1,38 @@
+<% title "Promos" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_promo_instance_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @promo_instances %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @promo_instances, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Title</th><th>Type</th><th>Last updated</th><th></th>
+  </tr>
+  <% @promo_instances.each do |promo_instance| %>
+  <tr<%= cycle(""," class='alt'") %>>
+    <td>
+      <%= link_to promo_instance_thumb(promo_instance), edit_admin_promo_instance_path(promo_instance) %>
+      <%= link_to promo_instance.title, edit_admin_promo_instance_path(promo_instance) %>
+    </td>
+    <td><%= promo_instance.promo_title %></td>
+    <td><%= l promo_instance.updated_at %></td>
+    <td>
+      <span class="actions">
+      <%= link_to 'edit', edit_admin_promo_instance_path(promo_instance) %> |
+      <%= link_to 'delete', confirm_destroy_admin_promo_instance_path(promo_instance) %></span>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @promo_instances, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

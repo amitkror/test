@@ -1,0 +1,38 @@
+<% title "Ask an adviser" %>
+
+<% content_for :body_id do %> id="guest-profile"<% end %>
+<% content_for :body_class do %> class="suggest-ask"<% end %>
+
+<h1>Ask an adviser</h1>
+<h4>Staffed by live, trained NYC college advisers</h4>
+
+<p>
+  Do you have a question about getting into or graduating from college? Or one about financial aid or a unique
+   family situation? Ask your question here, and you'll receive an email within 48 hours, notifying you that an
+   adviser has confidentially answered your question.
+</p>
+
+<%= render 'shared/errors', m: @guest_question %>
+
+<%= form_for [:guest_profile, @guest_question], html: { class: "default" } do |f| %>
+
+  <%= f.text_area :question, placeholder: "Question", required: "required" %>
+  <input type="email" required="required" name="guest_user[email]" placeholder="Your email address" value="<%= @guest_email %>">
+  <input type="text" required="required" name="guest_user[zipcode]" placeholder="ZIP code" value="<%= @guest_zipcode %>">
+
+  <p class="tos">
+    <label><%= f.check_box :accepts_tos, checked: true, class: 'custom' %> I agree to the </label> <a href="/terms-of-use">terms and conditions</a></p>
+
+  <%= recaptcha_tag(:ajax, display: { theme: 'clean' }).html_safe %>
+
+  <button class="green" type="submit">Submit</button>
+<% end %>
+
+<div class="already-ask-wrap">
+  <h5>Did you already ask a question?</h5>
+  <a href="<%= new_user_registration_path %>"><h5>Create an account to access your message history!</h5></a>
+</div>
+
+<% content_for :aside do %>
+  <%= image_tag('sidebar_blue.png') %>
+<% end %>

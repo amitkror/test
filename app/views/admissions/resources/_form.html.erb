@@ -1,0 +1,205 @@
+<%= nested_form_for [:admin, resource] do |f| %>
+
+  <%= render 'shared/errors', m: resource %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: resource,
+      cancel_path: admin_resources_path,
+      view_path: resource.new_record? ? nil : resource_path(resource),
+      delete_path: resource.new_record? ? nil : confirm_destroy_admin_resource_path(resource) %>
+
+  <p><%= f.label :name %>
+      <%= f.text_field :name, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :status_id %>
+      <%= select :resource, :status_id, Resource::STATUSES %></p>
+
+  <p><%= f.label :type_id %>
+      <%= select :resource, :type_id, Resource::TYPES %></p>
+
+  <p><%= f.label :organization_id %>
+      <%= select :resource, :organization_id,
+            Organization.ordered.super_skinny.collect { |l| [l.name, l.id] },
+            { include_blank: '- Select an organization' },
+            { class: 'chosen' } %>
+    <span class="indent hint">
+      This drives the "more resources from" at bottom of the details page.<br/>
+      Also drives the "see more resources from this organization" at top.</span></p>
+
+  <p><%= f.label :website %>
+      <%= f.text_field :website %><br/>
+      <span class="indent hint">If linking to another site, include 'http'</span></p>
+
+  <p><%= f.label :contact_name %>
+      <%= f.text_field :contact_name %></p>
+
+  <p><%= f.label :contact_email %>
+      <%= f.email_field :contact_email %></p>
+
+  <p><%= f.label :contact_phone_number, "Contact phone" %>
+      <%= f.text_field :contact_phone_number %></p>
+
+  <p><%= f.label :street %>
+      <%= f.text_field :street %></p>
+
+  <p><%= f.label :city %>
+      <%= f.text_field :city, class: "small" %></p>
+
+  <p><%= f.label :state %>
+      <%= select :resource, :state, us_states,
+            { include_blank: '- Select a state' } %></p>
+
+  <p><%= f.label :postal_code %>
+      <%= f.text_field :postal_code, class: "small" %></p>
+
+  <div class="indent">
+    <strong>Subway Lines</strong>
+    <ul class="check-list clearfix">
+    <% SubwayLine.all.each do |s| %>
+      <li><label><%= check_box_tag "resource[subway_line_ids][]",
+                  s.id, has_subway_line?(resource, s) %> <%= s.name %></label></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="indent">
+    <strong>Boroughs</strong><br/>
+    <span class="hint">Select the boroughs that the resource serves. If a resource is not location-specific (such as a video), select all boroughs.</span>
+    <ul class="check-list clearfix">
+    <% Borough.filters.each do |s| %>
+      <li><label><%= check_box_tag "resource[borough_ids][]",
+                  s.id, has_borough?(resource, s) %> <%= s.name %></label></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="indent">
+    <strong>Phases</strong>
+    <ul class="check-list clearfix">
+    <% Phase.all.each do |s| %>
+      <li><label><%= check_box_tag "resource[phase_ids][]",
+                  s.id, has_phase?(resource, s) %> <%= s.name %></label></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <p><%= f.label :when_text, "When" %>
+      <%= f.text_area :when_text, class: "small" %></p>
+
+  <p><%= f.label :cost_text, "Cost" %>
+      <%= f.text_field :cost_text, class: "small" %><br/>
+      <span class="indent hint">This appears in the details box in the right rail.</span></p>
+
+  <!-- p><%= f.label :size_text, "Size" %>
+      <%= f.text_field :size_text, class: "small" %></p -->
+
+  <p><%= f.label :is_experts_pick, "Expert's pick" %>
+      <%= f.check_box :is_experts_pick %><br/>
+      <span class="indent hint">This appears in the details box in the right rail.</span></p>
+
+  <p><%= f.label :conditions_of_use_id %>
+      <%= select :resource, :conditions_of_use_id,
+            ConditionsOfUse.super_skinny.collect { |l| [l.title, l.id] },
+            { include_blank: '- Select a conditions of use' } %></p>
+
+  <p>
+    <%= f.label :teaser %>
+    <%= f.text_area :teaser, class: 'small' %></p>
+
+  <p>
+    <%= f.label :body %>
+    <%= f.text_area :body, class: 'tinymce' %></p>
+
+  <p><%= f.label :logo %>
+    <% unless resource.logo_uid.blank? %>
+      <%= admin_thumb(resource.logo) %>
+      <label><%= f.check_box :remove_logo %> Remove?</label>
+    <% end %>
+    <%= f.file_field :logo %>
+    <%= f.hidden_field :retained_logo %>
+    <span class="indent hint">Logos should be at least 50 pixels in height and preferably on a white or transparent background</span>
+  </p>
+
+  <hr/>
+
+  <div>
+    <p>
+      <label>Files</label>
+      <span class="hint">Drag and drop to re-order</span><br/></p>
+
+    <ul id="assets-list" class="clearfix nested-list">
+    <%= f.fields_for :assets, wrapper_tag: 'li' %></ul>
+
+    <p class="indent" data-target="#assets-list">
+      <%= f.link_to_add "Add File", :assets, class: 'button small' %></p>
+
+    <hr/>
+  </div>
+
+  <div class="indent">
+    <strong>Subjects</strong>
+    <ul class="check-list clearfix">
+    <% Subject.all.each do |s| %>
+      <li><label><%= check_box_tag "resource[subject_ids][]",
+                  s.id, has_subject?(resource, s) %> <%= s.name %></label></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="indent">
+    <strong>Audiences</strong>
+    <ul class="check-list clearfix">
+    <% Audience.all.each do |s| %>
+      <li><label><%= check_box_tag "resource[audience_ids][]",
+                  s.id, has_audience?(resource, s) %> <%= s.name_plural %></label></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="indent program-fields">
+    <strong>Support</strong>
+    <ul class="check-list clearfix">
+    <% Support.all.each do |s| %>
+      <li><label><%= check_box_tag "resource[support_ids][]",
+                  s.id, has_support?(resource, s) %> <%= s.name %></label></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="indent">
+    <strong>Languages</strong>
+    <ul class="check-list clearfix">
+    <% Language.all.each do |s| %>
+      <li><label><%= check_box_tag "resource[language_ids][]",
+                  s.id, has_language?(resource, s) %> <%= s.name %></label></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <p>
+    <%= f.label :permalink, "URL" %>
+    / <%= f.text_field :permalink, class: 'permalink' %><br/>
+    <span class="hint indent">Leave this blank to have the url generated from the title and do not use an existing URL<br/>
+    Please only include letters, numbers, and dashes and DO NOT make this a number.</span>
+  </p>
+
+  <p><%= f.label :user_tokens, "Assigned users" %>
+      <%= f.text_field :user_tokens, data: { pre: user_data(resource) } %></p>
+
+  <p>
+    <%= f.label :keywords %>
+    <%= f.text_area :keywords, class: 'small' %>
+    <span class="hint indent">Add keywords for search. These are not displayed anywhere on the site.
+  </p>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: resource,
+      cancel_path: admin_resources_path,
+      view_path: resource.new_record? ? nil : resource_path(resource),
+      delete_path: resource.new_record? ? nil : confirm_destroy_admin_resource_path(resource),
+      bottom: true %>
+<% end %>
+
+<%= content_for :js do %>
+<%= javascript_include_tag 'libs/jquery.tokeninput', 'admin/resources' %>
+<% end %>

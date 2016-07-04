@@ -1,0 +1,28 @@
+<% title "Galleries" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_gallery_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @galleries %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @galleries, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>
+
+<ul class="index-list">
+  <% @galleries.each do |gallery| %>
+  <li<%= cycle(""," class='alt'") %>>
+  <%= link_to asset_thumb(gallery.thumb), edit_admin_gallery_path(gallery) unless gallery.thumb.blank? %>
+  <%= link_to gallery.title, edit_admin_gallery_path(gallery) %>
+  <span class="actions">
+  <%= link_to 'edit', edit_admin_gallery_path(gallery) %> |
+  <%= link_to 'delete', confirm_destroy_admin_gallery_path(gallery) %></span></li>
+  <% end %>
+</ul>
+
+<%= will_paginate @galleries, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

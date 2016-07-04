@@ -1,0 +1,52 @@
+
+@import 'admixins.css.scss';
+
+$image: url(image-path('admin/icons/sitemap.png'));
+
+.sitemap, .sitemap li { @include nopad-list; }
+.sitemap {
+  display:block; margin:10px 0 0;
+  li {
+    border-top:1px solid #eee; clear:both; display:block; padding-left:8px;
+    position:relative;
+  }
+  label { width:auto; }
+  ul { padding:0 0 10px; }
+  .expander {
+    display:inline-block; float:left; height:15px; margin-right:6px;
+    position:relative; width:7px; z-index:2;
+  }
+  .move {
+    background:$image -14px 0px no-repeat; cursor:pointer; display:inline-block;
+    float:left; height:16px; margin:0 10px 0 0; position:relative;
+    text-indent:-5000px; width:16px; z-index:2;
+  }
+  dl {
+    display:block; height:19px; position:relative; margin:0; padding:1px 0 6px;
+  }
+  dt {
+    float:left; font-size:13px; font-weight:bold; line-height:1em; padding:0 0 0 1px;
+  }
+  dd { float:left; margin:0; }
+  .open {
+    background:$image -29px 0 repeat-y;
+    > .expander {
+      background:$image -7px 4px no-repeat;
+    }
+    ul { display:block; }
+  }
+  .closed > .expander {
+    background:$image 0 4px no-repeat;
+  }
+  .closed ul { display:none; }
+  .actions {
+    float:right;
+    * { cursor:pointer; }
+  }
+  .dropzone { height:6px; background-color:#fff; border-bottom:4px solid #fff; }
+  .ui-draggable-dragging {
+    background:#fff;
+    .actions { display:none; }
+  }
+}
+.page-type-fields { display:none; }

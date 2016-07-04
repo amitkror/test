@@ -1,0 +1,65 @@
+<%
+title @page.title
+meta_description @page.meta
+%>
+
+<% content_for :body_id do %> id="phase"<% end %>
+<% content_for :body_class do %><%= " class='sub'".html_safe unless @page.is_root? %><% end %>
+
+<% unless @page.is_root? %>
+  <%= content_for :header do %>
+    <%= link_to "<i class='ico-left'></i> Back to #{@page.parent.short_title}".html_safe,
+          @page.parent.absolute_url, class: "back-link" %>
+  <% end %>
+<% end %>
+
+<h1><%= @page.title %></h1>
+
+<%= copy @page.copy %>
+
+<% if @page.children.any? %>
+<section id="kids">
+  <% @page.children.active.skinny.ordered.each do |kid| %>
+    <article>
+      <h1><%= link_to %(#{kid.short_title.strip}&nbsp;<i class="mobile-only-ib ico-plus"></i>).html_safe, kid.absolute_url %></h1>
+      <div>
+        <%= kid.teaser %> <%= link_to "Learn&nbsp;More".html_safe, kid.absolute_url %>
+      </div>
+    </article>
+  <% end %>
+</section>
+<% end %>
+
+<% if @page.faqs.active.any? %>
+<section id="faqs" class="dotted">
+  <hr/>
+  <h2>FAQ</h2>
+  <ul>
+  <% @page.faqs.active.each do |i| %>
+    <li>
+      <a href="#" id="faq-<%= i.id %>" class="faq"><%= i.question %></a>
+      <div><%= i.answer.html_safe %></div>
+    </li>
+  <% end %>
+  </ul>
+</section>
+<% end %>
+
+<% if @page.resources.any? %>
+<section id="recommendations" class="dotted">
+  <hr/>
+  <h3><%= @page.resources_title %></h3>
+  <p class="caption"><%= @page.resources_subtitle %></p>
+  <% @page.resources.each do |r| %>
+    <%= render "resources/bookmark", r: r %>
+  <% end %>
+</section>
+<% end %>
+
+<% content_for :aside do %>
+<%= render "shared/promos", promos: @promos %>
+<% end %>
+
+<% content_for :toolbar do %>
+  | <a href="<%= edit_admin_page_path(@page) %>">Edit this page</a>
+<% end %>

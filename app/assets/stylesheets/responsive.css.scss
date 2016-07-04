@@ -1,0 +1,627 @@
+@import '_config.scss',
+        '_mixins.scss';
+
+$bright-blue: #2bc1dc;
+$nav-h: 50px;
+
+#mobile-nav {
+  display: none;
+
+  float: right;
+  a {
+    width: 50px;
+    height: $nav-h;
+    background: #353535;
+    color: #fff;
+    top: 0;
+    font-size: 23px;
+    line-height: 50px;
+    text-align: center;
+    border: none;
+    float: left;
+    &:hover, &.on {
+      background: $bright-blue;
+    }
+  }
+}
+
+input[type="search"],
+input[type="text"],
+input[type="password"] {
+  font-size:16px;
+}
+
+#mobile-search-form {
+  display: none;
+
+  background: #2bc1dc;
+  position: absolute;
+  top: $nav-h;
+  width: 100%;
+  z-index: 101;
+
+  .input-wrap {
+    padding: 8px 50px 10px 10px;
+    position: relative;
+  }
+  input[type="search"] {
+    width: 100%;
+    font-size:16px;
+  }
+  button {
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    background: #0e7a8c;
+    margin-top: 0;
+    @include border-radius;
+    i {
+      font-size: 16px;
+    }
+  }
+}
+
+.mobile-only-i,
+.mobile-only-ib,
+.mobile-only-b {
+  display: none;
+}
+
+#mobile-toggle-overlay {
+  position: fixed;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: ($width - 1)) {
+  #content-top {
+    h1 {
+      word-wrap: break-word;
+      -webkit-hyphens: auto;
+      -moz-hyphens: auto;
+      hyphens: auto;
+    }
+  }
+
+  body#blog{
+    #content-top{
+      padding: 0 1em;
+      h2{
+        font-size:20px;
+      }
+    }
+    div.tags{
+      .left, .right {
+        display:inline;
+        max-width:100%;
+        float:none;
+      }
+    }
+    .info{
+
+      .bio {
+        .right {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  img,
+  p {
+    max-width: 100%;
+  }
+
+  .no-mobile {
+    display: none;
+  }
+
+  .mobile-comments {
+    width: 100%;
+
+    .comment {
+      img {
+        width: 10%;
+      }
+
+      .detail {
+        width: 80%;
+      }
+    }
+
+    #new_comment {
+      width: 100%;
+      img {
+        width: 10%;
+      }
+
+      fieldset {
+        width: 80%;
+      }
+      textarea {
+        width: 100%;
+      }
+    }
+  }
+
+ 
+
+  
+
+  
+  #layout, #head-wrap, #foot-wrap {
+    min-width: 0;
+  }
+  #layout {
+    min-height: 0;
+  }
+
+  #search-form,  #content, #home #blocks,  .col-1, .col-2, .col-3, #resource .col-1, #resource .col-2, #resource .col-3, .left-nav .col-1, #no-results, #slideshow {
+    width: auto;
+    float: none;
+  }
+
+  .col-1, .col-2, .col-3, #resource .col-1, #resource .col-2, #resource .col-3, .left-nav .col-1, #no-results, .centered .col-2, .centered .col-1, #slideshow {
+    margin: 0 10px;
+  }
+
+  article.col-2, article.col-1 {
+    margin-top: 20px;
+  }
+  article.col-2 {
+    margin-bottom:20px;
+    min-height:90px;
+    .info a {
+      max-width:100%;
+    }
+  }
+
+  #slideshow {
+    margin-bottom: 20px;
+    display:block;
+    height:auto;
+    article {
+      position:relative;
+    }
+  }
+
+  #search-form {
+    display: none;
+  }
+
+  #home {
+    h1 {
+      width: auto;
+      font-size: 24px;
+    }
+
+    .bubbles {
+      // padding: 0;
+      // background: none;
+      img {
+        margin: 0 auto;
+        max-width: 100%;
+      }
+    }
+
+    #search-form, .home-top {
+      display: block;
+      padding: 10px;
+      margin: 15px 5px;
+      .input-wrap {
+        width: auto;
+      }
+      input {
+        display: block;
+        width: 100%;
+        float: none;
+        &::-webkit-input-placeholder {
+          font-size: 0;
+          &:after {
+            content: "Search hand-picked resources.";
+            font-size: 13px;
+            line-height: 25px;
+          }
+        }
+      }
+      button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        i {
+          width: 155px;
+          height: 29px;
+          background-position: -116px -175px;
+          float: none;
+          margin: 0 auto;
+        }
+      }
+      .ico-search {
+        right: 0;
+      }
+    }
+
+    .bubbles a {
+      margin-bottom: 10px;
+    }
+
+    #blocks {
+      padding: 0 10px;
+    }
+
+    .block {
+      width: 100%;
+    }
+  }
+
+
+
+
+
+  
+ 
+
+
+  #content-top, #search #content-top {
+    width: auto;
+  }
+
+
+  // resources
+  #resource #content {
+    margin-top: 20px;
+  }
+
+
+  // pages with children
+  #kids h1 i {
+    font-size: 18px;
+    vertical-align: middle;
+  }
+  #kids article > div {
+    display: none;
+    &.on {
+      display: block;
+    }
+  }
+
+
+  // phase pages
+  #phase .back-link {
+    padding-left: 10px;
+  }
+
+
+  // search
+  #search #content-top {
+    margin: 20px 10px;
+  }
+
+  .icon.bookmark {
+    right: 0;
+  }
+  #search-results {
+    padding: 40px 10px 20px;
+  }
+
+  .filters {
+    background: #d7d7d7;
+    padding: 5px 7px;
+    margin-top: 10px !important;
+    @include border-radius;
+    > h3 {
+      font-size: 16px;
+      text-transform: uppercase;
+      color: #434343;
+      cursor: pointer;
+      padding: 5px 0;
+      i {
+        float: right;
+      }
+    }
+    .filter {
+      display: none;
+      margin: 0 7px 5px;
+      &.first {
+        margin-top: 10px;
+      }
+      &.last {
+        margin-bottom: 10px;
+      }
+      &.on {
+        display: block;
+      }
+    }
+  }
+  .filter label {
+    display: block;
+  }
+
+  #mobile-tabs {
+    position: relative;
+    height: 38px;
+    margin: 0 10px;
+  }
+
+  #no-results {
+    margin-top: 20px;
+    padding: 0 20px 20px;
+  }
+
+  .custom-select-wrap, select.custom-select, span.custom-select {
+    background: #d7d7d7;
+    max-width: none;
+    height: 38px;
+    line-height: 38px;
+    font-size: 16px;
+    margin: 0;
+    width: 100% !important; // override the plugin setting the width on the element
+  }
+  span.custom-select i {
+    right: 7px;
+    height: 38px;
+    line-height: 38px;
+  }
+  select.custom-select {
+    border: 1px solid #ccc;
+  }
+  span.custom-select {
+    padding-left: 7px;
+  }
+
+  // FORM ELEMENTS
+  .mobile-upload-tag {
+    display: inline-block;
+  }
+  .file-upload {
+  	position: relative;
+  	overflow: hidden;
+  	margin: 10px;
+    background-color:#b0d24a; @include border-radius(5px); color:#464646;
+    border:0; display:inline-block; float:left; font-size:14px; font-weight:700;
+    height:29px; line-height:29px; margin-right:10px; padding:0 10px 0;
+    text-transform:uppercase;
+    color:#6a6a6a; display:block; font-size:11px; height:29px; line-height:29px;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+
+    input.custom-file-input {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      padding: 0;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0;
+      filter: alpha(opacity=0);
+    }
+  }
+
+  .custom-file-hover .file-upload,
+  .custom-file-focus .file-upload {
+    background-color:#406618; color:#fff;
+  }
+  // .custom-file-input {
+  //   margin-top: 20px;
+  // }
+  form.default input[type="text"], form.default input[type="text"].medium, form.default input[type="email"], form.default input[type="password"], form.default input[type="password"].medium, form.default input[type="url"], form.default textarea, input.medium {
+    width: 100%;
+    background: none;
+    border: 1px inset;
+  }
+  button {
+    float: none;
+    margin-top: 20px;
+  }
+
+
+  // login
+  #new_user, #edit_user {
+    width: auto;
+  }
+
+  #recommendations {
+    display: block;
+  }
+
+
+  // profile
+  
+
+  #profile-header {
+    height: auto;
+    width: auto;
+    img.avatar {
+      max-width:75px;
+      margin: 5px 0 0 0px;
+    }
+  }
+  #profile-header .text {
+    position: static;
+    width: 70%;
+    margin: -5px 0 0 28%;
+    .icon {
+      background-position: -75px -350px;
+      width:23px;
+      height:23px;
+      position:absolute;
+      right:0px;
+      top:5px;
+    }
+  }
+  #profile  {
+    #content-top {
+      width:100%;
+      margin:0 auto;
+      #profile-setup {
+        overflow:hidden;
+        padding: 25px 25px;
+        .left, .right {
+          border:0;
+          padding-right:0;
+          width:auto;
+        }
+      }
+    }
+
+    .guest-header {
+      .text {
+        width: 100%;
+      }
+    }
+
+    #question > #thread {
+      width: 100%;
+    }
+  }
+  form.profile {
+    .left, .right {
+      border: none;
+      padding: 0;
+      float: none;
+      width: auto;
+      li {
+        .check {
+          width:80%;
+        }
+      }
+    }
+  }
+
+  #guest-profile {
+    aside {
+      display: none;
+    }
+
+    form {
+      input[type="email"] {
+        float: none;
+      }
+
+      input[name="guest_user[zipcode]"] {
+        display: block;
+        margin-left: 0;
+      }
+    }
+  }
+
+  /* .folder {
+    float: none;
+    margin: 10px 0 0 -5px;
+  }
+  .folder:nth-child(2n) {
+    width:318px;
+  }
+
+  .folder:nth-child(even) {
+    margin-left:0;
+  } */
+
+  #interior-search-form {
+    margin-bottom: 0;
+    button {
+      margin-top: 0;
+    }
+  }
+
+  // faq
+  #faq #content-top p, #faq #interior-search-form, #faq-nav {
+    display: none;
+  }
+  #faq {
+    #back-to-top {
+      display:none;
+    }
+  }
+  // questions
+  #questions .details {
+    position: static;
+    width: auto;
+    padding-top: 10px;
+  }
+
+  // forums
+  #forums header.list  {
+    height:auto;
+    width:100%;
+    padding-bottom:10px;
+    h1 {
+      width:80%;
+      a {
+        span {
+          position:absolute;
+          right:10px;
+          top:18px;
+        }
+      }
+    }
+    h1, .thread-list li {
+      padding-left: 10px;
+
+    }
+  }
+  #forums #content-top {
+    margin: 10px;
+  }
+
+}
+
+@media (min-width: ($width - 1)){
+  #home{
+    .bubbles-hat{
+      margin-top:3%;
+    }
+    .bubbles{
+      padding-bottom:20px;
+      border-radius: 0 0 5px 5px;
+    }
+    .home-top{
+      padding-bottom:0px;
+    }
+  }
+}
+
+@media (max-width: ($width - 1)){
+  #home{
+    #search-form{
+      display:none;
+    }
+    .bubbles-hat{
+      display:none;
+    }
+    .bubbles{
+      background:$dark-gray;
+      padding-top:10px;
+      margin-top:10px;
+      padding-bottom:10px;
+      .pushup{
+        top:0;
+        margin-bottom: 0em;
+        margin-top: 0.7em;
+      }
+    }
+    section.quicklinks{
+      padding:0 10px;
+      a.quicklink{
+        width:100%;
+        margin:1.5% auto;
+        padding:0.3em;
+      }
+    }
+    .home-top{
+      padding:0;
+      > *{
+        padding:10px;
+      }
+    }
+  }
+}
+
+
+.block#bottom-account-block {
+  display: none;
+}

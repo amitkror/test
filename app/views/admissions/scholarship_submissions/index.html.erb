@@ -1,0 +1,85 @@
+<% title "Scholarship Submissions" %>
+
+<div class="controls">
+  <%= link_to "export", admin_scholarship_submissions_path(format: 'csv', scholarship_id: @scholarship_id), class: 'button', title: 'export to csv' %>
+  <%= link_to "add new", new_admin_scholarship_submission_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @submissions %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @submissions, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<p>
+    <label for="scholarship_id">Scholarship:</label>
+    <%= select_tag :scholarship_id,
+      options_from_collection_for_select(Scholarship.skinny, :id, :name, @scholarship_id),
+      prompt: "Show all" %></p>
+
+<table class="index-list">
+  <tr>
+    <th><%= sortable_header("scholarship_submissions.order", "Order") %></th>
+    <th><%= sortable_header("first_name") %></th>
+    <th><%= sortable_header("last_name") %></th>
+    <th><%= sortable_header("scholarship_id", "Scholarship") %></th>
+    <th><%= sortable_header("selected_entry", "Selected") %></th>
+    <th><%= sortable_header("user_submission_votes_count", "Votes") %></th>
+    <th><%= sortable_header("created_at", "Created at", true) %></th>
+    <th></th>
+  </tr>
+  <% @submissions.each do |scholarship_submission| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= scholarship_submission.order %></td>
+  <td><%= link_to scholarship_submission.first_name, edit_admin_scholarship_submission_path(scholarship_submission) %></td>
+  <td><%= link_to scholarship_submission.last_name, edit_admin_scholarship_submission_path(scholarship_submission) %></td>
+  <td><%= scholarship_submission.scholarship_name %></td>
+  <td><%= scholarship_submission.selected_entry %></td>
+  <td><%= scholarship_submission.user_submission_votes_count %></td>
+  <td><%= l scholarship_submission.created_at %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'edit', edit_admin_scholarship_submission_path(scholarship_submission) %> |
+    <%= link_to 'delete', confirm_destroy_admin_scholarship_submission_path(scholarship_submission) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @submissions, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>
+
+<%= content_for :js do %>
+  <script>
+    (function () {
+        var app = {},
+            scholarship = 'scholarship_id';
+        function init() {
+            $('#' + scholarship).change(onFilterChange);
+        }
+        function onFilterChange(e) {
+            var pairs = window.location.search.split('?').join('').split('&'),
+                keys = {},
+                pair;
+            for (var i = 0; i < pairs.length; ++i) {
+                pair = pairs[i].split('=');
+                keys[pair[0]] = pair[1];
+            }
+            keys[scholarship] = $('#' + scholarship).val();
+            window.location = window.location.pathname + '?' + serialize(keys);
+        }
+        function serialize(obj) {
+            var str = [];
+            for(var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
+        }
+        $(init);
+        return app;
+    }());
+  </script>
+<% end %>

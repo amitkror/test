@@ -1,0 +1,230 @@
+<% 
+about = Page.where(:permalink => 'about').first 
+help = Page.where(:permalink => 'help').first
+%>
+
+<footer>
+  <div class="container-fluid" id="footer">
+    <div id="topfooter" class="row">
+      <div class="container">
+        <div class="ftrcol about lg">
+          <h3><a href="/about">About NYC College Line</a></h3>
+          <div class="desc">
+            NYC College Line will help you stay organized from exploration to graduation. The site was created by Graduate NYC!, CUNY, NYC DOE, and Goddard Riverside. <%= link_to 'More...', page_path(about) unless about.blank? %>
+          </div>
+        </div>
+        <div class="ftrcol contact sm">
+          <h3>Contact </h3>
+          <div class="desc">
+            <strong>16 Court Street<br/> Brooklyn, NY<br/><a href="mailto:info@nyccollegeline.org">info@nyccollegeline.org</a></strong>
+            <a href="http://www.facebook.com/NYCCollegeLine" class="socialicon"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+            <a href="https://twitter.com/NYCCollegeLine" class="socialicon"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+            <a href="http://nyccollegeline.tumblr.com" class="socialicon"><i class="fa fa-tumblr-square" aria-hidden="true"></i></a>
+            <%= link_to '<i class="fa fa-bold" aria-hidden="true"></i>'.html_safe, blog_posts_path, class: 'socialicon' %>
+            <a href="<%= root_url %>feed?format=rss" class="socialicon"><i class="fa fa-rss" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div class="ftrcol languages lg">
+          <h3>Languages </h3>
+          <div class="desc">
+            <div class="langleft">
+              <a href="/languages/bengali">Bengali</a>
+              <a href="/languages/espanol">Español</a>
+              <a href="/languages/francais">Français</a>
+              <a href="/languages/haitian-creole">Kreyòl Ayisyen</a>
+              <a href="/languages/urdu">اردو</a>
+            </div>
+            <div class="langryt">
+              <a href="/languages/russian">Pусский</a>
+              <a href="/languages/arabic">العربيّة</a>
+              <a href="/languages/korean">방문</a>
+              <a href="/languages/chinese">中文</a>
+            </div>
+          </div>
+        </div>
+        <div class="ftrcol more sm">
+          <h3>More</h3>
+          <div class="desc">
+            <a href="#" id="translate">Translate site</a>
+            <div id="google_translate_element"></div>
+            <a href="/glossary">Glossary</a>
+            <%= link_to 'Help', page_path(help) unless help.blank? %><br/><br/>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+        
+    <div id="midfooter" class="row">
+      <div class="container">
+        <div class="copyright">© Copyright 2016. All rights reserved.
+          <a href="/terms-of-use">Terms of Use</a> &amp; <a href="/privacy-policy">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+        
+             
+    <div id="bottomfooter" class="row">
+      <div class="container footerimg">
+        <div class="ftrlogo  col-sm-2 col-xs-6"><%=link_to image_tag("CUNY.jpg"), "http://www2.cuny.edu/" %></div>
+        <div class="ftrlogo col-sm-2 col-xs-6"><%=link_to image_tag("NYC.jpg"), "http://schools.nyc.gov/default.htm" %></div>
+        <div class="ftrlogo col-sm-4 col-xs-6"><%=link_to image_tag("graguate_nyc.jpg"), "http://www.graduatenyc.org/" %></div>
+        <div class="ftrlogo col-sm-4 col-xs-6"><%= link_to image_tag("goddard.jpg"), "http://www.goddard.org/grcc/?" %></div>
+      </div>
+    </div> 
+  </div>
+</footer>
+
+
+
+<!-- pop up -->
+<div id='popup-display' style="display: none">
+<div id='aaa-popup-fade2' style='position: fixed; z-index: 99; left: 0; top:0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);'></div>
+<div class="custom-modal-dialog">  
+  <div id="aaapopup">
+    <div class="custom-modal-left">
+      <div id="abc"></div>
+      <%= image_tag 'sidebar_blue.png' %>
+    </div>
+    <div class="custom-modal-right">
+      <div class="rightpanel">
+        <a class="nyc-close" id='aaa-close' href="javascript:;">X</a>
+        <h3>Ask an adviser</h3>
+        <h5> Staffed by live, trained NYC college advisers</h5>
+        <p> Do you have questions about getting into or graduating from college? Or one about financial aid or a unique family situation. Ask your question here, and you'll receive an email within 48 years, notifying you that an adviser has confidentially answered your question.</p>
+        <%= form_for GuestQuestion.new, url: build_guest_profile_guest_questions_path, html: { class: "newpopup",:id => "aaa-popup" } do |f| %>
+        <div><textarea id="question_question" name="question[question]" placeholder="Question" rows="5" required="required"></textarea></div>
+        <div class="qmailzip">
+          <div class="qemail">
+            <input type="email" required="required" name="guest_user[email]" placeholder="Your email address">
+          </div>
+          <div class="qzip">
+            <input type="text" required="required" name="guest_user[zipcode]" placeholder="ZIP code">
+          </div>
+        </div>
+       <div id="recaptcha1" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
+        <p class="tos">
+          <label><%= f.check_box :accepts_tos, :required => true, checked: true %> I agree to the </label> <a href="/terms-of-use" target="_blank">terms and conditions</a>
+        </p>
+        <button class="green" type="submit">Submit</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Monika popup -->
+<div id='aaa-popup-fade1' style='position: fixed; z-index: 99; left: 0; top:0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);'></div>
+<div class="custom-modal-signup">
+  <div id="aaapopup">
+    <div class="custom-modal-left"><%= image_tag 'signup_img.jpg' %></div>
+    <div class="custom-modal-right">
+      <div class="rightpanel">
+        <a class="nyc-close" id='signup-close' href="javascript:;">X</a>
+        <h3>Sign Up</h3>
+        <h6> All you need is an email address.</h6>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "newpopup", :id => "signup-popup" }) do |f| %>
+        <div><input id="q_user" type="text" name="user[username]" placeholder="Username*" required>
+          <span class="hint offset">Create a unique name!</span>
+        </div>
+        <div class="qmailzip">
+          <div class="qemail">
+            <input id="signup_email" type="email" name="user[email]" placeholder="Your email address*" required>
+          </div>
+          <div class="qzip">
+            <input id="signup_zipcode" type="text" name="user[zipcode]" placeholder="Zipcode*" required>
+          </div>
+        </div>
+        <div class="qpassword">
+          <div class="qemail">
+            <input id="signup_pwd" type="password" name="user[password]" placeholder="Password*" required>
+          </div>
+          <div class="qzip">
+            <input id="signup_cpwd" type="password" name="user[password_confirmation]" placeholder="Confirm password*" required>
+          </div>
+          <span class="hint offset">Password must be a minimum of 8 characters.</span>
+        </div>
+        <p class="tos">
+          <label><%= f.check_box :accepts_tos, :required => true, :required => true, checked: true %> I am at least 13 years of age and agree to the</label> <a href="/terms-of-use" target="_blank">terms and conditions</a>
+        </p>
+         <%= recaptcha_tag(:ajax, display: { theme: 'clean' }).html_safe %>  
+        <button class="green" type="submit">Submit</button>
+        <div class="already">
+          Already a member? <a href="/login">Sign in here</a><br>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Monika popup -->
+
+<% content_for :js do %>
+  <% if !current_user.present? %>  
+    <%= javascript_include_tag 'app/main' %>
+  <% end %>
+  <%= javascript_include_tag 'app/home' %>
+
+  <script src="https://www.google.com/recaptcha/api.js?onload=myCallBack&render=explicit" async defer></script>
+  <script type="text/javascript">
+  $('.localprogram').change(function() {
+    var str = $(this).val();
+    var str2 = '/search?&'+ str;
+    $("#search_link").prop("href", str2);
+  });
+  
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 36){  
+      $('#mainheader').addClass("fixed");}
+    else{
+      $('#mainheader').removeClass("fixed");}
+    });
+  $('#main-menu li').hover(
+    function(){ $(this).addClass('open') },
+    function(){ $(this).removeClass('open') }
+  )
+</script>
+    
+    <script>
+      var recaptcha1;
+      var verifyCallback = function() {
+        console.log("callback is working")
+        var response = grecaptcha.getResponse();
+
+        alert(response);
+      };
+    
+       var myCallBack = function() {
+        //Render the recaptcha1 on the element with ID "recaptcha1"
+        recaptcha1 = grecaptcha.render('recaptcha1', {
+          'sitekey' : '6LfZjh8TAAAAALYXGhmicWvvqjqMcf_CyDOamzFQ', //Replace this with your 
+          'theme' : 'light',
+          'callback' : verifyCallback
+
+        });
+      };
+    </script>
+
+  <!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+  <script>
+    $("#aaa-popup").validate({
+      submitHandler: function (form) {
+        var response = grecaptcha.getResponse();
+        //recaptcha failed validation
+        if (response.length == 0) {
+          $('p #recaptcha-error').show();
+          return false;
+        }
+          //recaptcha passed validation
+        else {
+          $('#recaptcha-error').hide();
+          return true;
+        }
+      }
+    });
+  </script> -->
+<% end %>
+
+<!-- Monika popup -->

@@ -1,0 +1,13 @@
+<li class="closed status-<%= page.status_id %>" id="page_<%= page.id %>">
+<span class="move" title="Move">Move</span>
+<a href="#" class="expander">&nbsp;</a>
+<dl>
+  <dt><%= link_to page.title, edit_admin_page_path(page) %></dt>
+  <dd class="actions">
+    <%= link_to "show", page.absolute_url %>&nbsp;|&nbsp;<%= link_to 'edit', edit_admin_page_path(page) %>&nbsp;
+    <% unless page.locked %>|&nbsp;<%= link_to 'delete', confirm_destroy_admin_page_path(page) %><% end %>
+  </dd>
+  <%= render 'admissions/shared/status_form', m: page, statuses: Page::STATUSES unless page.locked %>
+</dl>
+<%= page_tree page %>
+</li>

@@ -1,0 +1,43 @@
+<% title @page.title %>
+<% meta_description @page.meta %>
+
+<%= content_for :header do %>
+  <h1><%= @page.title %></h1>
+
+  <%= copy @page.copy %>
+
+  <ul id="letters">
+  <% @sorted_terms.each_with_index do |sorted_term, idx| %>
+    <% key = sorted_term[0] %>
+    <li><% if idx != 0 %><span class="sep">|</span><% end %><a href="#<%= key.upcase %>"><%= key.upcase %></a></li>
+  <% end %>
+  </ul>
+<% end %>
+
+<% cache('glossary') do %>
+
+<div id="glossary" class="clearfix">
+  <% @sorted_terms.each do |sorted_term| %>
+    <%
+      key = sorted_term[0]
+      terms = sorted_term[1]
+    %>
+    <hr id="<%= key.upcase %>" />
+    <h2><%= key.upcase %></h2>
+    <ul>
+      <% terms.each do |t| %>
+      <li id="<%= t.name %>">
+        <strong><%= t.url.blank? ? t.name : external_link(t.url, t.name)  %></strong><br/>
+        <%= t.definition.html_safe %>
+      </li>
+      <% end %>
+    </ul>
+  <% end %>
+  </div>
+
+  <a href="#" id="back-to-top" data-target="#letters"><i class="icon airplane"></i>Back to Top</a>
+<% end %>
+
+<%= content_for :aside do %>
+  <%= render "shared/promos", promos: @page.promos %>
+<% end %>

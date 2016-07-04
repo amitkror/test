@@ -1,0 +1,22 @@
+<% title "Ask an adviser" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered suggest-ask"<% end %>
+
+<%=  render "header" %>
+<div role="tabpanel"  id="ladvisor">               
+  <div class="lheading">Ask an adviser</div>
+  <%= form_for [:profile, @question], html: { class: "newfrom" } do |f| %>
+    <%= render 'shared/errors', m: @question %>
+    <div class="form-group">
+     <%= f.text_area :question, placeholder: "Question", required: "required", cols: "80", rows: "10" %>
+    </div>
+    <p class="tos">
+    <label><%= f.check_box :accepts_tos, checked: true, class: 'custom' %> I agree to the </label> <a href="/terms-of-use">terms and conditions</a></p>
+
+    <button class="green" type="submit">Submit</button>
+  <% end %>
+</div>
+<br>
+
+<%= render "questions" %>

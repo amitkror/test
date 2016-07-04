@@ -1,0 +1,23 @@
+<% title "My forums" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered forums"<% end %>
+
+<%= content_for :header_caption do %>See all threads you’ve started or commented on. Want to start a new thread? Go to the <a href="<%= forums_path %>">forum</a>. <% end %>
+<%#=  render "profile/shared/nav" %>
+
+<h1 class="count">My Forums <span>(<%= pluralize @forum_threads.size, "Item" %>)</span></h1>
+
+<ul class="thread-list">
+<% if @forum_threads.each do |f| %>
+  <li>
+    <%= link_to f.name, forum_forum_thread_path(f.forum, f) %>
+    <%= render "forum_threads/stats", t: f, show_count: true %>
+    <%= truncate(f.message, length: 160, separator: ' ') %>
+    <%= link_to "View thread", forum_forum_thread_path(f.forum, f), class: "view" %>
+  </li>
+<% end.empty? %>
+<li>
+  <p class="caption">You have no forum threads.  Check out the <a href="<%= forums_path %>" class="view">forum</a>!</p></li>
+<% end %>
+</ul>

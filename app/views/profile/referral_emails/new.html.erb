@@ -1,0 +1,25 @@
+<% title "Email your referral link" %>
+
+<section id="folder-email">
+
+  <% if notice %><p class="message notice"><%= notice %></p><% end %>
+  <% if alert %><p class="message alert"><%= alert %></p><% end %>
+
+  <h5>Email your referral link</h5>
+  <p>Send a quick and easy email your unique referral link.  You can send this to anyone, even if they don't have an account on NYC College Line.</p>
+
+  <%= render 'shared/errors', m: @referral_email  %>
+
+  <%= form_for [:profile, @contest, @referral_email], html: { class: 'default' } do |f| %>
+
+    <%= f.text_field :recipient, placeholder: "Recipient email", required: "required" %>
+    <p class="hint">Separate emails with a comma (',').</p>
+    <%= f.text_field :subject, placeholder: "Subject", required: "required" %>
+    <%= f.text_area :message, value: "Join College Line: #{root_url}?ref=#{@ref_code}}" %>
+    <p>
+      <label><%= f.check_box :cc_me, class: 'custom' %> Send me a copy of this email</label>
+    </p>
+    <button class="green large" type="submit">Send</button>
+    <%= f.hidden_field :over %>
+  <% end %>
+</section>

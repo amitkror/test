@@ -1,0 +1,35 @@
+<% title "Glossary Terms" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_glossary_term_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @glossary_terms %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @glossary_terms, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Name</th><th></th><th></th>
+  </tr>
+  <% @glossary_terms.each do |glossary_term| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to glossary_term.name, edit_admin_glossary_term_path(glossary_term) %></td>
+  <td><%= external_link glossary_term.url %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'show', glossary_index_path(anchor: glossary_term.name) %> |
+    <%= link_to 'edit', edit_admin_glossary_term_path(glossary_term) %> |
+    <%= link_to 'delete', confirm_destroy_admin_glossary_term_path(glossary_term) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @glossary_terms, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

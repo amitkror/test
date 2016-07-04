@@ -1,0 +1,35 @@
+<% title "#{@folder.name}" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="folder-show"<% end %>
+
+<%= content_for :header_caption do %>Send a quick and easy email with all the links in this folder. You can send this to anyone, even if they don’t have an account on NYC College Line.<% end %>
+
+
+<% content_for :header do %>
+  <header id="folder-header">
+    <a href="<%= profile_root_path %>" class="back-link"><i class="ico-left"></i> Back to all folders</a><br/>
+    <h1><%= @folder.name %>&nbsp;&nbsp;<span>(<%= pluralize @folder.bookmarks_count, 'Item' %>)</span></h1>
+    <% if @folder.bookmarks.any? %>
+    <a href="<%= new_profile_folder_folder_email_path(@folder) %>" class="button green large ovly" data-height="593" data-width="666"><i class="ico ico-mail"></i>Email this folder</a>
+
+    <a class="popup target" href="#feature-folder-popup">Feature My Folder</a>
+
+    <% end %>
+  </header>
+<% end %>
+
+<% content_for :aside do %>
+  <%= render "promos/sign_in" %>
+  <%= render "promos/clone_folder" %>
+<% end %>
+
+<% if @bookmarks.each do |b| %>
+  <%= render "resources/bookmark", r: b.resource unless b.resource.blank? %>
+<% end.empty? %>
+  <p>
+  You don't have any bookmarks in this folder yet.<br/>Try <a href="<%= search_path %>">browsing our resources</a> and add them to this folder.
+  </p>
+<% end %>
+
+<%= render 'profile/folder_recommendations/new' %>

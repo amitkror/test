@@ -1,0 +1,13 @@
+/* Overlay */
+#overlay { background:#000; cursor:pointer; display:none; height:100%; left:0;
+           position:fixed; top:0; width:100%; z-index:9999; }
+div.overlay {
+  background:#fff; display:none; min-height:200px; left:50%;
+  overflow:scroll-y; padding:10px; position:fixed; z-index:9999;
+  .close {
+    color:#000; display:block; font-size:10px; font-weight:bold; height:14px;
+    line-height:14px; text-align:center; text-transform:uppercase;
+    position:absolute; right:10px; top:0; width:15px;
+    &:hover {  }
+  }
+}

@@ -1,0 +1,8 @@
+<% title "Delete #{@comment.content}"%>
+
+<%= form_for :comment, url: admin_comment_path(@comment), html: { method: :delete } do |f| %>
+  <h3>Are you sure you want to permanently destroy <%= @comment.content %>?</h3>
+  <p>
+    <button type="submit">Destroy</button> or <%= link_to "cancel", admin_comments_path %>
+  </p>
+<% end %>

@@ -1,0 +1,39 @@
+<%= form_for [:admin, forum] do |f| %>
+
+  <%= render 'shared/errors', m: forum %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: forum,
+      cancel_path: admin_forums_path,
+      view_path: forum.new_record? ? nil : forum_path(forum),
+      delete_path: forum.new_record? ? nil : confirm_destroy_admin_forum_path(forum) %>
+
+  <p><%= f.label :name %>
+      <%= f.text_field :name, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :order %>
+      <%= f.text_field :order, required: 'required tiny' %> <span class="required">*</span></p>
+
+  <p>
+    <%= f.label :status_id %>
+    <%= select :forum, :status_id, Forum::STATUSES %></p>
+
+  <div class="indent">
+    <strong>Audiences</strong>
+    <ul class="check-list clearfix">
+      <% Audience.all.each do |s| %>
+        <li><label><%= check_box_tag "forum[audience_ids][]",
+                  s.id, has_audience?(forum, s) %> <%= s.name_plural %></label></li>
+      <% end %>
+    </ul>
+  </div>
+  
+
+  <p>
+    <%= f.label :permalink, "URL" %>
+    / <%= f.text_field :permalink, class: 'permalink' %><br/>
+    <span class="hint indent">Leave this blank to have the url generated from the title and do not use an existing URL<br/>
+    Please only include letters, numbers, and dashes.</span>
+  </p>
+
+<% end %>

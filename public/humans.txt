@@ -1,0 +1,27 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+
+/* TEAM */
+  Agency: Blenderbox
+  Site: http://www.blenderbox.com
+  Twitter: @blenderbox
+  Location: Brooklyn, NY
+
+  Senior Developer: Caleb Brown
+  Site: http://bottleupandexplode.com
+  Twitter: @kayluhb
+  Location: Brooklyn, NY
+
+  Name: Dan Steadman
+  Site: http://dansteadman.com
+  Twitter: @steadmanblend
+  Location: Brooklyn, NY
+
+/* THANKS */
+  Names (& URL): 
+
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: Modernizr, jQuery, Ruby on Rails
+  Software: Sublime Text 2, vim, nginx, passenger, etc.

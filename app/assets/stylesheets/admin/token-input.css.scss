@@ -1,0 +1,42 @@
+ul.token-input-list {
+  display:inline-block; overflow:hidden; height:auto !important; height:1%;
+  width:616px;border:1px solid #bccccd;cursor:text;
+  min-height:1px;z-index:999;margin:0;padding:0;
+  background-color:#fff;list-style-type:none;clear:left;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;
+}
+ul.token-input-list li input {
+  border:0; width:100px;padding:3px 8px;background-color:#ECECEC;
+  margin:2px 0;-webkit-appearance:caret;}
+li.token-input-token {
+  background:#fff;overflow:hidden; height:auto !important; height:15px;
+  margin:3px;padding:1px 3px;
+cursor:default;border:1px solid #ccd5e4;
+        border-radius:5px;
+   -moz-border-radius:5px;
+-webkit-border-radius:5px;
+float:left;white-space:nowrap;}
+li.token-input-token p {display:inline;padding:0;margin:0;}
+li.token-input-token span {color:#47453f;margin-left:5px;font-weight:bold;cursor:pointer;}
+li.token-input-token img {
+  float:left; margin-right:4px;-moz-border-radius:4px;-webkit-border-radius:4px;
+  border-radius:4px;
+}
+li.token-input-selected-token {
+-webkit-box-shadow: inset 0px 0px 10px 0px rgba(25, 23, 18, .25);
+   -moz-box-shadow: inset 0px 0px 10px 0px rgba(25, 23, 18, .25);
+        box-shadow: inset 0px 0px 10px 0px rgba(25, 23, 18, .25);}
+li.token-input-input-token {float:left;margin:0;padding:0;list-style-type:none;}
+
+div.token-input-dropdown {
+  position:absolute;width:400px;background-color:#fff;overflow:hidden;
+  border-left:1px solid #ccc;border-right:1px solid #ccc;
+  border-bottom:1px solid #ccc;cursor:default;z-index:1200;
+  p {margin:0;padding:5px;font-weight:bold;color:#777;}
+  ul {margin:0;padding:0;}
+  ul li {background:#fff;clear:left;padding:3px;margin:0;list-style-type:none;}
+  ul li img { float:left; margin-right:4px; }
+  ul li.token-input-dropdown-item {background-color:#fff;}
+  ul li.token-input-dropdown-item2 {background-color:#fff;}
+  ul li em {font-weight:bold;font-style:normal;}
+  ul li.token-input-selected-dropdown-item {background:#ECECEC;color:#424242;}
+}

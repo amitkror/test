@@ -1,0 +1,37 @@
+<% title "Audiences" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_audience_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @audiences %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @audiences, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Name</th><th>Plural Name</th><th>Filters?</th><th>Settings?</th><th>User Text?</th>
+  </tr>
+  <% @audiences.each do |audience| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to "#{audience.order} - #{audience.name}", edit_admin_audience_path(audience) %></td>
+  <td><%= audience.name_plural %></td>
+  <td><%= "Yes" if audience.show_in_filters %></td>
+  <td><%= "Yes" if audience.show_in_settings %></td>
+  <td><%= "Yes" if audience.display_user_text %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'edit', edit_admin_audience_path(audience) %> |
+    <%= link_to 'delete', confirm_destroy_admin_audience_path(audience) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @audiences, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

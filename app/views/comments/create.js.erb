@@ -1,0 +1,28 @@
+var $comments = $('#comments'),
+    li = $('<%= escape_javascript(render "comments/comment", comment: @comment) %>');
+
+li.hide();
+
+$comments
+    .find('.none')
+    .remove();
+
+$comments
+    .find('ul')
+    .append(li);
+
+$comments
+    .find('textarea')
+    .val('');
+
+$comments
+    .find('.count')
+    .text('<%= pluralize(@comment_size, 'Comment') %>');
+
+$('#thread-count')
+    .find('span')
+    .text(<%= @comment_size %>);
+
+li.fadeIn();
+
+$('.tip').tooltip();

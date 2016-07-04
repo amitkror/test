@@ -1,0 +1,37 @@
+<% title "Assets" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_asset_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @assets %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @assets, previous_label: '&lt; previous', next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Title</th><th>Last updated</th><th></th>
+  </tr>
+  <% @assets.each do |asset| %>
+  <tr<%= cycle(""," class='alt'") %>>
+    <td>
+      <%= link_to asset_thumb(asset), edit_admin_asset_path(asset) %>
+      <%= link_to asset.title, edit_admin_asset_path(asset) %>
+    </td>
+    <td>
+      <%= l asset.updated_at %>
+    </td>
+    <td>
+      <span class="actions">
+      <%= link_to 'edit', edit_admin_asset_path(asset) %> |
+      <%= link_to 'delete', confirm_destroy_admin_asset_path(asset) %></span>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @assets, previous_label: '&lt; previous', next_label: 'next &gt;' %>

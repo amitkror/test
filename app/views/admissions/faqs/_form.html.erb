@@ -1,0 +1,44 @@
+<%= form_for [:admin, faq] do |f| %>
+
+  <%= render 'shared/errors', m: faq %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: faq,
+      cancel_path: admin_faqs_path,
+      delete_path: faq.new_record? ? nil : confirm_destroy_admin_faq_path(faq) %>
+
+  <p><%= f.label :status_id %>
+      <%= select :faq, :status_id, Faq::STATUSES %></p>
+
+  <p><%= f.label :question %>
+      <%= f.text_area :question, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :answer %>
+      <%= f.text_area :answer, class: 'tinymce' %></p>
+
+  <div class="indent">
+    <strong>Audiences</strong>
+    <ul class="check-list clearfix">
+      <% Audience.all.each do |s| %>
+        <li><label><%= check_box_tag "faq[audience_ids][]",
+                  s.id, has_audience?(faq, s) %> <%= s.name_plural %></label></li>
+      <% end %>
+    </ul>
+  </div>    
+
+  <% unless faq.new_record? %>
+  <h6 class="indent">Pages using this FAQ</h6>
+  <ul class="indent">
+    <% if faq.pages.each do |p| %>
+    <li><%= link_to p.short_title, edit_admin_page_path(p) %></li>
+    <% end.empty? %>
+    <li>This doesn't appear on any pages yet.</li>
+    <% end %>
+  </ul>
+  <% end %>
+
+<% end %>
+
+<% content_for :js do %>
+  <%= javascript_include_tag 'admin/faqs' %>
+<% end %>

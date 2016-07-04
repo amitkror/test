@@ -1,0 +1,46 @@
+@import '_config.scss';
+
+/* Overlay */
+.overlay {
+  background:rgba(0, 0, 0, 0.70);
+  cursor:pointer;
+  display:none;
+  height:100%;
+  left:0;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:9999;
+}
+
+.overlay-content {
+  background:#ececec;
+  display:none;
+  margin-left:-250px;
+  left:50%;
+  position:fixed;
+  top:-800px;
+  z-index:9999;
+
+  .close {
+    opacity:1;  
+    background-color:#b0d24a;
+    color:$default;
+    font-size:40px;
+    height:50px;
+    line-height:50px;
+    position:absolute;
+    right:0;
+    text-align:center;
+    top:0;
+    width:50px;
+
+    &:hover {
+      background-color:#406618;
+    }
+  }
+
+  iframe {
+    float:left;
+  }
+}

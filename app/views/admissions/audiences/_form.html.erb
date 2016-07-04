@@ -1,0 +1,37 @@
+<%= form_for [:admin, audience] do |f| %>
+
+  <%= render 'shared/errors', m: audience %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: audience,
+      cancel_path: admin_audiences_path,
+      delete_path: audience.new_record? ? nil : confirm_destroy_admin_audience_path(audience) %>
+
+  <p><%= f.label :name %>
+      <%= f.text_field :name, required: 'required' %> <span class="required">*</span></p>
+
+    <p><%= f.label :name_plural %>
+      <%= f.text_field :name_plural, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :show_in_filters %>
+      <%= f.check_box :show_in_filters %></p>
+
+  <p><%= f.label :show_in_settings %>
+      <%= f.check_box :show_in_settings %></p>
+
+  <p><%= f.label :display_user_text %>
+      <%= f.check_box :display_user_text %></p>
+
+  <p><%= f.label :placeholder_text %>
+      <%= f.text_field :placeholder_text %></p>
+
+  <p>
+    <%= f.label :newsletter_id %>
+    <%= f.select :newsletter_id, Newsletter.active.map {|f| [f.name, f.id] }, prompt: "Show All"%>
+  </p>
+
+  <p><%= f.label :order %>
+      <%= f.text_field :order, required: 'required', class: 'micro' %> <span class="required">*</span></p>
+
+<% end %>
+

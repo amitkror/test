@@ -1,0 +1,115 @@
+<%
+title @event.name + " : Events "
+meta_description truncate(@event.body, length: 80, separator: ' ')
+%>
+
+<% content_for :body_id do %> id="resource"<% end %>
+<% content_for :body_class do %> class="event"<% end %>
+
+<article id="overview">
+  <div class="type clearfix"><i class="ico ico-event tip" title="event" data-tip-class="type"></i>Event</div>
+  <h1><%= @event.name %></h1>
+
+  <div class="info">
+    <time datetime="<%= @event.start_datetime %>"><%= event_duration(@event) %></time><br/>
+    <% unless @event.location.blank? %>
+      <%= @event.location %><br/>
+    <% end %>
+
+    <% unless @event.website.blank? %>
+      <%= external_link @event.website %><br/>
+    <% end %>
+
+    <% unless @event.cost_text.blank? %>
+      <em>COST:</em> <span class="cost"><%= @event.cost_text %></span>
+    <% end %>
+
+    <% unless @event.contact_name.blank? && @event.contact_phone_number.blank? && @event.contact_email.blank? %>
+      <div class="contact">
+        <em>Contact:</em><br/>
+        <% unless @event.contact_name.blank? %>
+          <%= @event.contact_name %><br/>
+        <% end %>
+
+        <% unless @event.contact_email.blank? %>
+          <%= email @event.contact_email %><br/>
+        <% end %>
+
+        <%= @event.contact_phone_number unless @event.contact_phone_number.blank? %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render partial: 'shared/addthis' %>
+
+  <% unless @event.attachment_uid.blank? %>
+    <div id="downloads" class="clearfix">
+      <%= link_to (@event.attachment_label.blank? ? "Download" : @event.attachment_label), @event.attachment.url, target: "_blank" %>
+    </div>
+  <% else %>
+    <hr />
+  <% end %>
+
+  <%= image_tag(@event.logo.thumb("335x400").url, class: "logo") unless @event.logo_uid.blank? %>
+
+  <%= copy @event.body %>
+
+  <%= render "comments/list", commentable: @event %>
+
+</article>
+
+<% content_for :aside do %>
+  <% if @event.subway_lines.any? || !@event.full_address.blank? %>
+    <div class="block bordered directions">
+      <h4>Directions</h4>
+      <p>
+        <%= @event.street %><br/>
+        <%= @event.city %><% unless @event.city.blank? || @event.state.blank? %>, <% end %><%= @event.state %> <%= @event.postal_code %>
+      </p>
+
+      <% if @event.subway_lines.any? %>
+      <p>
+        Subway: <%= @event.subway_lines.collect{|r| r.name }.join(',  ') %>
+      </p>
+      <% end %>
+
+      <div id="map-wrap"><div id="map"></div></div>
+    </div>
+  <% end %>
+
+  <% unless @upcoming.blank? %>
+  <div class="block bordered event-list">
+    <h4>Upcoming Events</h4>
+    <ul>
+    <% @upcoming.each do |e| %>
+    <li>
+      <article>
+        <h1><a href="<%= event_path(e) %>"><%= e.name %></a></h1>
+        <p>
+          <time datetime="<%= e.start_datetime %>"><%= event_duration(e) %></time>
+          <%= e.location %>
+        </p>
+      </article>
+    </li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+<% end %>
+
+<% content_for :js do %>
+<script>
+var addthis_config = {"data_track_addressbar":false},
+    <% unless @event.latitude.blank? %>LAT = <%= @event.latitude %>,<% end %>
+    <% unless @event.longitude.blank? %>LONG = <%= @event.longitude %>,<% end %>
+    TITLE = '<%= @event.name %>';
+</script>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<%= javascript_include_tag 'app/resource' %>
+<script src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-503676452e9c1b7a"></script>
+<% end %>
+
+<% content_for :toolbar do %>
+  | <a href="<%= edit_admin_event_path(@event) %>">Edit this event</a>
+<% end %>

@@ -1,0 +1,12 @@
+<% if p.tags.any? %>
+	<div class="tags">
+		<div class="left"><span>POSTED IN:</span></div>
+		<div class="right">
+			<% p.tags.each_with_index do |t, i| %>
+				<span class="tag">
+					<%= link_to t.title, blog_category_path(t.permalink) %><%= ',' unless i == p.tags.length-1 %>
+				</span>
+			<% end %>
+		</div>
+	</div>
+<% end %>

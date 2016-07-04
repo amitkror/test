@@ -1,0 +1,6 @@
+<% if user_signed_in? && current_user.admin? %>
+  <div id="toolbar">
+    <a href="<%= admin_root_path %>">Admin</a>
+    <%= yield :toolbar %>
+  </div>
+<% end %>

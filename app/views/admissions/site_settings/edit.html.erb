@@ -1,0 +1,81 @@
+<% title "Edit Settings" %>
+
+<%= nested_form_for [:admin, @site_setting] do |f| %>
+
+  <%= render 'shared/errors', m: @site_setting %>
+
+  <div class="controls">
+    <button class="action" type="submit">save</button>&nbsp;&nbsp;
+    <%= link_to "cancel", edit_admin_site_setting_path(@site_setting), class: 'button' %>
+  </div>
+
+  <h6>Home page settings</h6>
+
+  <hr/>
+
+  <div class="form-fields">
+    <label>Slides</label>
+    <span class="hint">Drag and drop to re-order</span><br/>
+    <ul id="files-list" class="nested-list">
+    <%= f.fields_for :home_slides, wrapper_tag: 'li' %>
+    </ul>
+    <span class="hint indent">Images will be resized and cropped, but should be exactly 940px x 420px for best results</span>
+    <p class="indent" data-target="#files-list"><%= f.link_to_add "Add Slide", :home_slides, class: 'button small' %></p>
+  </div>
+
+  <hr/>
+
+  <div>
+    <label>Promos</label>
+    <ul id="promos-list" class="nested-list">
+      <%= f.fields_for :promo_connections, wrapper_tag: 'li' %>
+    </ul>
+    <p class="indent" data-target="#promos-list">
+      <%= f.link_to_add "Add a Promo", :promo_connections, class: 'button small', id: 'add-promo' %>
+    </p>
+    <hr/>
+  </div>
+
+  <!-- AES -->
+
+  <div>
+    <label>Quick links:</label>
+    <ul id="quick-links-list" class="nested-list">
+      <%= f.fields_for :quick_links, wrapper_tag: 'li' %>
+    </ul>
+    <p class="indent" data-target="#quick-links-list">
+      <%= f.link_to_add "Add a quick link", :quick_links, class: 'button small', id: 'add-public-folder-connection' %>
+    </p>
+    <hr/>
+  </div>
+
+  <div>
+    <label>Featured Public Folder Block</label>
+    <ul id="public-folders-list" class="nested-list">
+      <%= f.fields_for :public_folder_connections, wrapper_tag: 'li' %>
+    </ul>
+    <p class="indent" data-target="#public-folders-list">
+      <%= f.link_to_add "Add a public Folder", :public_folder_connections, class: 'button small', id: 'add-public-folder-connection' %>
+    </p>
+    <hr/>
+  </div>
+
+  <!-- /AES -->
+
+  <div>
+    <p>
+      <%= f.label :mc_api_key, "Mail Chimp API Key" %>
+      <%= f.text_field :mc_api_key %>
+    </p>
+    <hr/>
+  </div>
+
+  <div class="controls bottom">
+    <button class="action" type="submit">save</button>&nbsp;&nbsp;
+    <%= link_to "cancel", edit_admin_site_setting_path(@site_setting), class: 'button' %>
+  </div>
+<% end %>
+
+<%= content_for :js do %>
+  <%= javascript_include_tag 'admin/site_settings' %>
+<% end %>

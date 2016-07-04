@@ -1,0 +1,8 @@
+<% title "Delete #{@phase.name}"%>
+
+<%= form_for :phase, url: admin_phase_path(@phase), html: { method: :delete } do |f| %>
+  <h3>Are you sure you want to permanently destroy <%= @phase.name %>?</h3>
+  <p>
+    <button type="submit">Destroy</button> or <%= link_to "cancel", admin_phases_path %>
+  </p>
+<% end %>

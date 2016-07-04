@@ -1,0 +1,47 @@
+<% title "Ask an adviser" %>
+
+<% content_for :body_id do %> id="guest-profile"<% end %>
+<% content_for :body_class do %> class="suggest-ask"<% end %>
+
+<h1>Ask an adviser</h1>
+
+<section id="success">
+  <h4>Message sent</h4>
+
+  <% if @user_exists %>
+    <p>
+      We've received your question, and we're working to match you up with an adviser who can help. You should get an email when an adviser has replied. If you don't hear back from us after 48 hours, feel free to contact us at info@nyccollegeline.org.<br/><br/>
+    </p>
+  <% else %>
+    <p>
+      We've received your question, and we're working to match you up with an adviser who can help. You should get an email when an adviser has replied. If you don't hear back from us after 48 hours, feel free to contact us at info@nyccollegeline.org.<br/><br/>
+      Want to connect with students, parents and people learning about college? <a href="<%= forums_path %>">Check out the forums</a> to read what people are saying and post your own questions and ideas!
+    </p>
+  <% end %>
+</section>
+
+<% content_for :aside do %>
+  <% unless @user_exists %>
+    <article class="block create-account">
+      <a href="<%= new_user_registration_path %>">
+        <h1>Create an account</h1>
+        <p>Save & organize resources</p>
+        <p>Post & comment on forums</p>
+      </a>
+    </article>
+  <% end %>
+<% end %>
+
+<% if @user_exists %>
+  <h5>Log in to your account</h5>
+  <p>To access your full message history, save and organize resources, and post and comment on forums.</p>
+
+  <a href="<%= new_user_session_path %>">Log In</a>
+  <br>
+<% end %>
+
+<%= link_to 'Ask another question', new_guest_profile_guest_question_path, class: 'button green ask-another' %>
+
+<% if @guest_questions %>
+  <%= render "questions" %>
+<% end %>

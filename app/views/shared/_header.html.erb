@@ -1,0 +1,99 @@
+<div id="head-wrap">
+  <header>
+    <a href="/" class="ir" id="logo">NYC College Line</a>
+    <div id="mobile-nav">
+      <a href="javascript:;" id="mobile-menu" data-toggle="header nav"><i class="ico-menu"></i></a>
+      <%= link_to content_tag(:i, "", class: "ico-user"), (user_signed_in? ? profile_root_path : new_user_session_path), id: "mobile-account" %>
+      <a href="javascript:;" id="mobile-search" data-toggle="#mobile-search-form"><i class="ico-search-alt"></i></a>
+    </div>
+    <nav>
+      <ul id="main-nav">
+        <% main_nav.each do |p| %>
+        <li>
+          <%= link_to p.short_title,  p.absolute_url, class: on_class(p.absolute_url) %>
+          <% kids = child_nav(p)
+             len = kids.size
+          %>
+          <% if len > 0 %>
+            <ul>
+            <% kids.each_with_index do |kid, idx| %>
+              <%= sub_nav_li kid, idx, len %>
+            <% end %>
+            </ul>
+          <% end %>
+        </li>
+        <% end %>
+      </ul>
+      <div id="sub-nav">
+        <ul>
+          <% sub_nav.each_with_index do |p, i| %>
+            <% if i == sub_nav.length-1 %>
+              <li><%= link_to 'Blog', blog_posts_path %></li>
+            <% end %>
+            <% if p == Page.find_by_title("Ask an Adviser") %>
+              <li>
+                <% if current_user %>
+                  <li><%= link_to p.short_title, new_profile_question_path, class: "#{p.permalink} #{on_class(p.absolute_url)}" %></li>
+                <% else %>
+                  <li><%= link_to p.short_title, new_guest_profile_guest_question_path, class: "#{p.permalink} #{on_class(p.absolute_url)}" %></li>
+                <% end %>
+              </li>
+            <% else %>
+              <li><%= link_to p.short_title,  p.absolute_url, class: "#{p.permalink} #{on_class(p.absolute_url)}" %></li>
+            <% end %>
+
+          <% end %>
+          <% if user_signed_in? %>
+            <li class="no-mobile"><%= link_to "View my profile", profile_root_path, class: "signedin #{on_class profile_root_path}" %></li>
+            <li class="last no-mobile"><%= link_to "Log out", destroy_user_session_path, method: 'delete', class: 'signedin' %></li>
+          <% end %>
+        </ul>
+        <% unless user_signed_in? %>
+        <section class="account">
+          <div id="login">
+            <%= link_to "Log in", new_user_session_path %>
+            <%= form_for(:user, url: session_path(:user)) do |f| %>
+              <strong>Log in to your account</strong>
+              <i class="ir plane"></i>
+              <%= f.text_field :login, placeholder: "Username or email", required: "required" %>
+              <%= f.label :password, class: 'placeholder' %>
+              <%= f.password_field :password, placeholder: "Password", required: "required" %>
+              <label class="remember-label"><%= f.check_box :remember_me, checked: false, class: "remember" %> Remember me</label>
+              <div class="controls clearfix"><button type="submit">Log in <i class="ico-right"></i></button></div>
+              <p id="remember-msg" class="error">Do not use<br/>"Remember me" if you are on a shared computer.</p>
+              <p id="login-error" class="error"></p>
+              <%= link_to "I forgot my password", new_password_path(:user), rel: "nofollow" %>
+            <% end %>
+          </div>
+          <div id="signup">
+            <%= link_to "Sign up", new_user_registration_path %>
+            <%= form_for(:user, url: registration_path(:user)) do |f| %>
+              <strong>Save and organize your resources, contact an adviser, and more! All you need is an email address.</strong>
+              <%= f.text_field :username, placeholder:"Create username", required: "required" %>
+              <span id="username-hint" class="hint">Do not use your first and last name.</span>
+              <%= f.email_field :email, placeholder:"Email", type: "email", required: "required" %>
+              <%= f.label :password, class: 'placeholder' %>
+              <%= f.password_field :password, placeholder:"Password", required: "required" %>
+              <span id="password-hint" class="hint">Password must be a minimum of 8 characters.</span>
+              <%= f.label :password_confirmation, class: 'placeholder' %>
+              <%= f.password_field :password_confirmation, placeholder:"Confirmation", required: "required" %>
+              <span id="tos-hint" class="hint"><label><%= f.check_box :accepts_tos, checked: true %> I am at least 13 years old &amp;<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;agree to the</label> <a href="/terms-of-use">Terms &amp; Conditions</a></span>
+              <div class="controls clearfix"><button type="submit">Sign Up <i class="ico-right"></i></button></div>
+              <p class="contact">
+                Do you work at a NYC-based college resource? <a href="/contact-us">Contact us</a> to get a verified account and be added to our listings!
+              </p>
+            <% end %>
+          </div>
+        </section>
+        <% end %>
+      </div>
+    </nav>
+  </header>
+</div>
+<%= form_tag global_search_path, id: 'mobile-search-form', role: 'search' do |f| %>
+  <div class="input-wrap">
+    <input id="mobile-q" name="q" type="search" placeholder="Search for resources" value="<%= @search_form && @search_form.q || "" %>" />
+    <button type="submit" title="Search"><i class="ico-search-alt"></i></button>
+  </div>
+<% end %>

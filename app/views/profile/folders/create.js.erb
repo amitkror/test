@@ -1,0 +1,11 @@
+var folder = '<%= escape_javascript render("folder", folder: @folder) %>';
+
+var $folder = $(folder);
+$folder.css({ opacity:0 });
+FOLDERS.close($('#folder-new'));
+
+$('.folder .delete').show();
+
+$('#folder-new').before(folder);
+$('#folder-new input').val('');
+$folder.delay(150).fadeIn();

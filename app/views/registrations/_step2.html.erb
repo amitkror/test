@@ -1,0 +1,17 @@
+<%= nested_form_for current_user, url: registration_success_path(2), html: { class: "profile step-2"} do |f| %>
+
+<h4>My Settings</h4>
+
+<div class="row">
+  <%= render "profile/shared/newsletters", f: f %>
+
+  <div class="form-group col-sm-6 col-xs-12">
+    <%= render "profile/shared/notifications", f: f %>
+  </div>
+</div>
+
+<div class="actions">
+  <%= link_to "Skip", profile_root_path, class: "button large muted" %>
+  <button class="green large" type="submit">Finish <i class="ico-right"></i></button>
+</div>
+<% end %>

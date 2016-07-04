@@ -1,0 +1,19 @@
+<% if current_user.role_id == User::ROLES[:Administrator] %>
+	<% @tags = Tag.all %>
+	<h5>Tags</h5>
+	<p>Add tags by typing their name and clicking "Save". You can delete tags by clicking the X next to thier name in the list. Deletion will un-tag any content associated with that tag and can not be undone.</p>
+	<%= simple_form_for [:admin, Tag.new], remote: true do |f| %>
+		<p>
+			<%= f.label :title, "New Tag" %>
+			<%= f.text_field :title %>
+			<%= f.submit "Save", class: 'button' %>
+		</p>
+	<% end %>
+	<h6>Available tags</h6>
+	<div id="all-tags">
+		<% @tags.each do |t| %>
+			<% @tag = t %>
+			<%= render t %>
+		<% end %>
+	</div>
+<% end %>

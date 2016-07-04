@@ -1,0 +1,33 @@
+<% title "Phases" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_phase_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @phases %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @phases, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Name</th><th></th>
+  </tr>
+  <% @phases.each do |phase| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to phase.name, edit_admin_phase_path(phase) %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'edit', edit_admin_phase_path(phase) %> |
+    <%= link_to 'delete', confirm_destroy_admin_phase_path(phase) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @phases, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

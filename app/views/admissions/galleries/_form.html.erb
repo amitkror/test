@@ -1,0 +1,35 @@
+<%= nested_form_for [:admin, gallery] do |f| %>
+  <%= render 'shared/errors', m: gallery %>
+  <%= render 'admissions/shared/action_buttons',
+      m: gallery,
+      cancel_path: (!popup ? admin_galleries_path : browse_admin_galleries_path),
+      delete_path: gallery.new_record? ? nil : confirm_destroy_admin_gallery_path(gallery) %>
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title %></p>
+
+    <%= f.label :asset_tokens, "Slides" %>
+    <%= f.text_field :asset_tokens, "data-pre" => slide_data(gallery) %><br/>
+    <span class="hint indent">Drag and drop to re-order. Click on an image to edit it in a new window.</span>
+
+  <hr/>
+
+  <div id="upload-form" class="indent">
+    <h4>Add Photos</h4>
+    <p>
+      <a href="#" class="browse button" id="browse">browse</a>
+    </p>
+    <p>
+      To upload new photos, click 'browse' <span class="drop-zone"> or drag your files from your desktop into the 'drop zone'</span>.
+    </p>
+    <ul id="queue"></ul>
+    <div id="msg" class="hint">Click on the thumbnail to edit the details of the slide in a new window.</div>
+    <ul id="uploaded"></ul>
+    <div id="drop">drop zone</div>
+  </div>
+  <%= hidden_field :form, :popup, value: popup %>
+<% end %>
+
+<%= content_for :js do %>
+  <%= javascript_include_tag "libs/plupload/plupload.full", "libs/jquery.tokeninput", "admin/galleries" %>
+<% end %>

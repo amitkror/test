@@ -1,0 +1,18 @@
+<% title "#{@organization.name} : #{@page.title}" %>
+
+<% meta_description @organization.name %>
+
+<% content_for :header do %>
+  <h1><%= @organization.name %></h1>
+  <p class="caption">a <%= @organization.type_s %></p>
+<% end %>
+
+<section>
+  <% @organization.active_resources.each do |r| %>
+  <%= render "resources/bookmark", r: r %>
+  <% end %>
+</section>
+
+<% content_for :aside do %>
+<%= render "shared/promos", promos: @page.promos %>
+<% end %>

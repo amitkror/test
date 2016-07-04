@@ -1,0 +1,4 @@
+<span id="tag-<%= @tag.id %>" class="entry button">
+	<span class="title"><%= @tag.title %></span>
+	<span class="delete"><%= link_to 'X', admin_tag_path(@tag), method: :delete, remote: true, data: { confirm: 'Are you sure? This will remove the tag from the system and can not be undone.' } %></span>
+</span>

@@ -1,0 +1,50 @@
+<label>Tell us about yourself</label>
+<span class="hint">Which of these groups describes you best?</span>
+<ul class="audiences-list">
+<% current_user_user_audiences.each_with_index do |user_audience, idx| %>
+  <li class="clearfix">
+    <label class="check audiences">
+      <% id = user_audience.new_record? ? SecureRandom.base64 : idx %>
+      <%= check_box_tag :_keep, "1", !user_audience.new_record?,
+        class: "custom audience",
+        name: "user[user_audiences_attributes][#{id}][_keep]",
+        data: { newsletter: "#newsletter-#{(user_audience.newsletter_id.blank? ? 0 : user_audience.newsletter_id)}" } %>
+      <%= user_audience.audience_name %>
+    </label>
+
+    <% if user_audience.display_user_text %>
+      <%= text_field_tag "user[user_audiences_attributes][#{id}][user_text]",
+        user_audience.user_text,
+        placeholder: user_audience.placeholder_text,
+        data: { user_text: "#user-text-user[user_audiences_attributes][#{id}]"},
+        class: 'user-text-field' %>
+    <% end %>
+
+    <% unless user_audience.new_record? %>
+      <%= hidden_field_tag "user[user_audiences_attributes][#{id}][id]", user_audience.id %>
+    <% end %>
+
+    <%= hidden_field_tag "user[user_audiences_attributes][#{id}][_destroy]", "false", { class: 'destroy' } %>
+    <%= hidden_field_tag "user[user_audiences_attributes][#{id}][audience_id]", user_audience.audience_id %>
+  </li>
+<% end %>
+</ul>
+<% content_for :js do %>
+<script type="text/javascript">
+  $(".user-text-field").hide();
+  $('input.audience').change(function(){
+    $el = $(this);
+    var checked = $el.is(':checked');
+        $parent = $el.parent().parent();
+    $parent.find('.destroy').val(checked ? '0' : '1');  
+    
+    if (checked == true) {
+      $parent.find('.user-text-field').show();
+    } 
+    else {
+      $parent.find('.user-text-field').hide();
+    }
+    //$parent.find('.user-text-field').toggleClass('on', checked); 
+  });
+</script>
+<% end %>  

@@ -1,0 +1,5 @@
+<%= form_for [:admin, m], remote: 'true', html: { class: 'status' } do |f| %>
+  <% statuses.each do |s| %>
+      <label><%= f.radio_button :status_id, s[1] %> <%= s[0] %></label>
+  <% end %>
+<% end %>

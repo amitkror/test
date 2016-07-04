@@ -1,0 +1,496 @@
+/*
+ *= require_self
+*
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* HTML5 display definitions */
+/* line 9, ../../app/assets/stylesheets/all.css.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
+  display: block;
+}
+
+/* line 10, ../../app/assets/stylesheets/all.css.scss */
+audio, canvas, video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+/* line 11, ../../app/assets/stylesheets/all.css.scss */
+audio:not([controls]) {
+  display: none;
+}
+
+/* line 12, ../../app/assets/stylesheets/all.css.scss */
+[hidden] {
+  display: none;
+}
+
+/* Base */
+
+
+/* line 16, ../../app/assets/stylesheets/all.css.scss */
+html {
+  font-size: 100%;
+  overflow-y: auto;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* line 17, ../../app/assets/stylesheets/all.css.scss */
+body {
+  margin: 0;
+}
+
+/* line 18, ../../app/assets/stylesheets/all.css.scss */
+body, button, input, select, textarea {
+  color: #434343;
+  font-size: 13px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.18;
+}
+
+/* Links */
+/* line 21, ../../app/assets/stylesheets/all.css.scss */
+a {
+  border-bottom: 2px solid #caeff6;
+  color: #2bc1dc;
+  text-decoration: none;
+}
+
+/* line 23, ../../app/assets/stylesheets/all.css.scss */
+a:hover {
+  border-color: #c3dee2;
+  color: #0e7a8c;
+  text-decoration: none;
+}
+
+/* line 24, ../../app/assets/stylesheets/all.css.scss */
+a:focus {
+  outline: thin dotted;
+}
+
+/* line 25, ../../app/assets/stylesheets/all.css.scss */
+a:hover, a:active {
+  outline: 0;
+}
+
+/* Typography */
+/* line 28, ../../app/assets/stylesheets/all.css.scss */
+p {
+  margin: 0;
+  padding: 0 0 30px;
+}
+
+/* line 29, ../../app/assets/stylesheets/all.css.scss */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/* line 30, ../../app/assets/stylesheets/all.css.scss */
+blockquote {
+  margin: 1em 40px;
+}
+
+/* line 31, ../../app/assets/stylesheets/all.css.scss */
+dfn {
+  font-style: italic;
+}
+
+/* line 32, ../../app/assets/stylesheets/all.css.scss */
+hr {
+  border: 0 #c7c6c6 solid;
+  border-top-width: 1px;
+  clear: both;
+  display: block;
+  height: 1px;
+  margin: 0 0 15px 0;
+  text-align: left;
+}
+
+/* line 36, ../../app/assets/stylesheets/all.css.scss */
+ins {
+  background: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+/* line 37, ../../app/assets/stylesheets/all.css.scss */
+mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+}
+
+/* line 38, ../../app/assets/stylesheets/all.css.scss */
+address {
+  font-style: normal;
+}
+
+/* line 39, ../../app/assets/stylesheets/all.css.scss */
+cite {
+  color: #6f6f6f;
+  font-size: 11px;
+  font-style: normal;
+}
+
+/* Redeclare monospace font family:h5bp.com/j */
+/* line 42, ../../app/assets/stylesheets/all.css.scss */
+pre, code, kbd, samp {
+  font-family: monospace, monospace;
+  _font-family: 'courier new', monospace;
+  font-size: 1em;
+}
+
+/* Improve readability of pre-formatted text in all browsers */
+/* line 45, ../../app/assets/stylesheets/all.css.scss */
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* line 46, ../../app/assets/stylesheets/all.css.scss */
+q {
+  quotes: none;
+}
+
+/* line 47, ../../app/assets/stylesheets/all.css.scss */
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+/* line 48, ../../app/assets/stylesheets/all.css.scss */
+small {
+  font-size: 85%;
+}
+
+/* Position subscript and superscript content without affecting line-height:h5bp.com/k */
+/* line 51, ../../app/assets/stylesheets/all.css.scss */
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+/* line 52, ../../app/assets/stylesheets/all.css.scss */
+sup {
+  top: -0.5em;
+}
+
+/* line 53, ../../app/assets/stylesheets/all.css.scss */
+sub {
+  bottom: -0.25em;
+}
+
+/* line 54, ../../app/assets/stylesheets/all.css.scss */
+h1, h2, h3, h4, h5, h6 {
+  color: #424242;
+  line-height: 1.029;
+  margin: 0;
+  padding: 10px 0;
+  text-rendering: optimizeLegibility;
+}
+
+/* line 55, ../../app/assets/stylesheets/all.css.scss */
+h1 {
+  font-size: 68px;
+  padding-top: 0;
+}
+
+/* line 56, ../../app/assets/stylesheets/all.css.scss */
+h2 {
+  color: #2bc1dc;
+  font-size: 68px;
+}
+
+/* line 57, ../../app/assets/stylesheets/all.css.scss */
+h3 {
+  color: #ff5297;
+  font-size: 36px;
+  line-height: 1.16;
+}
+
+/* line 58, ../../app/assets/stylesheets/all.css.scss */
+h4 {
+  color: #2bc1dc;
+  font-size: 36px;
+  line-height: 1.22;
+}
+
+/* line 59, ../../app/assets/stylesheets/all.css.scss */
+h5 {
+  font-size: 22px;
+  line-height: 1.36;
+}
+
+/* line 60, ../../app/assets/stylesheets/all.css.scss */
+h6 {
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+/* line 61, ../../app/assets/stylesheets/all.css.scss */
+blockquote {
+  color: #76888a;
+  font-size: 16px;
+  font-style: italic;
+  padding: 10px 0;
+}
+
+/* line 62, ../../app/assets/stylesheets/all.css.scss */
+blockquote p {
+  padding: 0;
+}
+
+/* line 63, ../../app/assets/stylesheets/all.css.scss */
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+  vertical-align: middle;
+}
+
+/* Lists */
+/* line 66, ../../app/assets/stylesheets/all.css.scss */
+dd {
+  margin: 0 0 0 40px;
+}
+
+/* line 67, ../../app/assets/stylesheets/all.css.scss */
+ul, ol {
+  padding: 0 10px 0 8px;
+}
+
+/* line 68, ../../app/assets/stylesheets/all.css.scss */
+ul li {
+  background: transparent url(image-path('bullet.png')) 0 6px no-repeat;
+  list-style: none;
+  padding: 0 0 0 8px;
+}
+
+/* line 70, ../../app/assets/stylesheets/all.css.scss */
+ol li {
+  list-style: decimal;
+  margin: 0 0 0 10px;
+  padding: 0 0 8px 0;
+}
+
+/* line 71, ../../app/assets/stylesheets/all.css.scss */
+nav ul, nav ol, nav li {
+  background: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Correct overflow not hidden in IE9 */
+/* line 74, ../../app/assets/stylesheets/all.css.scss */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Figures */
+/* line 77, ../../app/assets/stylesheets/all.css.scss */
+figure {
+  margin: 0;
+}
+
+/* Tables */
+/* line 80, ../../app/assets/stylesheets/all.css.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  padding: 10px 0;
+}
+
+/* line 81, ../../app/assets/stylesheets/all.css.scss */
+td, th {
+  padding: 5px;
+}
+
+/* line 82, ../../app/assets/stylesheets/all.css.scss */
+td {
+  vertical-align: top;
+}
+
+/* Forms */
+/* line 85, ../../app/assets/stylesheets/all.css.scss */
+form {
+  margin: 0;
+}
+
+/* line 86, ../../app/assets/stylesheets/all.css.scss */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Indicate that 'label' will shift focus to the associated form element */
+/* line 89, ../../app/assets/stylesheets/all.css.scss */
+label {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* line 90, ../../app/assets/stylesheets/all.css.scss */
+legend {
+  border: 0;
+  *margin-left: -7px;
+  padding: 0;
+}
+
+/* line 91, ../../app/assets/stylesheets/all.css.scss */
+button, input, select, textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle;
+}
+
+/* line 92, ../../app/assets/stylesheets/all.css.scss */
+button, input {
+  line-height: normal;
+  *overflow: visible;
+}
+
+/* line 93, ../../app/assets/stylesheets/all.css.scss */
+button:active {
+  position: relative;
+  top: 1px;
+}
+
+/* Reintroduce inner spacing in 'table' to avoid overlap and whitespace issues in IE6/7 */
+/* line 96, ../../app/assets/stylesheets/all.css.scss */
+table button, table input {
+  *overflow: auto;
+}
+
+/* line 97, ../../app/assets/stylesheets/all.css.scss */
+button, select, input[type="button"], input[type="reset"], input[type="submit"], input[type='file'] {
+  cursor: pointer;
+}
+
+/* line 98, ../../app/assets/stylesheets/all.css.scss */
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/* Consistent box sizing and appearance  */
+/* line 101, ../../app/assets/stylesheets/all.css.scss */
+input[type="checkbox"], input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+  *width: 13px;
+  *height: 13px;
+}
+
+/* line 102, ../../app/assets/stylesheets/all.css.scss */
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+
+/* line 103, ../../app/assets/stylesheets/all.css.scss */
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* line 104, ../../app/assets/stylesheets/all.css.scss */
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* line 110, ../../app/assets/stylesheets/all.css.scss */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+textarea {
+  border: none;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 0 0 10px;
+}
+
+/* line 111, ../../app/assets/stylesheets/all.css.scss */
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  resize: vertical;
+}
+
+/* Colors for form validity */
+/* line 117, ../../app/assets/stylesheets/all.css.scss */
+::-moz-selection {
+  background: #2bc1dc;
+  color: #fff;
+  text-shadow: none;
+}
+
+/* line 118, ../../app/assets/stylesheets/all.css.scss */
+::selection {
+  background: #2bc1dc;
+  color: #fff;
+  text-shadow: none;
+}
+
+/* line 119, ../../app/assets/stylesheets/all.css.scss */
+::-webkit-input-placeholder {
+  color: #7f7f7f;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* line 120, ../../app/assets/stylesheets/all.css.scss */
+::-moz-placeholder {
+  color: #7f7f7f;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* line 123, ../../app/assets/stylesheets/all.css.scss */
+a:focus, button:focus, input:focus, label:focus, select:focus, textarea:focus {
+  outline: 1px dashed #ff5297;
+}
+
+/* line 125, ../../app/assets/stylesheets/all.css.scss */
+button, a {
+  -webkit-transition-timing-function: ease-in;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+  -webkit-transition-property: all;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.15s;
+  -moz-transition-duration: 0.15s;
+  -o-transition-duration: 0.15s;
+  transition-duration: 0.15s;
+  -webkit-transition-property: color, background-color, border-color;
+  -moz-transition-property: color, background-color, border-color;
+  -o-transition-property: color, background-color, border-color;
+  transition-property: color, background-color, border-color;
+}
+
+/* line 143, ../../app/assets/stylesheets/all.css.scss */
+h1, h2, h3, h4, h5, h6, b, strong, mark, th, button {
+  font-weight: 700;
+}
+body { background:#fff; margin:10px; }
+.subhead {
+  color:#6d6d6d; font-size:23px; line-height:1.3; padding-bottom:30px;
+  a { border:none; }
+}

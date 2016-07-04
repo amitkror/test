@@ -1,0 +1,11 @@
+
+<% results.each_hit_with_result do |hit, result| %>
+  <%= render "resources/bookmark", r: result %>
+<% end %>
+
+<%= will_paginate(results.hits,
+  previous_label: "<i class='ico-left'></i> Previous",
+  next_label: "Next <i class='ico-right'></i>",
+  renderer: SearchPaginationRenderer,
+  link_path: link_path)
+%>

@@ -1,0 +1,28 @@
+<% title "Contest Entrants" %>
+
+<h4><%= @contest.name %> Entrants</h4>
+
+<div class="pagination-info">
+  <%= page_entries_info @entrants %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @entrants, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Name</th>
+    <th>Referrals</th>
+  </tr>
+  <% @entrants.each do |entrant| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to entrant.username, edit_admin_user_path(entrant) %></td>
+  <td><%= entrant.referrals.where({ contest_id: @contest.id }).count %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @entrants, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

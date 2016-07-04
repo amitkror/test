@@ -1,0 +1,13 @@
+<div class="indent">
+  <div class="order">
+    <%= f.label :order, class: "inline" %> <%= f.text_field :order, class: 'micro order' %>
+  </div>
+  <div class="values">
+    <%= f.label :text %>
+    <%= f.text_field :text %>
+    <br/>
+    <%= f.label :destination %>
+    <%= f.text_field :destination %>
+  </div>
+   <a href="#" class="edit-chosen">Edit</a> - <%= f.link_to_remove "Remove" %>
+</div>

@@ -1,0 +1,53 @@
+<div class="container-fluid" id="profilesection">
+  <div class="container">
+    <div class="row">
+      <div class="card hovercard">
+          <div class="btn-file">
+            <%= form_for current_user, url: update_avatar_profile_settings_path, remote: :true do |f| %>
+            <div class="fileUpload" title="upload photo">
+
+              <%= f.file_field :custom_avatar, class: "imgupload"%><span><i class="fa fa-camera camra" aria-hidden="true" ></i></span>
+             </div>   
+            <% f.submit "" %>  
+            <% end %>
+          </div>
+         
+          <a class="twPc-bg twPc-block">
+            <div class="avatarmob visible-xs">
+              <%= user_avatar(current_user) %>
+              <h3 class="text-center" style="padding: 10px 0px;"><%= current_user.username %>!<% if current_user.verified? %><i class="fa fa-check checkver" aria-hidden="true"></i><% end %></h3>
+            </div>
+            <h3 class="proname  hidden-xs"><%= current_user.username %>!<% if current_user.verified? %><i class="fa fa-check checkver" aria-hidden="true"></i></i><% end %></h3>
+          </a>
+          <div class="avatar" >
+            <a class="profilepic hidden-xs" id= "target">  <%= user_avatar(current_user) %> </a>
+            <div class="infoo">                 
+              Change your profile setting & how often you get emails. You're the boss!
+            </div>
+              <div class="c100 p<%= user_profile_status(current_user)%> green progrsbar hidden-xs">
+                <span><%= user_profile_status(current_user) %> %</span>
+                <div class="slice">
+                  <div class="bar"></div>
+                  <div class="fill"></div>
+                </div>
+              </div>
+              <div class="c100 p<%= user_profile_status(current_user)%> green small progrsbar visible-xs">
+                <span><%= user_profile_status(current_user) %> %</span>
+                <div class="slice">
+                  <div class="bar"></div>
+                  <div class="fill"></div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div> 
+</div>
+
+<% content_for :js do %>
+  <script type="text/javascript">
+    $('#user_custom_avatar').on('change', function(){
+       $(this).closest("form").submit();
+    });
+  </script>  
+<% end %>

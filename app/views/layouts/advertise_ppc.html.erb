@@ -1,0 +1,89 @@
+<!doctype html>
+<!--[if lt IE 7]> 
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en">
+  <![endif]-->
+  <!--[if IE 7]> 
+  <html class="no-js lt-ie9 lt-ie8" lang="en">
+    <![endif]-->
+    <!--[if IE 8]> 
+    <html class="no-js lt-ie9" lang="en">
+      <![endif]-->
+      <!--[if gt IE 8]><!--> 
+      <!--<![endif]-->
+      <!--<![endif]-->
+<html class="no-js" lang="en">
+  <head>
+    <%= render 'shared/head' %>
+    <%= yield :more_head %>
+  </head>
+  <body<%= yield :body_id %><%= yield :body_class %>>
+    <div id="layout">
+      <div id="head-wrap">
+        <header>
+          <a href="/" class="ir" id="logo">NYC College Line</a>
+          <div class="ppc-ad-img">
+            <% if @campaign_ppc && (@campaign_ppc.image && @campaign_ppc.advertisement_image_link) %>
+              <% if @campaign_ppc.advertisement_image_link != '' %>
+              <%= link_to "#{image_tag @campaign_ppc.image.thumb('620x70#').url}".html_safe, "#{@campaign_ppc.advertisement_image_link}", :target => "_new" %>
+              <% else %>
+                <%= image_tag @campaign_ppc.image.thumb('620x70#').url if @campaign_ppc && @campaign_ppc.image %>  
+              <% end %>
+            <% elsif @campaign_ppc && @campaign_ppc.image %>
+              <%= image_tag @campaign_ppc.image.thumb('620x70#').url if @campaign_ppc && @campaign_ppc.image %>
+            <% end %>              
+          </div>          
+        </header>
+      </div>
+      <div id="content" class="clearfix">
+        <% if notice %><p class="message notice"><%= notice.html_safe %></p><% end %>
+        <% if alert %><p class="message alert"><%= alert.html_safe %></p><% end %>
+        <article class="col-3">
+          <%= yield %>
+        </article>
+      </div>
+    </div>
+    <% 
+      about = Page.where(:permalink => 'about').first 
+      help = Page.where(:permalink => 'help').first
+      %>
+    <div id="foot-wrap">
+      <footer>
+        <section class="col about">
+          <strong><a href="/about">About NYC College Line</a></strong><br>
+          NYC College Line will help you stay organized from exploration to graduation. The site was created by Graduate NYC!, CUNY, NYC DOE, and Goddard Riverside. <a href="/about">More...</a>
+        </section>
+        <section class="col contact_ppc">
+          <strong>Send A Message To Us</strong> <br/>
+          <%= simple_form_for @contact, :html => {:class => 'form-horizontal', :id => 'contact_ppc', :multipart => true } do |f| %>
+            <div class="ppcusermail">
+              <div class="ppcname">
+                <%= f.text_field :name, :required => true, :placeholder =>"Name" %>
+                <% if @campaign_ppc %>
+                  <%= f.hidden_field :ppc_id, :value => @campaign_ppc.id %>
+                <% end %>
+              </div>
+              <div class="ppcemail">               
+                <%= f.email_field :email, :required => true, :placeholder =>"Email", id: "question_email" %>
+              </div>
+            </div>
+            <div class="ppcmsg">              
+              <textarea id="question_question" name="contact[message]" placeholder="Message" rows="2"></textarea>
+            </div>
+            <input class="button btn btn-primary ppc_btn" name="commit" type="submit" value="Send">
+          <% end %>
+        </section>
+      </footer>
+      <div class="sub-footer">
+        <div class="inner">
+          <a class="ir cuny" href="http://www.cuny.edu">CUNY University of New York</a>
+          <a class="ir nyc-ed" href="http://schools.nyc.gov">NYC Department of Education</a>
+          <a class="ir grad-nyc" href="http://gradnyc.com">Graduate NYC! College Readiness &amp; Success</a>
+          <a class="ir goddard" href="http://goddard.org">Goddard Riverside Community Center</a>
+        </div>
+      </div>
+    </div>
+    <%= render 'shared/javascripts' %>
+    <%= yield :js %>
+    <%= render 'shared/toolbar' %>
+  </body>
+</html>

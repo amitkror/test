@@ -1,0 +1,48 @@
+<% title @page.title %>
+<% meta_description @page.meta %>
+
+<% content_for :body_id do %> id="forums"<% end %>
+<% content_for :body_class do %> class="list"<% end %>
+
+<%= content_for :header do %>
+
+  <h1><%= @page.title %></h1>
+
+  <%= copy @page.copy %>
+
+  <p class="page-info">
+  Displaying top forums
+  </p>
+
+  <%= render "forums/search_form" %>
+
+<% end %>
+
+
+<% @forums.each do |f| %>
+<article>
+  <header class="list alt">
+    <hr/>
+    <h1><%= link_to "#{f.name} <span>view all</span>".html_safe, forum_path(f) %></h1>
+  </header>
+
+  <ul class="thread-list">
+  <% f.top_threads.each do |t| %>
+    <li class="<%= cycle("", "alt", name: "alt") %>">
+      <%= link_to t.name, forum_forum_thread_path(f, t) %>
+      <%= render "forum_threads/stats", t: t %>
+      <span class="count"><%= link_to t.comments_count, forum_forum_thread_path(f, t, anchor: "comments") %></span>
+    </li>
+  <% end %>
+  <% reset_cycle("alt") %>
+  </ul>
+</article>
+<% end %>
+
+<% content_for :aside do %>
+<%= render "forum_threads/block" %>
+<%= render "promos/sign_in_forum" %>
+<%= render "promos/search_resources" %>
+<%= render "promos/recent_posts" %>
+<%= render "shared/promos", promos: @page.promos %>
+<% end %>

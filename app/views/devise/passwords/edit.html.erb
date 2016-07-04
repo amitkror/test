@@ -1,0 +1,23 @@
+<% title "Change password?" %>
+
+<% content_for :body_class do %> class="centered"<% end %>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: "default", method: :put }) do |f| %>
+
+  <h1>Change password</h1>
+
+  <%= devise_error_messages! %>
+
+  <%= f.hidden_field :reset_password_token %>
+
+  <%= f.password_field :password, class: "medium", placeholder: "new password", required: "required", autofocus: "autofocus" %>
+
+  <%= f.password_field :password_confirmation, class: "medium", placeholder: "confirm new password", required: "required" %>
+
+  <p class="clearfix">
+    <button class="green" type="submit">Change</button>
+  </p>
+
+  <%= render "devise/shared/links" %>
+
+<% end %>

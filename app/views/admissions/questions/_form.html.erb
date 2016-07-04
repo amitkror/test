@@ -1,0 +1,33 @@
+<%= form_for [:admin, question] do |f| %>
+
+  <%= render 'shared/errors', m: question %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: question,
+      cancel_path: admin_questions_path,
+      delete_path: question.new_record? ? nil : confirm_destroy_admin_question_path(question) %>
+
+  <p class="indent">
+    Asked by: <strong><%= link_to question.user_username, edit_admin_user_path(question.user) %></strong>
+    on <%= l question.created_at %></p>
+
+  <p>
+    <%= f.label :adviser_id %>
+    <%= select :question, :adviser_id,
+      User.advisers.collect { |u| [u.username, u.id] },
+      { include_blank: 'Assign an adviser' }, class: 'chosen' %></p>
+
+  <p><%= f.label :question %>
+      <%= f.text_area :question, required: 'required' %> <span class="required">*</span></p>
+
+  <% if question.comments.any? %>
+  <div class="indent">
+    <strong>Conversation:</strong>
+    <ul>
+    <% question.comments.each do |c| %>
+      <li>On <%= l c.created_at %> <strong><%= c.user_username %></strong> said <br/><%= c.content %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+<% end %>

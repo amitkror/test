@@ -1,0 +1,76 @@
+<% title "Per Page Click" %>
+
+<div class="controls">
+  <%#= link_to "export", admin_events_path(format: 'csv'), class: 'button', title: 'export to csv' %>
+  <%= link_to "add new", new_admin_campaign_ppc_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @campaign_ppcs %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @campaign_ppcs, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<label for="status_id">Status:</label> <%= select_tag :status_id, options_for_select(Page::STATUSES, @status_id), prompt: "Show all" %>      
+
+<% if !@campaign_ppcs.blank? %>
+<table class="index-list">
+  <tr>
+    <th><%= sortable_header("title", "") %></th>
+    <th></th>
+
+  </tr>
+  <% @campaign_ppcs.each do |ppc| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to ppc.title, edit_admin_campaign_ppc_path(ppc) %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'show', campaign_ppc_path(ppc) %> |
+    <%= link_to 'edit', edit_admin_campaign_ppc_path(ppc) %> |
+    <%= link_to 'delete', confirm_destroy_admin_campaign_ppc_path(ppc) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @campaign_ppcs, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>
+<% end %>    
+
+<%= content_for :js do %>
+  <script>
+    (function () {
+        var app = {},
+            status = 'status_id',
+            type = 'type_id';
+        function init() {
+            $('#' + status).change(onFilterChange);
+            $('#' + type).change(onFilterChange);
+        }
+        function onFilterChange(e) {
+            var pairs = window.location.search.split('?').join('').split('&'),
+                keys = {},
+                pair;
+            for (var i = 0; i < pairs.length; ++i) {
+                pair = pairs[i].split('=');
+                keys[pair[0]] = pair[1];
+            }
+            keys[status] = $('#' + status).val();
+            keys[type] = $('#' + type).val();
+            window.location = window.location.pathname + '?' + serialize(keys);
+        }
+        function serialize(obj) {
+            var str = [];
+            for(var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
+        }
+        $(init);
+        return app;
+    }());
+  </script>
+<% end %>

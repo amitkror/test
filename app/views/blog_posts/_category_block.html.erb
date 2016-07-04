@@ -1,0 +1,10 @@
+<% unless @tags.blank? %>
+	<div id="blog-category-nav" class="category block">
+		<h3>Categories</h3>
+		<ul>
+			<% @tags.each do |t| %>
+				<li><%= link_to t.title, blog_category_path(t.permalink) %></li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>

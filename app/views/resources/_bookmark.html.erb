@@ -1,0 +1,24 @@
+<% bookmarked = bookmarked?(r.id) %>
+<article class="resource-bookmark">
+  <div class="type clearfix">
+    <i class="ico ico-<%= r.type_s %> ico-dark tip" title="<%= r.type_s %>" data-tip-class="type"></i>
+    <% if r.is_experts_pick %>
+      <i class="ico ico-expert tip" title="Expert's pick" data-tip-class="type"></i>
+    <% end %>
+    <% if r.comments.any? %>
+      <a href="<%= resource_path(r, anchor: "comments") %>" class="ico ico-comments tip" title="Comments" data-tip-class="type"></a>
+    <% end %>
+    <% if r.most_helpful? %>
+      <i class="ico ico-helpful tip" title="Most Helpful" data-tip-class="type"></i>
+    <% end %>
+  </div>
+  <h1><%= link_to r.name, r %></h1>
+  <p>
+    <strong><%= r.type_s.upcase %></strong>&nbsp;&nbsp;|&nbsp; <%= r.teaser_or_body.html_safe %>&nbsp;
+    <span class="actions">
+      <%= link_to "Read&nbsp;more".html_safe, r %>&nbsp;&nbsp;
+      <a href="<%= toggle_resource_bookmarks_path(r.id) %>" class="bookmark-<%= r.id %> save <%= "on" if bookmarked %>" data-remote="true"></a>
+    </span>
+  </p>
+  <a href="<%= toggle_resource_bookmarks_path(r.id) %>" class="icon bookmark bookmark-<%= r.id %> tip <%= "on" if bookmarked %>" title="<%= bookmark_title(bookmarked) %>" data-remote="true" data-tip-class="bookmark">Bookmark</a>
+</article>

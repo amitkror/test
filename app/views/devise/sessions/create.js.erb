@@ -1,0 +1,7 @@
+//alert('what?')
+
+var r = '<li><%= link_to "View my profile", profile_root_path, class: 'signedin' %></li>';
+r += '<li class="last"><%= link_to "Log out", destroy_user_session_path, method: 'delete', class: 'signedin' %></li>';
+
+$('#sub-nav .account, .sign-in').remove();
+$('#sub-nav ul').append(r);

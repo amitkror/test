@@ -1,0 +1,20 @@
+<% unless @archive_block.blank? %>
+	<div id="blog-date-nav" class="date-navigation block">
+		<h3>Archive</h3>
+		<ul>
+			<% @archive_block.each do |y, ms| %>
+				<li class="year"><i class="ico-right"></i>
+					<strong><%= y %></strong><br>
+					<ul class="months">
+						<% ms.each do |m| %>
+							<li class="">
+								<% linkable = y.to_s+'-'+m.to_s %>
+								<%= link_to DateTime::MONTHNAMES[m], blog_date_path(linkable) %><br>
+							</li>
+						<% end %>
+					</ul>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>

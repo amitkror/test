@@ -1,0 +1,73 @@
+<% title "Insert Image" %>
+
+<div id="container" class="clearfix popup">
+<%= form_for [:admin, @asset] do |f| %>
+  <div id="upload-form">
+      <div class="controls clearfix">
+        <a href="#" class="insert button action">Insert</a>&nbsp;&nbsp;
+        <a href="#" class="cancel button">cancel</a>
+      </div>
+      <p>
+        Select a photo to insert, then click 'insert' to insert your photo.
+      </p>
+      <ul id="uploaded" class="image-list">
+        <% @assets.each do |r| %>
+          <% if r.attachment.image? %>
+            <li><%= link_to(asset_thumb(r, "500x34").html_safe, "#", id: r.id, class: 'selectable') %></li>
+          <% end %>
+        <% end %>
+      </ul>
+      <%= will_paginate @assets, previous_label: '&lt; previous', next_label: 'next &gt;', separator: '&nbsp;&nbsp;' %>
+    <hr/>
+    To upload new photos, click 'browse' <span class="drop-zone"> or drag your files from your desktop into the 'drop zone'</span>.
+    <div class="controls clearfix">
+      <a href="#" class="browse button" id="browse">browse</a>
+    </div>
+    <div id="list-container">
+      <div id="drop">drop zone</div>
+      <ul id="queue" class="image-list"></ul>
+    </div>
+  </div>
+  <div id="details">
+    <p>
+    <label class="inline" for="size">Size to insert</label>
+      <select id="size">
+        <option value="590x1000">large</option>
+        <option value="290x1000" selected>medium</option>
+        <option value="120x1000">small</option>
+      </select>
+    </p>
+    <p>
+      <label class="inline" for="alt">Title</label>
+      <input id="alt" type="text" placeholder="alt text" />
+    </p>
+    <p>
+      <label class="inline" for="link">Link</label>
+      <input id="link" type="text" placeholder="url" />
+      <span class="hint">(include 'http://' if linking to another site)</span>
+    </p>
+    <p>
+        <b>Image Alignment:</b>
+    </p>
+    <div id="alignment">
+        <div class="icon"></div>
+        <label for="align0">None</label>
+        <input id="align0" class="radio" type="radio" name="alignment" value="" />
+        <label for="align1">Float Left</label>
+        <input id="align1" class="radio" type="radio" name="alignment" value="float-left" checked="checked" />
+        <label for="align2">Float Right</label>
+        <input id="align2" class="radio" type="radio" name="alignment" value="float-right" />
+        <label for="align3">Align Left</label>
+        <input id="align3" class="radio" type="radio" name="alignment" value="align-left" />
+        <label for="align4">Align Center</label>
+        <input id="align4" class="radio" type="radio" name="alignment" value="align-center" />
+        <label for="align5">Align Right</label>
+        <input id="align5" class="radio" type="radio" name="alignment" value="align-right" />
+    </div>
+  </div>
+<% end %>
+</div>
+
+<%= content_for :js do %>
+  <%= javascript_include_tag 'libs/tiny_mce/tiny_mce_popup', 'libs/plupload/plupload.full', 'admin/assets' %>
+<% end %>

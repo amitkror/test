@@ -1,0 +1,74 @@
+<% title "My settings" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="settings centered"<% end %>
+
+<%= content_for :header_caption do %>Change your image, setting, and how often you get email. You’re the boss!<% end %>
+<%#=  render "profile/shared/nav" %>
+
+<%= render 'shared/errors', m: current_user %>
+<div role="tabpanel" id="lsetting">
+  <div class="col-xs-12">
+    <%= nested_form_for current_user, url: profile_settings_path, html: { class: "newform profile", autocomplete: "off" } do |f| %>
+      <div class="row">
+        <%= render "profile/shared/avatar", f: f  %>          
+      </div>      
+
+      <div class="row">
+        <div class="form-group col-sm-6 col-xs-12">
+          <label for="puser">Username</label>
+          <span class="hint">Your username shows up next to your comments and posts<br/>Please do not use your first and last name.</span>
+          <%= f.text_field :username, class: "form-control", placeholder: "username" %>
+        </div>
+        <div class="form-group col-sm-6 col-xs-12">
+          <label for="pemail">Update your email:</label>
+          <span class="hint">After you click "Save," we will send you an email with a confirmation link.</span><br/>
+          <%= f.email_field :email, class: "form-control", placeholder: "email", type: "email", required: "required" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6 col-xs-12">
+          <label for="pzipcode">UPDATE YOUR ZIP CODE/POSTAL CODE</label>
+          <%= f.text_field :zipcode, class: "form-control", placeholder: "zip code/postal code", required: "required" %>   
+        </div>
+        <div class="form-group col-sm-6 col-xs-12">
+          <label for="pwd">UPDATE YOUR PASSWORD</label>
+          <div class="row">
+            <div class="col-sm-6 col-xs-12 col-xs-12">
+             <%= f.password_field :password, class: "form-control col-sm-3", placeholder: "password" %>
+      
+            </div>
+            <div class="col-sm-6 col-xs-12 col-xs-12">
+              <%= f.password_field :password_confirmation, class: "form-control col-sm-3", placeholder: "confirmation" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6 col-xs-12">
+          <%= render "profile/shared/audiences", f: f , audience: @audience %>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <div class=" ">
+            <%= render "profile/shared/newsletters", f: f %> 
+          </div>
+          <br/>
+          <div class=" ">
+            <%= render "profile/shared/notifications", f: f %>
+          </div>
+        </div>
+      </div>      
+            
+      <div class="col-sm-6 col-xs-12 col-sm-offset-6">
+        <button class="btn green large pull-right text-uppercase" type="submit">Save </button>
+        <% unless current_user.admin? %>
+          <a href="<%= confirm_destroy_profile_settings_path %>" class="ovly del btn text-underline" data-height="487" data-width="552"><u>Delete your account</u></a>&nbsp;&nbsp;
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= content_for :js do %>
+  <%= javascript_include_tag 'libs/plupload/plupload.full', 'app/profile' %>
+<% end %>

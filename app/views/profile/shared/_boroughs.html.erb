@@ -1,0 +1,10 @@
+<div class="borough-selector">
+<p>
+  <strong>What borough do you live in?</strong>
+</p>
+<p>
+<%= select :user, :borough_id,
+      options_for_select(Borough.settings.collect { |l| [l.name, l.id] }, current_user.borough_id),
+      { include_blank: 'Select a borough' },
+      { class: 'custom-select' } %></p>
+</div>

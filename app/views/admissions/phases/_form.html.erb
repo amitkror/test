@@ -1,0 +1,24 @@
+<%= form_for [:admin, phase] do |f| %>
+
+  <%= render 'shared/errors', m: phase %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: phase,
+      cancel_path: admin_phases_path,
+      delete_path: phase.new_record? ? nil : confirm_destroy_admin_phase_path(phase) %>
+
+  <p><%= f.label :name %>
+      <%= f.text_field :name, required: 'required' %> <span class="required">*</span></p>
+
+  <p>
+    <%= f.label :teaser %>
+    <%= f.text_area :teaser, class: 'small' %></p>
+
+  <p>
+    <%= f.label :page_id, "Page" %>
+    <%= f.select :page_id, pages, {include_blank: '-- Select a page --'}, class: 'chosen' %></p>
+
+  <p class="indent">
+    <%= link_to "Search", search_path(phase_id: phase.id) %></p>
+
+<% end %>

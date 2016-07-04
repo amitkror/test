@@ -1,0 +1,6 @@
+<% if @helped %>
+  $('.block.helpful a').addClass('helped');
+<% else %>
+  $('.block.helpful a').removeClass('helped');
+<% end %>
+$('.block.helpful span').text(<%= @count %>);

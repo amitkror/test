@@ -1,0 +1,33 @@
+<% _title = "The Access to Success (A2S) blog" %>
+
+<% title _title %>
+
+<% content_for :body_id do %> id="blog"<% end %>
+
+<% content_for :header do %>
+  <h1>What's Keeping Us Up At Night</h1>
+  <h2 class='title'><%= _title %></h2>
+  <h6>Inside the hearts & minds of NYC College Advisers | <a href="<%= root_url %>feed?format=rss">Subscribe to RSS feed</a></h6>
+  <% if @aux_title %>
+    <h4><%= @aux_title %></h4>
+  <% end %>
+<% end %>
+
+<ul class="blog-index">
+  <% @blog_posts.each do |p| %>
+    <li>
+      <%= render 'single', :p => p %>
+    </li>
+  <% end %>
+
+</ul>
+
+<%= will_paginate @blog_posts,
+  previous_label: "<i class='ico-left'></i> Previous",
+  next_label: "Next <i class='ico-right'></i>" %>
+
+
+<% content_for :aside do %>
+  <%= render 'category_block' %>
+  <%= render 'archive_block' %>
+<% end %>

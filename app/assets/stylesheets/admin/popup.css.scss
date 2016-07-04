@@ -1,0 +1,40 @@
+@import '../_mixins.scss',
+        'admixins.css.scss';
+
+#container.popup { height:auto !important; height:400px; min-height:400px; padding:20px; width:820px; }
+
+/* IMAGE BROWSER */
+#upload-form { float:left; text-align:left; width:480px; }
+#uploaded {
+  overflow:auto;margin:0; padding:0;
+  li {
+    background:none; float:left; margin:0 2px 2px 0; text-align:center; overflow:hidden;
+    a {
+      border:3px solid #F0F0EE; display:block;
+      &:hover, &.selected { border-color:#40a7d0; }
+    }
+  }
+}
+#details {
+ float:right; width:240px; border:2px solid #e5e5e5; margin-left:10px; padding:10px 0 20px 10px;
+ label { font-size:10px; width:auto; padding:0; display:block; }
+ input[type=text] { width:218px; font-size:14px; padding:2px; }
+}
+#alignment {
+ label { display:inline-block; width:70px; text-align:right; margin:0; padding:0; }
+ .icon {
+    background:url(image-path('admin/icons/align.gif')) no-repeat -96px 0px; border:1px solid #e5e5e5;
+    height:106px; float:right; margin-right:10px; width:96px; @include transition(all);
+  }
+}
+#drop { border:3px #ccc dashed; font-size:16px; line-height:1; margin:10px 0 0; padding:20px 0; text-align:center; }
+.dragover { border:3px #666 solid; background:#ccc; }
+
+#gallery-list {
+  margin:10px 0 0; padding:0;
+  li { background:none; margin:0 0 3px; padding:0; }
+  a {
+    display:block; padding:4px;
+    &.selected { background:#F0F0EE; color:#47453f; }
+  }
+}

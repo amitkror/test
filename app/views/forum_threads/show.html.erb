@@ -1,0 +1,52 @@
+<% title "#{@forum_thread.name} - #{@forum.name} : #{@page.title}" %>
+
+<%# meta_description @forum.name #%>
+
+<% content_for :body_id do %> id="forums"<% end %>
+<% content_for :body_class do %> class="thread"<% end %>
+
+<%= content_for :header do %>
+  <h3><%= @page.title %></h3>
+  <h2><%= link_to "All Forums", forums_path %></h2> <i class="ico-right"></i>
+  <h2><%= link_to @forum.name, forum_path(@forum) %></h2> <i class="ico-right"></i>
+
+  <span class="title"><%= truncate(@forum_thread.name, length: 20, separator: ' ') %></span><br/>
+
+  <%= render "forum_threads/stats", t: @forum_thread %>
+
+  <p id="thread-count">
+    <span><%= @forum_thread.comments_count %></span>
+    <%= @forum_thread.comments_count == 1 ? "Response" : "Response".pluralize %>
+  </p>
+<% end %>
+
+<div id="message" class="clearfix comment dotted">
+  <hr />
+  <%= user_avatar_small(@forum_thread.user) %>
+  <div class="detail">
+    <span class="user">
+      <h1><%= @forum_thread.name %></h1>
+      <strong><%= user_username @forum_thread.user %></strong>
+      <time datetime="<%= @forum_thread.created_at %>"><%= time_ago_in_words @forum_thread.created_at %> ago</time>
+      <% if @forum_thread.user == current_user || (can? :destroy, @forum_thread) %>
+        <%= link_to "delete", forum_thread_path(@forum_thread),
+              class: 'delete',
+              confirm: "Are you sure? This cannot be undone",
+              method: :delete %>
+      <% end %>
+    </span>
+    <%= simple_format @forum_thread.message %>
+  </div>
+</div>
+
+<h5>Responses</h5>
+
+<%= render "comments/list", commentable: @forum_thread %>
+
+<%= link_to "<i class='ico-left'></i> Back to all forum topics".html_safe, forum_path(@forum), class: "back-link" %>
+
+<% content_for :aside do %>
+<%= render "forum_threads/block", forum_id: @forum.id %>
+<%= render "promos/search_resources" %>
+<%= render "shared/promos", promos: @page.promos %>
+<% end %>

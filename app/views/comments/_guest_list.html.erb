@@ -1,0 +1,48 @@
+<%
+   placeholder = local_assigns[:placeholder].nil? ? "Enter comment" : local_assigns[:placeholder]
+   button = local_assigns[:button].nil? ? "Post comment" : local_assigns[:button]
+%>
+
+<% mobile = @blog_post || @guest_question ? "mobile-comments" : "no-mobile" %>
+<div id="comments" class="dotted <%= mobile %>">
+
+  <p class="count">
+    <% if commentable.comments.any? %>
+      <%= pluralize(commentable.comments_count, 'Comment') %>
+    <% end %>
+  </p>
+
+  <ul>
+    <% if commentable.comments.any? %>
+      <% commentable.comments.includes(:user).each do |c| %>
+        <%= render "comments/comment", comment: c %>
+      <% end %>
+    <% else %>
+      <li class="none"><p>There are no comments yet.</p></li>
+    <% end %>
+  </ul>
+
+  <% if user_signed_in? %>
+    <%= form_for [commentable, Comment.new], remote: true, html: { class: "default clearfix" } do |f| %>
+      <header>
+        <span class="header">Add your comment, <%= current_user.username %></span>
+        <span class="logout">(Not you? <%= link_to "Log out", destroy_user_session_path, method: 'delete' %>)</span>
+      </header>
+      <%= user_avatar_small(current_user) %>
+      <fieldset>
+        <%= f.text_area :content, placeholder: placeholder, required: true %>
+        <button class="green" type="submit"><%= button %></button>
+      </fieldset>
+    <% end %>
+  <% else %>
+    <%= form_for [commentable, :guest, Comment.new], remote: true, html: { class: "default clearfix" } do |f| %>
+      <header>
+        <span class="header">Add your comment, <%= @guest_question.guest_user.email %></span>
+      </header>
+      <fieldset>
+        <%= f.text_area :content, placeholder: placeholder, required: true %>
+        <button class="green" type="submit"><%= button %></button>
+      </fieldset>
+    <% end %>
+  <% end %>
+</div>

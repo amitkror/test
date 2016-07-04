@@ -1,0 +1,23 @@
+<% title "Forgot your password?" %>
+
+<% content_for :body_class do %> class="centered"<% end %>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: "default", method: :post }) do |f| %>
+
+  <h1>Forgot?</h1>
+
+  <%= devise_error_messages! %>
+
+  <p>
+    Enter your email and we'll send you reset instructions.
+  </p>
+
+  <%= f.text_field :login, class: "medium", placeholder: "email", required: "required", autofocus: "autofocus" %>
+
+  <p class="clearfix">
+    <button class="green large" type="submit">Send <i class="ico-right"></i></button>
+  </p>
+
+  <%= render "devise/shared/links" %>
+
+<% end %>

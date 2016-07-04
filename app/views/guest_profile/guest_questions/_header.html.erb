@@ -1,0 +1,17 @@
+<% if @guest_user %>
+  <div class="guest-header clearfix">
+    <%= image_tag(SystemAvatar.first.image.thumb('150x150#').url) %>
+    <div class="text">
+      <h3>Hi, <%= @guest_user.email %></h3>
+      <p>
+        Do you have a question about getting into or graduating from college? Do you have a personal question about
+        financial aid or your unique family situation? Ask us, and we'll match you up with an adviser right here in
+        New York City. Our advisers will respond to you via email within 48 hours.<!--  <br/><br/>For more help, check
+     out the <a href="<%= forums_path %>">forums</a> and the <a href="/faq">FAQ</a>. For help using this website,
+     read the <a href="/help">help</a> section. -->
+      </p>
+    </div>
+
+    <hr>
+  </div>
+<% end %>

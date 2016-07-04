@@ -1,0 +1,38 @@
+<% title "Avatars" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_system_avatar_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @system_avatars %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<p>
+  The first avatar is the default avatar for new users.
+</p>
+
+<%= will_paginate @system_avatars, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Name</th><th></th>
+  </tr>
+  <% @system_avatars.each do |system_avatar| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td>
+    <%= admin_thumb(system_avatar.image, "75x75#") %>
+    <%= link_to "#{system_avatar.order} - #{system_avatar.name}", edit_admin_system_avatar_path(system_avatar) %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'edit', edit_admin_system_avatar_path(system_avatar) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @system_avatars, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

@@ -1,0 +1,62 @@
+@import '_config.scss',
+        '_mixins.scss';
+
+#events {
+  #datepicker {
+    margin-bottom:20px;
+  }
+
+  .event-list {
+    margin:0;
+    padding:0;
+
+    li {
+      border-top:1px dashed #dfdfdf;
+      background-image:none;
+      margin:0;
+      padding:0;
+    }
+
+    li:first-child {
+      border-top-style:solid;
+    }
+
+    article {
+      font-weight:600;
+    }
+
+    h1 {
+      color:$link;
+      font-size:17px;
+      line-height:0.95;
+      padding:0 0 5px;
+    }
+
+    a {
+      border:0;
+      color:$default;
+      display:block;
+      padding:15px 4px;
+      &:hover {
+        background-color:#f6f6f6;
+      }
+    }
+  }
+
+  .no-results {
+    padding:15px 4px;
+  }
+}
+
+.pipe {
+  color: #c4c4c4;
+}
+
+.ui-datepicker-prev,
+.ui-datepicker-next {
+  border:none;
+}
+
+.ui-datepicker-title:hover {
+  cursor: pointer;
+}

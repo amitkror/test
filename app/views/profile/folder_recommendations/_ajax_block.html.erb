@@ -1,0 +1,30 @@
+<% if format == 'button' %>
+	<a href="#" onclick="APP.fillSharePopup(FolderID);" id="popup-folder-share-trigger" class="button green">Feature My Folder</a>
+<% else %>
+	<% if user_signed_in? %>
+		<div class="featured-folder-promo-container">
+			<a href="#" onclick="APP.fillSharePopup(FolderID);" id="popup-folder-share-trigger" class="large-icon1" title="Got a great folder? Send it to us to be included as a featured folder!">
+				<!-- <div class="inner-mask">
+					Got a great folder? Send it to us to be included as a featured folder!
+				</div> -->
+			<img alt="" src="assets/grtfolder.png"> 
+			</a>
+		</div>
+	<% else %>
+		<%= render 'promos/sign_in' %>
+	<% end %>
+<% end %>
+
+<%= javascript_tag do %>
+  var FolderShare = true;
+<% end %>
+
+<% if !@folder.blank? && !@folder.id.blank? %>
+	<%= javascript_tag do %>
+	  var FolderID = <%= @folder.id %>;
+	<% end %>
+<% else %>
+	<%= javascript_tag do %>
+    var FolderID = false;
+	<% end %>
+<% end %>

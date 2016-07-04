@@ -1,0 +1,189 @@
+<%= nested_form_for [:profile, resource], html: { class: "newform profile" } do |f| %>
+
+  <%= render 'shared/errors', m: resource %>
+
+  <p><strong><%= f.label :name %></strong> <span class="required">*</span><br/>
+      <%= f.text_field :name, required: 'required' %></p>
+
+  <p><strong><%= f.label :type_id %></strong><br/>
+      <%= select :resource, :type_id, Resource::TYPES, {}, class: 'custom-select' %></p>
+
+  <p><strong><%= f.label :organization_id %></strong><br/>
+    <span class="hint">
+      Select an organization or create a new one.</span>
+      <%= select :resource, :organization_id,
+            Organization.ordered.super_skinny.collect { |l| [l.name, l.id] },
+            { include_blank: 'Select organization' },
+            { class: 'custom-select' } %></p>
+  <%= f.fields_for :new_organization %>
+
+  <p><strong><%= f.label :website %></strong><br/>
+      <%= f.text_field :website %></p>
+
+  <p><strong><%= f.label :contact_name %></strong><br/>
+      <%= f.text_field :contact_name %></p>
+
+  <p><strong><%= f.label :contact_email %></strong><br/>
+      <%= f.email_field :contact_email %></p>
+
+  <p><strong><%= f.label :contact_phone_number, "Contact phone" %></strong><br/>
+      <%= f.text_field :contact_phone_number %></p>
+
+  <p><strong><%= f.label :street %></strong><br/>
+      <%= f.text_field :street %></p>
+
+  <p><strong><%= f.label :city %></strong><br/>
+      <%= f.text_field :city, class: "small" %></p>
+
+  <p><strong><%= f.label :state %></strong><br/>
+      <%= select :resource, :state, us_states,
+            { include_blank: 'Select a state' }, class: 'custom-select' %></p>
+
+  <p><strong><%= f.label :postal_code %></strong><br/>
+      <%= f.text_field :postal_code, class: "small" %></p>
+
+  <div>
+    <strong>Subway Lines</strong>
+    <ul id="inline-list" class="clearfix">
+    <% SubwayLine.all.each do |s| %>
+      <li>
+        <label class="check">
+        <%= check_box_tag :subway_line_ids, s.id, resource.has_subway_line?(s.id), class: "custom", name: 'resource[subway_line_ids][]' %>
+        <%= s.name %></label></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <p><strong>Boroughs</strong>
+    <span class="hint">Select the boroughs that the resource serves.<br/>If a resource is not location-specific (such as a video), select all boroughs.</span>
+  </p>
+  <ul id="inline-list" class="clearfix">
+  <% Borough.all.each do |s| %>
+    <li>
+      <label class="check">
+      <%= check_box_tag :borough_ids, s.id, resource.has_borough?(s.id), class: "custom", name: 'resource[borough_ids][]' %>
+      <%= s.name %></label></li>
+  <% end %>
+  </ul>
+
+  <p><strong><%= f.label :when_text, "When" %></strong><br/>
+    <span class="hint">Include times and days that participants will attend your program.</span>
+      <%= f.text_area :when_text %></p>
+
+  <p><strong><%= f.label :cost_text, "Cost" %></strong><br/>
+      <span class="hint">How much does it cost to participate in your program?</span>
+      <span class="indent hint">This appears in the details box in the right rail.</span>
+      <%= f.text_field :cost_text, class: "small" %></p>
+
+  <p><strong><%= f.label :conditions_of_use_id %></strong><br/>
+    <span class="hint">Conditions of use are explained <a href="<%= conditions_of_use_index_path %>" target="_blank">here</a>.<br/>  (For use only of you are uploading a document).</span>
+      <%= select :resource, :conditions_of_use_id,
+            ConditionsOfUse.super_skinny.collect { |l| [l.title, l.id] },
+            { include_blank: 'Conditions of use' }, class: 'custom-select' %></p>
+
+  <p>
+    <strong><%= f.label :teaser %></strong><br/>
+    <span class="hint">This is brief two line description. Hint: You can copy and paste from your description below.</span>
+    <%= f.text_area :teaser %></p>
+
+  <p>
+    <strong><%= f.label :body, "Description" %></strong><br/>
+    <span class="hint">Make your description easy to read by adding subheaders between sections. Highlight the text you want to format, then select "subhead" from the Styles menu. Good examples we use across NYC College Line are "Overview," "Eligibility," and "How to Enroll." </span>
+  </p>
+  <%= f.text_area :body, class: 'tinymce' %>
+
+  <p><strong><%= f.label :logo %></strong><br/>
+    <% unless resource.logo_uid.blank? %>
+      <%= admin_thumb(resource.logo) %>
+      <label><%= f.check_box :remove_logo %> Remove?</label>
+    <% end %>
+    <%= f.file_field :logo, class: "custom-file-input" %>
+    <%= f.hidden_field :retained_logo %>
+    <span class="indent hint">Logos should be at least 50 pixels in height and preferably on a white or transparent background</span>
+  </p>
+  <hr/>
+  <p>
+    <strong><label>Files</label></strong><br/>
+    <span class="hint">Add related files for this resource</span>
+  </p>
+
+  <ul id="assets-list" class="clearfix nested-list">
+  <%= f.fields_for :assets, wrapper_tag: 'li' %></ul>
+
+  <p data-target="#assets-list">
+    <%= f.link_to_add "Add a File", :assets, class: 'button green' %> <span>Max size is 5MB. Only PDF, DOC, and PPT files are accepted.</span></p>
+  <hr/>
+  <div class="left">
+    <p>
+      <strong>Phases</strong><br/>
+      <span class="hint">Please select the NYC College Line phases for which you offer programming and support.</span>
+    </p>
+    <ul>
+    <% Phase.all.each do |s| %>
+      <li>
+        <label class="check">
+        <%= check_box_tag :phase_ids, s.id, resource.has_phase?(s.id), class: "custom", name: 'resource[phase_ids][]' %>
+        <%= s.name %></label></li>
+    <% end %>
+    </ul>
+
+    <p>
+      <strong>Subjects</strong>
+    </p>
+    <ul>
+    <% Subject.ordered.each do |s| %>
+      <li>
+        <label class="check">
+        <%= check_box_tag :subject_ids, s.id, resource.has_subject?(s.id), class: "custom", name: 'resource[subject_ids][]' %>
+        <%= s.name %></label></li>
+    <% end %>
+    </ul>
+
+    <div class="program-fields">
+      <p>
+        <strong>Support</strong>
+      </p>
+      <ul>
+      <% Support.ordered.each do |s| %>
+        <li>
+          <label class="check">
+          <%= check_box_tag :support_ids, s.id, resource.has_support?(s.id), class: "custom", name: 'resource[support_ids][]' %>
+          <%= s.name %></label></li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="right">
+    <p>
+      <strong>Audiences</strong>
+    </p>
+    <ul>
+    <% Audience.ordered.each do |s| %>
+      <li>
+        <label class="check">
+        <%= check_box_tag :audience_ids, s.id, resource.has_audience?(s.id), class: "custom", name: 'resource[audience_ids][]' %>
+        <%= s.name %></label></li>
+    <% end %>
+    </ul>
+
+    <p>
+      <strong>Languages other than English</strong>
+    </p>
+    <ul>
+    <% Language.ordered.each do |s| %>
+      <li>
+        <label class="check">
+        <%= check_box_tag :language_ids, s.id, resource.has_language?(s.id), class: "custom", name: 'resource[language_ids][]' %>
+        <%= s.name %></label></li>
+    <% end %>
+    </ul>
+  </div>
+  <div class="actions">
+    <%= link_to "Cancel", profile_resources_path, class: "button large muted" %>
+    <button class="green large" type="submit">Submit <i class="ico-right"></i></button>
+  </div>
+<% end %>
+
+<%= content_for :js do %>
+<%= javascript_include_tag 'libs/jquery.custom-file', 'libs/jquery-ui-1.9.0.custom.min', 'app/profile_resources', 'app/resource_suggestion' %>
+<% end %>

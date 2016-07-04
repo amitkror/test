@@ -1,0 +1,15 @@
+<div class="dotted">
+  <hr/>
+
+  <ul class="scholarship-submissions clearfix">
+    <% scholarship.scholarship_submissions.selected.each do |submission| %>
+      <li>
+        <a href="<%= scholarship_scholarship_submission_path(scholarship, submission) %>" class="ovly<%= voting_class(submission.id) %>" data-height="550" data-width="663" data-url="submission-<%= submission.id %>" id="submission-<%= submission.id %>">
+          <%= image_tag submission.thumbnail.thumb('147x83#').url unless submission.thumbnail_uid.blank? %>
+          <strong><%= submission.first_name %></strong><br/>
+          <%= submission.high_school %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,0 +1,10 @@
+<section id="question" class="clearfix">
+
+<%= image_tag(SystemAvatar.first.image.thumb("75x75#").url, class: 'guest-image') %>
+<div id="thread" class="guest-thread">
+  <p class="caption">Question asked by <strong><%= question.guest_user.email %></strong> <% unless question.topic.blank? %>| Posted about '<%= question.topic_name %>'<% end %> on <%= l question.created_at %></p>
+  <%= simple_format question.question %>
+  <!-- Should update this to guest_comments eventually -->
+  <%= render "comments/guest_list", commentable: question, placeholder: "Reply", button: "Submit" %>
+</div>
+</section>

@@ -1,0 +1,72 @@
+<%= nested_form_for [:admin, promo_instance] do |f| %>
+
+  <%= render 'shared/errors', m: promo_instance %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: promo_instance,
+      cancel_path: admin_promo_instances_path,
+      delete_path: promo_instance.new_record? ? nil : confirm_destroy_admin_promo_instance_path(promo_instance) %>
+
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title, required: 'required' %> <span class="required">*</span></p>
+
+  <p id="misc">
+    <%= f.label :misc_text %>
+    <%= f.text_field :misc_text %>
+    <span class="indent hint" id="twint">Enter a user name, twitter handle, or hover text here</span></p>
+
+  <p>
+      <%= f.label :promo_id, "Type" %>
+      <%= collection_select(:promo_instance, :promo_id,
+                            Promo.unlocked,
+                            :id, :title,
+                            {},
+                            class: 'chosen' ) %></p>
+
+  <p id="color">
+    <%= f.label :color %>
+    <%= select :promo_instance, :color, PromoInstance::COLORS %></p>
+
+  <p id="copy">
+    <%= f.label :copy, "Text" %>
+    <%= f.text_area :copy %></p>
+
+  <div class="image" id="image">
+    <p class="indent">
+      <%= promo_instance_thumb(promo_instance) %></p>
+    <p>
+      <%= f.label :image, "Image" %>
+      <%= f.file_field :image %>
+      <%= f.hidden_field :retained_image %><br/>
+      <span class="hint indent">Homepage promo images should be smaller than 246px wide. Interior promo images will be resized automatically.</span><br/>
+    </p>
+  </div>
+
+  <div class="image" id="rollover">
+    <p class="indent">
+      <%= promo_instance_rollover_thumb(promo_instance) %></p>
+    <p>
+      <%= f.label :image, "Rollover image" %>
+      <%= f.file_field :rollover %>
+      <%= f.hidden_field :retained_rollover %><br/>
+      <span class="hint indent">If set, this will appear on rollover. Image sizing suggestions apply.</span><br/>
+    </p>
+  </div>
+
+  <div id="link">
+    <hr/>
+    <label>Link</label><br/>
+    <span class="hint indent">You can link to a url or to a page. If you link to a page, it will take precedence.</span>
+    <p>
+        <%= f.label :page_id, "Page" %>
+        <%= f.select :page_id, pages, {include_blank: '-- Select a page --'}, class: 'chosen' %></p>
+    <p>
+      <%= f.label :link, "URL" %>
+      <%= f.text_field :link %></p>
+  </div>
+<% end %>
+
+<%= content_for :js do %>
+  <%= javascript_include_tag 'admin/promo_instances' %>
+<% end %>

@@ -1,0 +1,2 @@
+module Admissions::ReferralCodesHelper
+end

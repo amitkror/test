@@ -1,0 +1,165 @@
+<div class="homepglayout">
+  <!-- header start -->
+  <%= render 'shared/new_header' %>
+  <!-- header end -->
+  <!-- slider start -->
+  <div id="slider" class="carousel slide slider" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <% @slides.each_with_index do |slider,index| %>
+      <li data-target="#slider" class="<%='active' if index == 0 %>" data-slide-to="<%= index %>"></li>
+      <% end %>
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <% @slides.each_with_index do |slide,index| %>      
+      <div class="item <%='active' if index == 0 %>">
+        <% if slide.image_uid.blank? %>
+          <a href="<%= slide.url %>"><%= image_tag slide.image.thumb("1450x499#").url %></a>
+        <% else %>
+          <a href="#"><%= image_tag 'header_banner.jpg' %></a>
+        <% end %>  
+      </div>
+      <% end %>      
+    </div>
+  </div>
+  <!-- slider end  -->
+  <!-- explore resource start -->
+  <div class="container-fluid" id="section-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-xs-12" id="explore-left">
+          <!-- <img alt="program" src="img/Hey_NYC.png"> -->
+          <%= image_tag 'Hey_NYC.png' %>
+        </div>
+        <div class="col-md-8 col-xs-12" id="explore-right">
+          <h1>Hey NYC, start exploring resources for:</h1>
+          <section class="quicklinks">
+            <a href="/apply" class="quicklink">Getting into College</a>
+            <a href="/pay-for-college" class="quicklink">Paying for College</a>
+            <a href="/succeed-in-college" class="quicklink">Staying in College</a>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- explore resource end -->
+  <!-- local program start -->
+  <div class="conatiner-fluid" id="section-2">
+    <div class="container">
+      <div class="row bubbles">
+        <div class="col-sm-8 col-xs-12" id="progleft">
+          <div class="bubbles-title" >
+            <!-- <img alt="Home-mobile" src="img/location_icon.png" class="pull-left loc_img"> -->
+            <%= image_tag 'location_icon.png', :class => "pull-left loc_img" %>
+            <h2 class="pushup">Find local programs near you</h2>
+            <p class="caption"><em>Choose a borough to get started!</em></p>
+          </div>
+        </div>
+        <div class= "col-sm-4 col-xs-12" id="progright">
+          <select class="localprogram pull-left">
+            <option value='type=1'>All of NYC</option>
+            <option value='bor=1&type=1'>Bronx</option>
+            <option value='bor=2&type=1'>Brooklyn</option>
+            <option value='bor=3&type=1'>Manhattan</option>
+            <option value='bor=4&type=1'>Queens</option>
+            <option value='bor=5&type=1'>Staten Island</option>
+          </select>
+          <a href="/search?&amp;type=1" id="search_link"><button type="button" class="btn btn-localprog pull-right">Go</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- local program end -->
+  <!-- block section start -->
+  <div class="container-fluid " id="section-3">
+    <div class="container">
+      <section id="blocks" class="clearfix">
+        <div>
+          <a href="/profile/ask-an-adviser" class="block new blue">
+            <div class="block_img">
+              <%= image_tag 'ask_adviser.png' %> <!--  <img alt="Ask an adviser" src="img/ask_adviser.png"> -->
+            </div>
+            <div class="block_desc">
+              <p><strong>Ask an Adviser:</strong>Do you have a question about college? Ask us and we'll answer.</p>
+            </div>
+            <div class="learn_more">
+              <p>Learn More <i class="fa fa-arrow-circle-o-right"></i>
+              <p>
+            </div>
+          </a>
+          <a href="/succeed-in-college/life-after-college" class="block new blue">
+            <div class="block_img">
+              <%= image_tag 'fact1.png' %> <!--  <img alt="Ask an adviser" src="img/fact1.png"> -->
+            </div>
+            <div class="block_desc">
+              <p><strong>Fact:</strong>By 2020, 75% of jobs will require a 2- or 4-year degree.</p>
+            </div>
+            <div class="learn_more">
+              <p>Learn More <i class="fa fa-arrow-circle-o-right"></i>
+              <p>
+            </div>
+          </a>
+          <a href="/explore/academics-matter" class="block new blue">
+            <div class="block_img">
+              <%= image_tag 'fact2.png' %> <!-- <img alt="Ask an adviser" src="img/fact2.png"> -->
+            </div>
+            <div class="block_desc">
+              <p><strong>Fact:</strong>In NYC, 4 years of math in high school is strongly linked with college success.</p>
+            </div>
+            <div class="learn_more">
+              <p>Learn More <i class="fa fa-arrow-circle-o-right"></i>
+              <p>
+            </div>
+          </a>
+          <a class="block blue new">
+            <div class="block_img">
+              <%= image_tag 'fact3.png' %> <!-- <img alt="Ask an adviser" src="img/fact3.png"> -->
+            </div>
+            <div class="block_desc">
+              <p><strong>Fact:</strong>CUNY requires students to earn a 75 in English and 80 in Math on Regents exams in order to start college credit classes.</p>
+            </div>
+            <div class="learn_more">
+              <p>Learn More <i class="fa fa-arrow-circle-o-right"></i>
+              <p>
+            </div>
+          </a>
+          <a href="/pay-for-college/price-tag" class="block new blue">
+            <div class="block_img">
+              <%= image_tag 'fact4.png' %> <!-- <img alt="Ask an adviser" src="img/fact4.png"> -->
+            </div>
+            <div class="block_desc">
+              <p><strong>Fact:</strong>On average, students pay only 30% of the total tuition at public colleges.</p>
+            </div>
+            <div class="learn_more">
+              <p>Learn More <i class="fa fa-arrow-circle-o-right"></i>
+              <p>
+            </div>
+          </a>
+          <a href="/succeed-in-college" class="block new blue">
+            <div class="block_img">
+              <%= image_tag 'fact5.png' %><!-- <img alt="Ask an adviser" src="img/fact5.png"> -->
+            </div>
+            <div class="block_desc">
+              <p><strong>Fact:</strong>In 2010 in New York state, 62,713 students earned an associates degree and 122,860 earned a bachelors degree.</p>
+            </div>
+            <div class="learn_more">
+              <p>Learn More <i class="fa fa-arrow-circle-o-right"></i>
+              <p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+  
+</div>
+
+<%= render 'shared/new_footer' %>
+<%= render 'shared/javascripts' %>
+<%= yield :js %>
+<%= render 'shared/toolbar' %>
+<!-- Begin: www.iperceptions.com -->
+<script type="text/javascript">
+  ;(function (w, d, s, l) { var r = 100, js, fjs = d.getElementsByTagName(s)[0], id = "IPerceptionsJS", a = "async", b = "defer",go = function() { if(d.getElementById(id)) { return; } js = d.createElement(s);js.src = w.location.protocol + "//ips-invite.iperceptions.com/webValidator.aspx?sdfc=6493690c-120224-d5814988-e0a7-49aa-8f34-59f3d2c80751&lID=1&source=91787"; js.id = id; js.type = "text/javascript"; js[a] = a; js[b] = b; fjs.parentNode.insertBefore(js, fjs); }; if(r < Math.floor(Math.random() * 100)) { d.cookie = "IPE_S_120224=0;Path=/;" } else if(!(/(^|;)\s*IPE(_S_)?120224=/.test(d.cookie))){ if (w.addEventListener) { w.addEventListener(l, go, false); } else if (w.attachEvent) { w.attachEvent("on" + l, go); } } })(window, document, "script", "load");
+</script>  

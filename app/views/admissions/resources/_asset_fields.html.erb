@@ -1,0 +1,12 @@
+<p class="indent">
+  <span class="handle"></span>
+<% unless f.object.new_record? %>
+  <%= asset_thumb(f.object) %>
+<% end %>
+  <%= f.label :order, class: "inline" %>
+  <%= f.text_field :order, class: "micro order" %>
+  <%= f.text_field :title, class: "small", placeholder: "title" %>
+  &nbsp;&nbsp;&nbsp;<%= f.link_to_remove "Remove" %><br/>
+  <span class="hint">Use action words like "download" and "visit" in the title so that the button has a clear "call to action."</span>
+  <%= f.file_field :attachment %>
+</p>

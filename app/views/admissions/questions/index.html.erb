@@ -1,0 +1,75 @@
+<% title "Questions" %>
+
+<div class="controls">
+  <%= link_to "export", admin_questions_path(format: 'csv'), class: 'button', title: 'export to csv' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @questions %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @questions, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+<p>
+  <label for="assigned">Assigned:</label> <%= select_tag :assigned, options_for_select([['Yes', 1], ['No', 0]], @assigned), prompt: "Show all" %></p>
+
+<table class="index-list">
+  <tr>
+    <th><%= sortable_header("user_id") %></th>
+    <th>Question</th>
+    <th width="100"><%= sortable_header("created_at", "Date", true) %></th>
+    <th width="70"><%= sortable_header("adviser_id", "") %></th>
+    <th><%= sortable_header("answered", "") %></th>
+    <th width="100"></th>
+  </tr>
+  <% @questions.each do |question| %>
+  <tr<%= cycle(""," class='alt'") %>>
+    <td><%= question.user_username %></td>
+    <td><%= simple_format question.question %></td>
+    <td><%= l question.created_at, format: :short %></td>
+    <td><%= question.assigned? ? question.adviser_username : "no" %></td>
+    <td><%= question.answered %></td>
+    <td>
+      <span class="actions">
+      <%= link_to 'edit', edit_admin_question_path(question) %>&nbsp;|&nbsp;<%= link_to 'delete', confirm_destroy_admin_question_path(question) %></span>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @questions, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>
+
+<%= content_for :js do %>
+  <script>
+    (function () {
+        var app = {},
+            assigned = 'assigned';
+        function init() {
+            $('#' + assigned).change(onFilterChange);
+        }
+        function onFilterChange(e) {
+            var pairs = window.location.search.split('?').join('').split('&'),
+                keys = {},
+                pair;
+            for (var i = 0; i < pairs.length; ++i) {
+                pair = pairs[i].split('=');
+                keys[pair[0]] = pair[1];
+            }
+            keys[assigned] = $('#' + assigned).val();
+            window.location = window.location.pathname + '?' + serialize(keys);
+        }
+        function serialize(obj) {
+            var str = [];
+            for(var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
+        }
+        $(init);
+        return app;
+    }());
+  </script>
+<% end %>

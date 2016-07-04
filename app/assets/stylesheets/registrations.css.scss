@@ -1,0 +1,76 @@
+@import '_config.scss',
+        '_mixins.scss';
+
+#new_user, #edit_user {
+  margin:0 auto;
+  width:365px;
+
+  h1 {
+    font-size:66px;
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 1px 1px 2px 0px rgba(127, 127, 127, 0.6) inset,
+                        0 0 0px 1000px white inset;
+  }
+  button {
+    float:left;
+    margin-right:14px;
+  }
+
+  .recaptchatable input {
+    border: none!important;
+  }
+
+  .tos {
+    font-size:11px;
+  }
+
+  .bottom {
+    border-top:1px solid #cfcfcf;
+    clear:both;
+    font-weight:600;
+    line-height:1.4;
+    margin:10px auto 0;
+    padding:28px 0 30px;
+    text-align:center;
+
+    li {
+      background:none;
+      border-left:1px solid #cfcfcf;
+      display:inline;
+      margin:0;
+      padding:0 5px;
+
+      &:first-child {
+        border:none;
+        padding-left:0;
+      }
+    }
+
+    a {
+      border:none;
+      font-size:12px;
+    }
+  }
+
+  .already {
+    font-weight:600;
+    text-align:center;
+  }
+}
+
+#new_user {
+  float: left;
+}
+
+#sign-up-icons {
+  width: 215px;
+  float: right;
+  .sicon {
+    float:right;
+    margin: 10px 0 10px 0;
+  }
+}
+#ajax_recaptcha {
+  margin-bottom:20px;
+}

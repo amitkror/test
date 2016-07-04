@@ -1,0 +1,45 @@
+<% title "#{@forum.name} : #{@page.title}" %>
+
+<%# meta_description @forum.name #%>
+
+<% content_for :body_id do %> id="forums"<% end %>
+<% content_for :body_class do %> class="forum"<% end %>
+
+<%= content_for :header do %>
+<h2><%= @page.title %></h2>
+
+<p class="page-info">
+<%= page_entries_info @forum_threads %>
+</p>
+
+<%= render "forums/search_form" %>
+
+<% end %>
+
+<header class="list dotted alt">
+  <hr/>
+  <h1><%= @forum.name %></h1>
+  <strong>Posts</strong>
+</header>
+
+<ul class="thread-list">
+<% @forum_threads.each do |f| %>
+  <li class="<%= cycle("", "alt") %>">
+    <%= link_to f.name, forum_forum_thread_path(@forum, f) %>
+    <%= render "forum_threads/stats", t: f %>
+    <span class="count"><%= link_to f.comments_count, forum_forum_thread_path(@forum, f, anchor: "comments") %></span>
+  </li>
+<% end %>
+</ul>
+
+<%= will_paginate @forum_threads,
+  previous_label: "<i class='ico-left'></i> Previous",
+  next_label: "Next <i class='ico-right'></i>" %>
+
+<% content_for :aside do %>
+<%= render "promos/sign_in_forum" %>
+<%= render "forum_threads/block", forum_id: @forum.id %>
+<%= render "promos/search_resources" %>
+<%= render "promos/recent_posts" %>
+<%= render "shared/promos", promos: @page.promos %>
+<% end %>

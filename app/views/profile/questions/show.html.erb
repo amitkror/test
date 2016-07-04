@@ -1,0 +1,11 @@
+<% title "#{@question.question} : My messages" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered suggest-ask question"<% end %>
+
+<%=  render "header" %>
+
+<h1 class='count'>My messages</h1>
+<a href="<%= new_profile_question_path %>"><i class="ico-left"></i> Back to all questions</a>
+
+<%= render "question", question: @question %>

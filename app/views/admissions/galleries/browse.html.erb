@@ -1,0 +1,24 @@
+<% title "Insert Gallery" %>
+
+<div id="container" class="clearfix popup">
+  <div class="controls clearfix">
+    <a href="#" class="insert button action">insert</a>&nbsp;&nbsp;
+    <a href="#" class="cancel button">cancel</a>&nbsp;&nbsp;
+    <%= link_to "add gallery", new_admin_gallery_path({ popup: true }), class: "button" %>
+  </div>
+  <div id="list-container">
+    <span class="hint">Select a gallery to insert</span><br/>
+    <ul id="gallery-list">
+      <% @galleries.each do |g| %>
+        <li><%= link_to "#{asset_thumb(g.thumb, '50x36#')} #{g.title}".html_safe, "#", id: g.id, class: 'selectable' %></li>
+      <% end %>
+    </ul>
+    <%= will_paginate @galleries, previous_label: '&lt; previous', next_label: 'next &gt;', separator: '&nbsp;&nbsp;' %>
+  </div>
+</div>
+
+<%= content_for :js do %>
+<script>var TINY=<%= @tiny %>;</script>
+<%= javascript_include_tag 'libs/tiny_mce/tiny_mce_popup' if @tiny == true %>
+<%= javascript_include_tag 'admin/gallery_browse' %>
+<% end %>

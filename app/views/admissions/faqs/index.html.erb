@@ -1,0 +1,35 @@
+<% title "FAQs" %>
+
+<div class="controls">
+  <%= link_to "export", admin_faqs_path(format: 'csv'), class: 'button', title: 'export to csv' %>
+  <%= link_to "add new", new_admin_faq_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @faqs %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @faqs, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Name</th><th>Status</th><th></th>
+  </tr>
+  <% @faqs.each do |faq| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to truncate(faq.question, length: 50), edit_admin_faq_path(faq) %></td>
+  <td><%= faq.status_s %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'edit', edit_admin_faq_path(faq) %> |
+    <%= link_to 'delete', confirm_destroy_admin_faq_path(faq) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @faqs, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

@@ -1,0 +1,17 @@
+<% @featured = PublicFolderConnection.order("public_folder_connections.order ASC") %>
+
+<% if @featured.any? %>
+	<div class="block">
+		<h6>Featured Public Folders</h6>
+		<% @featured.each do |f| %>
+
+			<%= link_to f.folder.name, folder_path(f.folder.id, f.folder.slug) %>, <%= f.order %>
+			<hr>
+
+		<% end %>
+
+		<br/>
+		<%= link_to "See all featured folders", folders_path %>
+	</div>
+
+<% end %>

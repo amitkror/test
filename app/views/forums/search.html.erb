@@ -1,0 +1,53 @@
+<% title @page.title %>
+<% meta_description @page.meta %>
+
+<% content_for :body_id do %> id="forums"<% end %>
+<% content_for :body_class do %> class="list"<% end %>
+
+<%= content_for :header do %>
+
+  <h1><%= @page.title %> Search</h1>
+
+<% unless @search.hits.empty? %>
+  <p class="page-info">
+    <%= page_entries_info @search.hits, model: "result" %>
+  </p>
+<% end %>
+
+  <%= render "forums/search_form", q: @query %>
+
+<% end %>
+
+  <% unless @search.hits.empty? %>
+    <ul class="thread-list search">
+    <% @search.each_hit_with_result do |hit, result| %>
+      <li class="<%= cycle("", "alt") %>">
+        <%= link_to result.forum.name, forum_path(result.forum) %>
+        <i class="ico-right"></i>
+        <%= link_to result.name, forum_forum_thread_path(result.forum, result) %>
+        <%= render "forum_threads/stats", t: result %>
+        <span class="count"><%= link_to result.comments_count, forum_forum_thread_path(result.forum, result, anchor: "comments") %></span>
+      </li>
+    <% end %>
+    </ul>
+    <%= will_paginate @search.hits,
+      previous_label: "<i class='ico-left'></i> Previous",
+      next_label: "Next <i class='ico-right'></i>" %>
+  <% else %>
+
+  <section id="no-results">
+    <h2>Whoops! We couldn't find any results.</h2>
+    <p>
+      Visit the <a href="/forums">Forums</a> landing page or try searching resources, like <a href="/search?q=tutoring">tutoring</a>, <a href="/search?q=internships">internships</a>, or <a href="/search?q=financial aid">financial aid</a> or browse local programs by borough:<br/><a href="/search?bor=1">Bronx</a> <span class="sep">|</span> <a href="/search?bor=2">Brooklyn</a> <span class="sep">|</span> <a href="/search?bor=3">Manhattan</a> <span class="sep">|</span> <a href="/search?bor=4">Queens</a> <span class="sep">|</span> <a href="/search?bor=5">Staten Island</a>
+    </p>
+  </section>
+
+  <% end %>
+
+<% content_for :aside do %>
+<%= render "forum_threads/block" %>
+<%= render "promos/sign_in_forum" %>
+<%= render "promos/search_resources" %>
+<%= render "promos/recent_posts" %>
+<%= render "shared/promos", promos: @page.promos %>
+<% end %>

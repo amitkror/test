@@ -1,0 +1,34 @@
+<% title "Forums" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_forum_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @forums %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @forums, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Name</th><th></th>
+  </tr>
+  <% @forums.each do |forum| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to "#{forum.order} #{forum.name}", edit_admin_forum_path(forum) %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'show', forum_path(forum) %> |
+    <%= link_to 'edit', edit_admin_forum_path(forum) %> |
+    <%= link_to 'delete', confirm_destroy_admin_forum_path(forum) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @forums, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

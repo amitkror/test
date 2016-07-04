@@ -1,0 +1,23 @@
+<% title "Ask an adviser" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered suggest-ask"<% end %>
+
+<%=  render "header" %>
+<h1>Ask an Adviser</h1>
+<%= render "question_form" %>
+
+<% if @guest_questions %>
+  <%= render "questions" %>
+<% end %>
+
+<% unless current_user %>
+  <article id="bottom-account-block" class="block create-account">
+    <a class="clearfix" href="<%= new_user_registration_path %>">
+      <h1>Create an account</h1>
+      <p>Save your full message history</p>
+      <p>Save & organize resources</p>
+      <p>Post & comment on forums</p>
+    </a>
+  </article>
+<% end %>

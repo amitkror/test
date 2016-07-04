@@ -1,0 +1,8 @@
+<span class="hint">If your organization is not in the drop down add it here.</span>
+
+<p><strong><%= f.label :name, 'New organization name' %></strong><br/>
+    <%= f.text_field :name %></p>
+
+<p>
+  <strong><%= f.label :type_id, 'New organization type' %></strong><br/>
+  <%= select :organization, :type_id, Organization::TYPES, {}, class: 'custom-select' %></p>

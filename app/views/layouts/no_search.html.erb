@@ -1,0 +1,25 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<%= render 'shared/head' %>
+<%= yield :more_head %>
+</head>
+<body<%= yield :body_id %> class="left-nav <%= yield :body_class %>">
+<div id="layout">
+  <%= render 'shared/header' %>
+  <%= yield %>
+</div>
+<%= render 'shared/footer' %>
+<%= render 'shared/javascripts' %>
+<%= yield :js %>
+<%= render 'shared/toolbar' %>
+<!-- Begin: www.iperceptions.com -->
+<script type="text/javascript">
+  ;(function (w, d, s, l) { var r = 100, js, fjs = d.getElementsByTagName(s)[0], id = "IPerceptionsJS", a = "async", b = "defer",go = function() { if(d.getElementById(id)) { return; } js = d.createElement(s);js.src = w.location.protocol + "//ips-invite.iperceptions.com/webValidator.aspx?sdfc=6493690c-120224-d5814988-e0a7-49aa-8f34-59f3d2c80751&lID=1&source=91787"; js.id = id; js.type = "text/javascript"; js[a] = a; js[b] = b; fjs.parentNode.insertBefore(js, fjs); }; if(r < Math.floor(Math.random() * 100)) { d.cookie = "IPE_S_120224=0;Path=/;" } else if(!(/(^|;)\s*IPE(_S_)?120224=/.test(d.cookie))){ if (w.addEventListener) { w.addEventListener(l, go, false); } else if (w.attachEvent) { w.attachEvent("on" + l, go); } } })(window, document, "script", "load");
+</script>
+<!-- End: www.iperceptions.com -->
+</body>
+</html>

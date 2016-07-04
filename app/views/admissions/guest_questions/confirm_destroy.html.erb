@@ -1,0 +1,8 @@
+<% title "Delete this Guest Question?"%>
+
+<%= form_for :guest_question, url: admin_guest_question_path(@question), html: { method: :delete } do |f| %>
+  <h3>Are you sure you want to permanently destroy <%= @question.question %>?</h3>
+  <p>
+    <button type="submit">Destroy</button> or <%= link_to "cancel", admin_guest_questions_path %>
+  </p>
+<% end %>

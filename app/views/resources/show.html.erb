@@ -1,0 +1,206 @@
+<%
+title "#{@resource.name} : Resources"
+meta_description @resource.teaser
+%>
+
+<% content_for :body_id do %> id="resource"<% end %>
+
+<article id="overview">
+  <% bookmarked = bookmarked?(@resource.id) %>
+  <a href="<%= toggle_resource_bookmarks_path(@resource.id) %>" class="icon bookmark bookmark-<%= @resource.id %> tip <%= "on" if bookmarked %>" title="<%= bookmark_title(bookmarked) %>" data-remote="true" data-tip-class="bookmark">Bookmark</a>
+
+  <div class="type clearfix"><i class="ico ico-<%= @resource.type_s %> tip" title="<%= @resource.type_s %>" data-tip-class="type"></i><%= @resource.type_s %></div>
+
+  <h1><%= @resource.name %></h1>
+
+  <div class="info">
+
+  <% unless @resource.organization_name.blank? %>
+    by <%= @resource.organization_name %><br/>
+  <% end %>
+
+  <% unless @resource.website.blank? %>
+  <%= external_link @resource.website, truncate(@resource.website, length: 80) %><br/>
+  <% end %>
+
+  <% unless @resource.contact_phone_number.blank? %>
+    <em>Phone</em>: <%= @resource.contact_phone_number %><br/>
+  <% end %>
+
+  <% unless @resource.contact_name.blank? %>
+    <em>Contact</em>: <%= @resource.contact_name %><br/>
+  <% end %>
+
+  <% unless @resource.contact_email.blank? %>
+    <em>Email Contact</em>: <%= email @resource.contact_email %><br/>
+  <% end %>
+
+    <span class="caption">last updated <%= l @resource.updated_at %></span>
+  </div>
+
+  <%= render partial: 'shared/addthis' %>
+
+  <% if @resource.assets.any? || !@resource.logo_uid.blank? %>
+  <div id="downloads" class="clearfix">
+    <% @resource.assets.each do |r| %>
+      <%= link_to r.title, r.attachment.remote_url %>
+    <% end %>
+
+    <%= image_tag @resource.logo.thumb("80x50").url unless @resource.logo.blank? %>
+  </div>
+  <% end %>
+
+  <% unless @resource.body.blank? %>
+    <%= copy @resource.body %>
+  <% else %>
+    <%= @resource.teaser %>
+  <% end %>
+
+  <% if @resource.subjects.any? %>
+    <h6>Subjects</h6>
+    <p>
+    <%= @resource.subjects.collect{|r| r.name }.join('<br/>').html_safe %>
+    </p>
+  <% end %>
+
+  <% unless @resource.conditions_of_use.blank? %>
+  <div id="conditions">
+    <strong>Conditions of use</strong> |
+    <%= @resource.conditions_of_use_copy %>
+  </div>
+  <% end %>
+
+  <%= render "comments/list", commentable: @resource %>
+
+</article>
+
+<% unless @other_resources.blank? %>
+<section id="bookmark-resources" class="no-mobile">
+  <h4>More Resources From <%= @resource.organization_name %></h4>
+
+  <% @other_resources.each do |r| %>
+    <%= render "bookmark", r: r %>
+  <% end %>
+
+  <div class="more">
+  <%= link_to "See more from this institution <i class='ico-right'></i>".html_safe,
+        search_path(org: @resource.organization.id) %>
+  </div>
+</section>
+<% end %>
+
+<% content_for :aside do %>
+
+<%= render "promos/sign_in" %>
+
+<div class="block bordered helpful no-mobile">
+  <a href="<%= helpful_resource_path(@resource) %>" data-id="<%= @resource.id %>" data-method="post" data-remote="true" rel="nofollow"<%= " class='helped'".html_safe if helped @resource %> title="Was this helpful?"><i class="ico ico-helpful"></i><span><%= @resource.helpful_count %></span></a>
+  Is this resource helpful?
+</div>
+
+<div class="block bordered">
+  <h4><%= @resource.type_s.titleize %> Details</h4>
+
+  <% if @resource.is_experts_pick %>
+  <p>
+    <strong>Experts Pick</strong>
+  </p>
+  <% end %>
+
+  <% unless @resource.when_text.blank? %>
+  <p>
+    <strong>When</strong> <%= @resource.when_text %>
+  </p>
+  <% end %>
+
+  <% unless @resource.cost_text.blank? %>
+  <p>
+    <strong>Cost</strong> <%= @resource.cost_text %>
+  </p>
+  <% end %>
+
+  <% unless @resource.size_text.blank? %>
+  <!-- p>
+    <strong>Size</strong> <%= @resource.size_text %>
+  </p -->
+  <% end %>
+
+  <% if @resource.supports.any? %>
+  <p>
+    <strong>Support</strong>
+    <%= @resource.supports.collect{|r| r.name }.join(', ') %>
+  </p>
+  <% end %>
+
+  <% if @resource.languages.any? %>
+  <p>
+    <strong>Language<%= "s" if @resource.languages.size > 1 %> other than English</strong>
+    <%= @resource.languages.collect{|r| r.name }.join(', ') %>
+  </p>
+  <% end %>
+
+  <% if @resource.audiences.any? %>
+  <p>
+    <strong>Audience</strong>
+    <%= @resource.audiences.collect{|r| r.name }.join(', ') %>
+  </p>
+  <% end %>
+
+  <% if @resource.boroughs.any? %>
+  <p>
+    <strong>Borough<%= "s" if @resource.boroughs.size > 1 %></strong>
+    <%= @resource.boroughs.collect{|r| r.name }.join(', ') %>
+  </p>
+  <% end %>
+
+  <% unless @resource.organization.blank? %>
+  <p class="caption"><%= @resource.organization_name %> is a <%= @resource.organization_type_s %></p>
+  <% end %>
+
+  <% if @resource.subway_lines.any? || !@resource.full_address.blank? %>
+    <div class="directions">
+      <h4>Directions</h4>
+      <p>
+        <%= @resource.street %><br/>
+        <%= @resource.city %><% unless @resource.city.blank? || @resource.state.blank? %>, <% end %><%= @resource.state %> <%= @resource.postal_code %>
+      </p>
+
+      <% if @resource.subway_lines.any? %>
+      <p>
+      Subway: <%= @resource.subway_lines.collect{|r| r.name }.join(',  ') %>
+      </p>
+      <% end %>
+
+      <div id="map-wrap"><div id="map"></div></div>
+    </div>
+  <% end %>
+</div>
+  <% if @resource.phases.any? %>
+  <div class="block bordered relates">
+    <h4>Relates To</h4>
+    <% @resource.phases.each_with_index do |r, idx| %>
+      <article<%= " class=\"first\"".html_safe if idx == 0 %>>
+        <h1><a href="<%= r.page_absolute_url %>"><%= r.name %></a></h1>
+        <%= r.teaser %>
+        <a href="<%= r.page_absolute_url %>">Learn more <i class="ico-right"></i></a>
+      </article>
+    <% end %>
+  </div>
+  <% end %>
+<% end %>
+
+<% content_for :js do %>
+<script>
+var addthis_config = {"data_track_addressbar":false},
+    <% unless @resource.latitude.blank? %>LAT = <%= @resource.latitude %>,<% end %>
+    <% unless @resource.longitude.blank? %>LONG = <%= @resource.longitude %>,<% end %>
+    TITLE = '<%= @resource.name %>';
+</script>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<%= javascript_include_tag 'app/resource' %>
+<script src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-503676452e9c1b7a"></script>
+<% end %>
+
+<% content_for :toolbar do %>
+  | <a href="<%= edit_admin_resource_path(@resource) %>">Edit this resource</a>
+<% end %>

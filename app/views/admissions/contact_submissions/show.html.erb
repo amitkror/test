@@ -1,0 +1,24 @@
+<%= title "Contact from #{@contact_submission.name}" %>
+
+
+<div class="controls">
+  <%= link_to "view all", admin_contact_submissions_path, class: 'button' %>&nbsp;&nbsp;
+  <%= link_to 'delete', admin_contact_submission_path(@contact_submission),
+        class: "button danger", confirm: "Are you sure?", method: "delete", remote: "true" %>
+</div>
+
+<p class="indent">
+  </p>
+
+<p class="indent">
+  Submitted by
+  <strong><%= @contact_submission.name %></strong> on <%= l @contact_submission.created_at %><br/>
+  <a href="mailto:<%= @contact_submission.email %>"><%= @contact_submission.email %></a></p>
+
+<p class="indent">
+  <strong>Program Title</strong><br/>
+  <%= @contact_submission.title %></p>
+
+<p class="indent">
+  <strong>Message</strong><br/>
+  <%= @contact_submission.message %></p>

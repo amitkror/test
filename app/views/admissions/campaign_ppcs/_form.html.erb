@@ -1,0 +1,117 @@
+<%= form_for [:admin, campaign_ppc] do |f| %>
+
+    <%= render 'shared/errors', m: campaign_ppc %>
+
+    <%= render 'admissions/shared/action_buttons',
+               m: campaign_ppc,
+               cancel_path: admin_campaign_ppcs_path,
+               view_path: campaign_ppc.new_record? ? nil : campaign_ppc_path(campaign_ppc),
+               delete_path: campaign_ppc.new_record? ? nil : confirm_destroy_admin_campaign_ppc_path(campaign_ppc) %>
+
+    <p><%= f.label :title %>
+      <%= f.text_field :title, required: true %> <span class="required">*</span></p>
+
+    <p>
+      <%= f.label :status_id %>
+      <%= select :blog_post, :status_id, Page::STATUSES %></p>
+    </p>  
+    
+    <p>
+      <%= f.label :body %>
+      <%= f.text_area :body, class: 'tinymce' %></p>
+
+    <p>
+      <%= f.label :meta_title %>
+      <%= f.text_field :meta_title %>
+    </p>
+    <p>
+      <%= f.label :meta_keywords %>
+      <%= f.text_field :meta_keywords %>
+    </p>
+    <p>
+      <%= f.label :meta_description %>
+      <%= f.text_area :meta_description %>
+    </p>  
+    <% unless campaign_ppc.image_uid.blank? %>
+    <p>
+      <%= f.label :existing_advertise_image %>      
+      <%#= admin_thumb(campaign_ppc.image, "150x150#") %>
+      <%= image_tag campaign_ppc.image.thumb('620x70#').url %>
+    </p>
+    <% end %>  
+    <p>
+      <%= f.label :new_advertise_image %>
+      <%= f.file_field :image %></p>
+      
+      <p class="hint indent" id="preview" >*Image size should be 1200(width) x 135(height)</p>
+      
+    <p>
+      <%= f.label :advertisement_image_link %>
+      <%= f.text_field :advertisement_image_link %>
+    </p>
+    <p>
+      <%= f.label :notification_emails_send_to %>
+      <%= f.text_field :contact_form_email %>
+    </p>    
+    <p>
+      <label for="blog_post_permalink" class="string required"><abbr title="required">*</abbr> Permalink</label>
+      <%= f.text_field :permalink %>
+      <p class="hint indent">*You should leave this blank and let the system generate one, unless validation fails.</p>      
+    </p>
+
+    <%= render 'admissions/shared/action_buttons',
+               m: campaign_ppc,
+               cancel_path: admin_campaign_ppcs_path,
+              # view_path: campaign_ppc.new_record? ? nil : campaign_ppc_path(campaign_ppc),
+               delete_path: campaign_ppc.new_record? ? nil : confirm_destroy_admin_campaign_ppc_path(campaign_ppc) %>
+
+<% end %>
+
+<%= content_for :js do %>
+  <script>
+    var valid_form = false ;
+    var form_class = $("form").attr('class');
+    if (form_class == "edit_campaign_ppc"){
+      valid_form = true
+    } 
+
+    function displayPreview(files) {
+      var reader = new FileReader();
+      var img = new Image();
+      
+      reader.onload = function (e) {
+        img.src = e.target.result;
+        // fileSize = Math.round(files.size / 1024);
+        //alert("File size is " + fileSize + " kb");
+        
+        img.onload = function () {
+            if(this.width == 1200 || this.height == 135){
+               valid_form = true
+              //$('#preview').css("display","none") 
+            }
+            else {
+             // $('#preview').append('<img src="' + e.target.result + '"/>');
+              //$('#preview').css("display","block")
+                valid_form = false 
+                $('#preview').css('color','red'); 
+                return false;
+            }
+            
+        };
+      };
+      reader.readAsDataURL(files);
+    }
+
+    $("#campaign_ppc_image").change(function () {
+      var file = this.files[0];
+      displayPreview(file);
+    });
+
+
+    $("form").submit(function(e){
+      if(valid_form == false) {
+        e.preventDefault(e);   
+      }    
+    });
+  </script>    
+<% end %>

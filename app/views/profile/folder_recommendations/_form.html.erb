@@ -1,0 +1,32 @@
+
+<div class="popup close step-1">
+	<a href="#" onclick="APP.closePopup();" class=""><i class="ico-cancel"></i></a>
+</div>
+
+<h2>Feature My Folder</h2>
+
+<p>Got a great set of resources? Send it our way. We’ll review it, and feature the best folders on NYC College Line and our e-newsletter. You just might see your work featured on the home page!</p>
+<p><em>For the best chances of being featured, be sure to have a clear and specific folder name, such as “great sites for test prep” or “summer programs in Queens”.<em/></p>
+
+<%= form_for ([:profile, FolderRecommendation.new]), {remote: true} do |f| %>
+
+	<div class="form-element">
+		<%= f.select(:folder_id, @folder_options, { :selected => @selected }) %>
+	</div>
+	<div class="form-element">
+	  <%= f.text_area :description, placeholder: "How do you make use of the information in this folder? What makes this collection great?", required: "required" %>
+  </div>
+  <br/>
+  <label>Which of these groups describes you best?</label>
+  <div class="form-element">
+	  <%= f.select(:demographic, FolderRecommendation::DEMOGRAPHICS) %>
+	</div>
+	<div class="form-element">
+	  <%= f.submit 'Submit my Folder' %>
+	</div>
+
+<% end %>
+
+<%= javascript_tag do %>
+	$('#feature-folder-popup select').customSelect();
+<% end %>

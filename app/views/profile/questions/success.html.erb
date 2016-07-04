@@ -1,0 +1,16 @@
+<% title "Ask an adviser" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered suggest-ask"<% end %>
+
+<%=  render "header" %>
+
+<section id="success">
+  <h1>Message sent</h1>
+
+  <p class="caption">
+    We've received your question, and we're working to match you up with an adviser who can help. You should get an email when an adviser has replied. If you don't hear back from us after 48 hours, feel free to contact us at info@nyccollegeline.org.<br/><br/>
+    Want to connect with students, parents and people learning about college? <a href="<%= forums_path %>">Check out the forums</a> to read what people are saying and post your own questions and ideas!
+  </p>
+</section>
+<%= render "questions" %>

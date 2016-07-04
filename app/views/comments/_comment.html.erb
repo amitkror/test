@@ -1,0 +1,28 @@
+<li class="comment clearfix" id="comment-<%= comment.id %>">
+  <% if comment.user %>
+    <%= user_avatar_small(comment.user) %>
+    <div class="detail">
+      <span class="user">
+        <strong><%= user_username comment.user %></strong>
+        <time datetime="<%= comment.created_at %>"><%= time_ago_in_words comment.created_at %> ago</time>
+        <% if comment.user == current_user || (can? :destroy, comment) %>
+          <%= link_to "delete", comment_path(comment),
+                class: 'delete',
+                confirm: "Are you sure? This cannot be undone",
+                method: :delete,
+                remote: true %>
+        <% end %>
+      </span>
+      <%= simple_format comment.content %>
+    </div>
+  <% else %>
+    <%= image_tag(SystemAvatar.first.image.thumb("75x75#").url, class: "avatar") %>
+    <div class="detail">
+      <span class="user">
+        <strong><%= comment.guest_user.email %></strong>
+        <time datetime="<%= comment.created_at %>"><%= time_ago_in_words comment.created_at %> ago</time>
+      </span>
+      <%= simple_format comment.content %>
+    </div>
+  <% end %>
+</li>

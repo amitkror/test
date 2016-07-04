@@ -1,0 +1,288 @@
+.contact_ppc {
+     width: calc(960px - 331px);
+    margin-right: 0 !important;;
+  }
+  .contact_ppc strong {
+    color: #2bc1dc;
+    font-size: 30px;
+  }
+  
+  .ppcusermail {
+    width: 100%;
+    clear: both;
+    overflow: hidden;
+    margin-bottom: 0 !important;
+  }
+  .ppcname, .ppcemail, .ppcmsg {
+    width: 48%;
+    float: left;
+  }
+  .ppcname, .ppcmsg {
+    margin-right: 4%;
+  }
+ #contact_ppc div {
+  margin-bottom: 15px;
+}
+#contact_ppc div input {
+  padding: 3px 10px;
+  width: 100%;
+  margin-left: 0 !important
+}
+.ppcmsg textarea { width: 100%; padding:10px !important; }
+form#contact_ppc .ppc_btn { margin-top: 12px; width: 120px; }
+.ppc-ad-img {
+  float: right;
+  height: 90px;
+  margin: 28px 0 0 0px;
+}
+.ppc-ad-img img{max-width:100%;}
+
+
+
+
+.nyc-close {
+    font-size: 25px;
+    color: rgb(67, 67, 67);
+    font-weight: normal;
+    border: none;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.custom-modal-dialog,
+.custom-modal-signup {
+    border-radius: 0px;
+    background: #fff;
+    max-width: 90%;
+    width: 760px;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+    margin-top: -200px;
+    z-index: 99;
+}
+.custom-modal-left {
+    float: left;
+    width: 28%;
+}
+.custom-modal-left img {
+    max-width: 100%;
+}
+.custom-modal-right {
+    float: right;
+    width: 72%;
+}
+.rightpanel {
+    padding: 0px 30px 10px;
+}
+#rc-imageselect {
+  top:  50%;
+  left: 50%;
+  margin-top: -200px;
+  z-index: 99;
+}
+
+/*form*/
+
+#new_question {
+    padding: 10px 10px 0px 0px;
+}
+.newpopup #recaptcha_table { width: 100%; }
+.newpopup div,
+.newpopup p {
+    margin-bottom: 15px;
+}
+.qmailzip {
+    width: 100%;
+    clear: both;
+    overflow: hidden;
+    margin-bottom: 0 !important;
+}
+.qemail,
+.qzip {
+    width: 48%;
+    float: left;
+}
+.qemail {
+    margin-right: 4%;
+}
+.qcaptcha {
+    width: 100%;
+}
+.qcaptcha {
+    border: 1px solid #e2e2e2;
+    display: table;
+    height: 60px;
+    padding: 0;
+}
+.qcaptcha span {
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+    text-align: center;
+    padding-right: 20px;
+}
+.rightpanel h3 {
+    color: #434343;
+    padding: 20px 0px 0px;
+}
+.rightpanel h5 {
+    color: #2bc1dc;
+    padding: 10px 0px 10px 0px;
+}
+.rightpanel h6 {
+    font-weight: 400;
+}
+.rightpanel p {
+    line-height: 1.5;
+}
+.tos {
+    line-height: 1.18 !important;
+    padding-bottom: 0;
+}
+.newpopup .tos label {
+    font-weight: normal;
+}
+
+form.newpopup {
+    width: 100% !important;
+    margin-bottom: 0px !important;
+}
+form.newpopup textarea {
+    width: 100%;
+    height: auto;
+    padding-top: 10px;
+    border: 1px solid rgb(169, 169, 169);
+}
+form.newpopup div input {
+    height: 35px;
+    border: 1px solid #dfdfdf !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+}
+form.newpopup #question_question { border: 1px solid #dfdfdf !important;}
+form.newpopup .hint {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 6px;
+}
+form.newpopup a {
+    border-bottom: none;
+}
+div.already {
+    float: right;
+    line-height: 1.5;
+    font-weight: 500;
+    font-size: 15px;
+}
+.newpopup input::-webkit-input-placeholder, .newpopup #question_question::-webkit-input-placeholder {
+       text-transform: none ;
+       color: rgb(169, 169, 169);
+}
+
+.newpopup input:-moz-placeholder, .newpopup #question_question:-moz-placeholder { /* Firefox 18- */
+       text-transform: none;
+       color: rgb(169, 169, 169);
+}
+
+.newpopup input::-moz-placeholder, .newpopup #question_question::-moz-placeholder {  /* Firefox 19+ */
+       text-transform: none;
+       color: rgb(169, 169, 169);
+}
+
+.newpopup input:-ms-input-placeholder, .newpopup #question_question:-ms-input-placeholder {  
+       text-transform: none;
+       color: rgb(169, 169, 169);
+}
+@media only screen and (max-width: 991px) {
+    .custom-modal-dialog,
+    .custom-modal-signup {
+        width: 500px;
+    }
+    .newpopup button.green {
+        margin-top: 0;
+    }
+    .custom-modal-left {
+        display: none;
+    }
+    .custom-modal-right {
+        width: 100%;
+        float: none;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .qemail,
+    .qzip {
+        width: 100%;
+    }
+    .qcaptcha {
+        height: auto;
+    }
+    .qcaptcha span {
+        width: 100%;
+        display: block;
+        margin: 15px 0px;
+        padding-right: 0px;
+    }
+    .ppc-ad-img{display:none;}
+}
+@media only screen and (max-width: 497px) {
+    .qcaptcha span:last-child {
+        width: 70%;
+        margin: 0 auto 10px;
+    }
+    .newpopup div.already {
+        display: block;
+        float: left;
+        width: 100%;
+        padding-top: 10px;
+    }
+
+    .ppcname, .ppcemail, .ppcmsg {
+      width: 100%;
+      float: left;
+    }
+    .ppcname, .ppcmsg {
+      margin-right: 0px;
+    }
+    form#contact_ppc .ppc_btn { margin-top: 10px; }
+    
+}
+@media only screen and (max-width: 569px) {
+
+   .newpopuprecaptchaimg { height: auto !important; }
+
+   .newpopuprecaptchaimg div#recaptcha_image {
+      float: left;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    .newpopuprecaptchatable .newpopuprecaptchaimg center img {
+      height: auto !important;
+      max-width: 100%;
+    }
+    .newpopuprecaptchatable #recaptcha_response_field {
+      width:100% !important;
+    }
+    .newpopuprecaptchatable td { width:100% !important; float:left; padding:10px !important;}
+    .newpopuprecaptchatable td:last-child {
+      display:none;
+    }
+    .newpopuprecaptchatable td img {
+      display: inline-block !important;
+    }
+  
+    .newpopuprecaptchatable div.recaptcha_input_area {margin-bottom:0 !important;}
+
+    /* .popuprecaptcha_only_if_privacy {
+      display:none;
+    }*/
+     /*.popupcaptchareload+ td {
+      display:none;
+    }*/
+}

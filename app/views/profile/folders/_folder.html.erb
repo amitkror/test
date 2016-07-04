@@ -1,0 +1,36 @@
+<div id="folder-<%= folder.id %>" class="folder lfolder">
+  <% @icon_class = folder.is_featured ? 'featured' : 'not-featured' %>
+  
+  <% if @icon_class == 'featured' %>
+    <%= link_to image_tag("featurefolder.png", class: "img-responsive" ), profile_folder_path(folder)%></a>
+  <% else %>
+    <%= link_to image_tag("arrowfolder.png" , class:"img-responsive"), profile_folder_path(folder)%></a>
+  <% end %>  
+
+  <div class="foldesc details">    
+    <span class="folname">
+      <%= folder.name %></span> &nbsp<%= folder.bookmarks_count %> | <a href="#" class="change"><i class="fa fa-pencil fol foledit" aria-hidden="true"></i></a>
+    <span class="delete <%= "hidden" if current_user.folders.size == 1 %>"><a href="#" class="delete"><i class="fa fa-trash fol foldel" aria-hidden="true"></i></a><span>
+
+  </div>  
+   
+  <%= form_for [:profile, folder], html: { class: "newform edit" }, remote: true do |f|  %>
+    <%= f.text_field :name, placeholder: "enter new folder name", class: "small form-control"  %><br/>
+    <p class="actions">
+      <a href="#" class="button muted cancel">Cancel</a>
+      <button class="green" type="submit">OK!</button>
+    </p>
+  <% end %>
+    
+  <%= form_for [:profile, folder], html: { class: "newform destroy" }, method: "delete", remote: true do |f| %>
+    <p class="warning">
+      Are you sure you want to delete this?<br/>
+      All your bookmarks will be lost.
+    </p>
+    <p class="actions">
+      <a href="#" class="button muted cancel">Cancel</a>
+      <button class="red" type="submit">Delete</button>
+    </p>
+  <% end %>
+</div>
+  

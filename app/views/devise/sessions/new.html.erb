@@ -1,0 +1,25 @@
+<% title "Log in" %>
+
+<% content_for :body_class do %> class="centered"<% end %>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "default" }) do |f| %>
+
+  <h1>Log in</h1>
+
+  <p>
+    <%= f.text_field :login, class: "medium", placeholder: "username or email", required: "required", autofocus: "autofocus", value: @guest_email %>
+    <%= f.label :password, class: 'placeholder' %>
+    <%= f.password_field :password, class: "medium", placeholder: "password", required: "required" %>
+  </p>
+
+  <label><%= f.check_box :remember_me, checked: false, class: "remember" %> Remember me</label>
+
+  <p id="remember-msg" class="error">Do not use "Remember me" if you are on a shared computer.</p>
+
+  <p class="clearfix">
+    <button class="green large" type="submit">Log In <i class="ico-right"></i></button>
+  </p>
+
+  <%= render "devise/shared/links" %>
+
+<% end %>

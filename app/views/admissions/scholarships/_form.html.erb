@@ -1,0 +1,125 @@
+<%= form_for [:admin, scholarship] do |f| %>
+
+  <%= render 'shared/errors', m: scholarship %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: scholarship,
+      cancel_path: admin_scholarships_path,
+      view_path: scholarship.new_record? ? nil : scholarship_path(scholarship),
+      delete_path: scholarship.new_record? ? nil : confirm_destroy_admin_scholarship_path(scholarship) %>
+
+  <p><%= f.label :name %>
+      <%= f.text_field :name, required: 'required' %> <span class="required">*</span></p>
+
+  <p>
+      <%= f.label :status_id %>
+      <%= select :scholarship, :status_id, Scholarship::STATUSES %></p>
+
+  <p><%= f.label :end_datetime, "End date" %>
+    <%= f.date_select :end_date,
+          prompt: { day: 'Select day', month: 'Select month', year: 'Select year' } %>
+    <%= f.time_select :end_date,
+          ignore_date: true,
+          prompt: { hour: 'Select hour', minute: 'Select minute', year: 'Select year' } %></p>
+
+  <p><%= f.label :require_authentication %>
+      <%= f.check_box :require_authentication %></p>
+
+  <p><%= f.label :high_school_label %>
+      <%= f.text_field :high_school_label, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :show_or_label %>
+      <%= f.check_box :show_or_label %></p>
+
+  <p><%= f.label :or_label_text %>
+      <%= f.text_field :or_label_text %></p>
+
+  <p><%= f.label :show_upload %>
+      <%= f.check_box :show_upload %></p>
+
+  <p><%= f.label :show_video_url %>
+      <%= f.check_box :show_video_url %></p>
+
+  <p><%= f.label :show_title %>
+      <%= f.check_box :show_title %></p>
+
+  <p><%= f.label :title_label %>
+      <%= f.text_field :title_label %></p>
+
+  <p><%= f.label :description_instructions %>
+      <%= f.text_field :description_instructions, required: 'required' %> <span class="required">*</span></p>
+
+  <p>
+    <%= f.label :copy %>
+    <%= f.text_area :copy, class: 'tinymce' %></p>
+
+  <p>
+    <%= f.label :logged_in_copy %>
+    <%= f.text_area :logged_in_copy, class: 'tinymce' %></p>
+  <p>
+    <%= f.label :terms %>
+    <%= f.text_area :terms, class: 'tinymce' %></p>
+
+  <p><%= f.label :submission_format %>
+      <%= f.text_area :submission_format %>
+      <span class="hint indent">Put each option on a separate line. The first line is the label.</span></p>
+
+  <p><%= f.label :submission_prompt %>
+      <%= f.text_area :submission_prompt %>
+      <span class="hint indent">Put each option on a separate line. The first line is the label.</span></p>
+
+  <p>
+    <%= f.label :thank_you, "Submission message" %>
+    <%= f.text_area :thank_you, class: 'small' %></p>
+
+  <p>
+    <%= f.label :meta_description %>
+    <%= f.text_area :meta_description, class: 'small' %>
+    <span class="hint indent">Please include a meta description of the page. This is what shows up in google search results and the like.<br/>
+    Try and limit it to 120 characters.</span><br/>
+  </p>
+
+  <div class="indent">
+    <strong>Audiences</strong>
+    <ul class="check-list clearfix">
+      <% Audience.all.each do |s| %>
+        <li><label><%= check_box_tag "scholarship[audience_ids][]",
+                  s.id, has_audience?(scholarship, s) %> <%= s.name_plural %></label></li>
+      <% end %>
+    </ul>
+  </div>
+
+
+  <p>
+    <%= f.label :permalink, "URL" %>
+    /scholarships/ <%= f.text_field :permalink, class: 'permalink small' %><br/>
+    <span class="hint indent">Leave this blank to have the url generated from the title and do not use an existing URL<br/>
+    Please only include letters, numbers, and dashes.</span>
+  </p>
+
+  <hr/>
+
+  <h5 class="indent">Voting</h5>
+  <p><%= f.label :voting_start_date, "Voting start date" %>
+    <%= f.date_select :voting_start_date,
+          prompt: { day: 'Select day', month: 'Select month', year: 'Select year' } %>
+    <%= f.time_select :voting_start_date,
+          ignore_date: true,
+          prompt: { hour: 'Select hour', minute: 'Select minute' } %></p>
+
+  <p><%= f.label :voting_end_date, "Voting end date" %>
+    <%= f.date_select :voting_end_date,
+          prompt: { day: 'Select day', month: 'Select month', year: 'Select year' } %>
+    <%= f.time_select :voting_end_date,
+          ignore_date: true,
+          prompt: { hour: 'Select hour', minute: 'Select minute' } %></p>
+
+  <p><%= f.label :voting_title %>
+      <%= f.text_field :voting_title, required: 'required' %> <span class="required">*</span></p>
+
+  <p>
+    <%= f.label :voting_copy %>
+    <%= f.text_area :voting_copy, class: 'tinymce' %></p>
+
+
+<% end %>

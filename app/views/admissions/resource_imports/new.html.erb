@@ -1,0 +1,11 @@
+<% title "Import resources" %>
+
+<h1>Import resources</h1>
+
+<%= form_for [:admin, @resource_import] do |f| %>
+  <%= render 'shared/errors', m: @resource_import %>
+  <p>
+    <%= f.file_field :attachment, :class => 'attachment' %><br />
+    <%= f.hidden_field :retained_attachment %></p>
+  <button type="submit">Save</button>
+<% end %>

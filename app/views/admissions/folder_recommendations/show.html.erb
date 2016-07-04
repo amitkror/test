@@ -1,0 +1,26 @@
+<% title 'Recommended Public Folders' %>
+
+<%#= @folder.inspect %>
+<h5><%= @folder.name %></h5><br/>
+<strong>Submitted by:</strong>
+<h6><%= @folder.user.username %></h6><br>
+
+<strong>User demographic:</strong><p><%= @recommendation.demographic %></p>
+
+<strong>Submitted description:</strong> <p><%= @recommendation.description %></p>
+
+<h6>Resources in this folder (<%= @folder.bookmarks_count %>):</h6>
+
+<table>
+	<% @resources.each do |r| %>
+		<tr>
+			<td><%= link_to r.name, resource_url(r), :target => '_blank' %></td>
+			<td><%= r.website %></td>
+			<td><%= r.teaser %></td>
+		</tr>
+	<% end %>
+</table>
+
+<h5>Actions:</h5>
+
+<%= render 'folder_form' %>

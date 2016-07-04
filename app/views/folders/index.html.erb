@@ -1,0 +1,25 @@
+<% @title = "Featured Folders" %>
+
+<% title @title %>
+
+<div class="public-folder-index">
+	<h1><%= @title %></h1>
+	<p>Featured folders are community picks — collections of the best resources, as chosen by advisors and students on NYC College Line.</p>
+	<% unless user_signed_in? %>
+		<p>Want to get started? <%= link_to "Sign up", new_user_session_path %> to save and organize resources to your own folders!</p>
+	<% end %>
+
+	<% @folders.each do |f| %>
+
+	<%= render 'folder', f: f %>
+	<% end %>
+
+	<% content_for :aside do %>
+
+		<%= render 'profile/folder_recommendations/ajax_block', :format => 'block' %>
+
+	<% end %>
+
+	<%= will_paginate @folders, previous_label: '&lt; previous',
+	      next_label: 'next &gt;' %>
+</div>

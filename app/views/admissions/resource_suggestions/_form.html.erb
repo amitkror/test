@@ -1,0 +1,36 @@
+<%= form_for [:admin, resource_suggestion] do |f| %>
+
+  <%= render 'shared/errors', m: resource_suggestion %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: resource_suggestion,
+      cancel_path: admin_resource_suggestions_path,
+      delete_path: resource_suggestion.new_record? ? nil : confirm_destroy_admin_resource_suggestion_path(resource_suggestion) %>
+
+  <p class="indent">
+    Suggested by: <strong><%= link_to resource_suggestion.user_username, edit_admin_user_path(resource_suggestion.user) %></strong>
+    on <%= l resource_suggestion.created_at %></p>
+
+  <p><%= f.label :title %>
+      <%= f.text_field :title, required: 'required' %> <span class="required">*</span></p>
+
+  <p>
+    <%= f.label :type_id %>
+    <%= select :resource_suggestion, :type_id, ResourceSuggestion::TYPES %></p>
+
+  <p><%= f.label :link %>
+      <%= f.text_field :link %>
+
+  <p><%= f.label :description %>
+      <%= f.text_area :description %>
+
+  <p><%= f.label :was_used %>
+      <%= f.check_box :was_used %></p>
+
+  <% unless resource_suggestion.attachment_uid.blank? %>
+  <p>
+    <label>User uploaded file</label>
+    <%= link_to "#{resource_suggestion.attachment_name}".html_safe, resource_suggestion.attachment.url, target: "_blank" %>
+  </p>
+  <% end %>
+<% end %>

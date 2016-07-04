@@ -1,0 +1,7 @@
+<% title "Conditions of Use" %>
+
+<% @conditions_of_use.each do |c| %>
+  <h6><%= c.title %></h6>
+  <p><%= c.copy.html_safe %></p>
+  <hr/>
+<% end %>

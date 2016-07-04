@@ -1,0 +1,270 @@
+@import '_config.scss',
+        '_mixins.scss';
+
+#mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9000;
+  background-color: #000;
+  display: none;
+}
+
+.left-panel{margin: 9px 64px 115px 29px}
+
+#signupmask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9000;
+  background-color: #000;
+  display: none;
+}
+
+
+#boxes .window {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 440px;
+  height: 200px;
+  display: none;
+  z-index: 9999;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+#signupboxes .window {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 440px;
+  height: 200px;
+  display: none;
+  z-index: 9999;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+#boxes #dialog {
+  width: 750px;
+  height: 300px;
+  padding: 10px;
+  background-color: #ffffff;
+  font-family: 'Segoe UI Light', sans-serif;
+  font-size: 15pt;
+}
+
+#signupboxes #signupdialog {
+  width: 850px;
+  height: 1500px;
+  padding: 10px;
+  background-color: #ffffff;
+  font-family: 'Segoe UI Light', sans-serif;
+  font-size: 15pt;
+}
+
+#popupfoot {
+
+  font-size: 16pt;
+  position: absolute;
+  bottom: 0px;
+  width: 250px;
+  left: 250px;
+}
+
+#signuppopup {
+
+  font-size: 16pt;
+  position: absolute;
+  bottom: 0px;
+  width: 250px;
+  left: 250px;
+}
+
+.popup {
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+
+#home {
+  h1 {
+    color:$dark-gray;
+    font-size:60px;
+    line-height:1.35;
+    margin:0 auto;
+    padding:0 0 20px;
+    width:830px;
+  }
+
+  h1 a {
+    border-color:#2bc1dc;
+  }
+
+  h2 {
+    color:#2bc1dc;
+    font-size:23px;
+    padding:0 0 4px;
+  }
+
+  .home-top {
+    background:$lightgray;
+    height:auto;
+    margin:15px auto 40px;
+    padding:55px 0 50px;
+    @include border-radius(5px);
+    max-width:940px;
+    .bubbles-title, .bubbles-bubbles{
+      text-align:left;
+      max-width:550px;
+      margin:0 auto;
+    }
+  }
+
+  #search-form{
+    .input-wrap {
+      margin:0 auto;
+      position:relative;
+    }
+
+    input {
+      margin-right:9px;
+      width:90%;
+    }
+
+    .ico-search {
+      top:9px;
+      right:10%;
+    }
+
+    ::-webkit-input-placeholder {
+      font-size:16px;
+    }
+
+    :-moz-placeholder {
+      font-size:16px;
+    }
+
+    ::-moz-placeholder {
+      font-size:16px;
+    }
+
+    input.placeholder {
+      font-size:16px;
+    }
+  }
+
+  #search-form{
+    background: $babyblue;
+    border-radius:5px 5px 5px 5px;
+    margin:15px auto;
+  }
+
+  .bubbles {
+    background:$dark-gray;
+    // margin:30px 0 0;
+    // padding:54px 0 0;
+    text-align:center;
+    .pushup{
+      position:relative;
+      top:-1em;
+      margin-bottom: -0.7em;
+    }
+    a {
+      background:#b0d24a;
+      border:none;
+      color:#353535;
+      display:inline-block;
+      font-weight:700;
+      height:26px;
+      line-height:26px;
+      margin-right:10px;
+      padding:0 8px;
+      @include border-radius(3px);
+
+      &:hover {
+        background-color:#406618;
+        color:#fff;
+      }
+    }
+  }
+  .bubbles-hat{
+    background:url(image-path('wave.png')) no-repeat bottom;
+    img{
+      width:112%;
+      margin-left:-6%;
+    }
+  }
+  .caption {
+    font-size:13px;
+    padding-bottom:18px;
+  }
+
+  #blocks {
+    margin:0 auto;
+    width:940px;
+  }
+
+  .block {
+    float:left;
+    font-size:20px;
+    margin:0 20px 20px 0;
+    min-height:384px;
+    padding:28px;
+    width:300px;
+
+    &:nth-child(3n) {
+      margin-right:0;
+    }
+
+    &.feature-comment {
+      .detail {
+        font-size:20px;
+        width:170px;
+
+        strong {
+          font-size:22px;
+        }
+      }
+    }
+
+    &.tweet {
+      .user {
+        font-size:20px;
+
+        strong {
+          font-size:22px;
+        }
+      }
+
+      .tweet {
+        bottom:40px;
+        right:22px;
+      }
+    }
+  }
+  section.quicklinks{
+    text-align:center;
+    max-width:845px;
+    margin:0 auto;
+    a.quicklink{
+      display:inline-block;
+      width: 31%;
+      padding: 1%;
+      margin: 1%;
+      text-align:center;
+      background:#b0d24a;
+      @include border-radius(5px);
+      color:#353535;
+      border:none;
+      font-size:24px;
+      font-weight:700;
+      &:hover {
+        background-color:#406618;
+        color:#fff;
+      }
+    }
+  }
+}

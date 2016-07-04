@@ -1,0 +1,71 @@
+<%
+title "Submission from #{@scholarship_submission.first_name}"
+meta_description @scholarship_submission.description
+%>
+
+<% content_for :body_class do %> class="scholarship-submission"<% end %>
+
+<div class="clearfix">
+  <h1><%= @scholarship_submission.first_name %></h1>
+
+  <% unless user_signed_in? %>
+  <p>
+    <%= link_to "Register to vote", new_user_registration_path, class: "button green", target: "_blank" %>
+    <%= link_to "Log in", new_user_session_path, class: "button green", target: "_blank" %>
+  </p>
+  <% else %>
+
+    <% unless @voted %>
+      <%= form_for [@scholarship, @scholarship_submission, @user_submission_vote], remote: true do |f| %>
+        <button class="green" type="submit" data-disable-with="voting...">Vote for this entry!</button>
+      <% end %>
+    <% else %>
+      <%= form_for [@scholarship, @scholarship_submission, @user_submission_vote], html: { method: "delete" }, remote: true do |f| %>
+        <button class="green" type="submit" data-disable-with="removing...">Remove your vote</button>
+      <% end %>
+    <% end %>
+
+  <% end %>
+</div>
+
+<section class="scrolling-content">
+  <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+  <div class="viewport">
+    <div class="overview">
+      <div class="media">
+      <% if @scholarship_submission.video_embed.blank? && !@scholarship_submission.thumbnail_uid.blank? %>
+        <% unless @scholarship_submission.document_uid.blank? %>
+          <a href="<%= @scholarship_submission.full_document_url %>" target="_blank">
+        <% end %>
+          <%= image_tag @scholarship_submission.thumbnail.thumb('575x1000').url, class: "img" %>
+        <% unless @scholarship_submission.document_uid.blank? %>
+          </a>
+        <% end %>
+      <% else %>
+        <%= @scholarship_submission.video_embed.html_safe %>
+      <% end %>
+      </div>
+
+      <%= render partial: 'shared/addthis' %>
+
+      <p>
+        <% unless @scholarship_submission.title.blank? %>
+          <strong class="title"><%= @scholarship_submission.title %></strong> <span class="sep">|</span>
+        <% end %>
+        <% if @scholarship_submission.video_embed.blank? && !@scholarship_submission.document_uid.blank? %>
+          <a href="<%= @scholarship_submission.full_document_url %>" class="view-complete" target="_blank"><strong>View complete <%= @scholarship_submission.submission_format.downcase %></strong></a> <span class="sep">|</span>
+        <% end %>
+        <%= @scholarship_submission.description %>
+      </p>
+    </div>
+  </div>
+</section>
+
+<% content_for :js do %>
+<script>
+  if (window.parent === window) {
+      window.location = '<%= scholarship_path(@scholarship, anchor: "submission-#{@scholarship_submission.id}") %>';
+  }
+</script>
+<%= javascript_include_tag "libs/jquery.tinyscrollbar.js", "app/scholarship_submission" %>
+<% end %>

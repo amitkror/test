@@ -1,0 +1,89 @@
+<% title 'Blog Posts' %>
+
+<div class="controls">
+    <%= link_to 'New Blog Post', new_admin_blog_post_path, class: 'button' %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @posts, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<label for="status_id">Status:</label> <%= select_tag :status_id, options_for_select(Page::STATUSES, @status_id), prompt: "Show all" %>
+<p>
+<%= form_tag admin_blog_posts_path, :method => 'get' do %>
+  <%= text_field_tag :keyword_search, @keyword_str, placeholder: 'Enter search keyword...' %>
+  <%= submit_tag "Search" , class: 'button' %>
+<% end %>
+<p>
+
+<table class="index-list">
+  <tr>
+    <th><%= sortable_header("title", "Title", true) %></th>
+    <th><%= sortable_header("status_id", "Status", true) %></th>
+    <th><%= sortable_header("created_at", "Created") %></th>
+    <th>Author</th>
+    <th></th>
+  </tr>
+  <% if !@posts.blank? %>
+  <% @posts.each do |p| %>
+    <tr<%= cycle(""," class='alt'") %>>
+        <td><%= link_to p.title, edit_admin_blog_post_path(p) %></td>
+        <td><%= p.status_s %></td>
+        <td><%= l p.created_at, format: :admin_short %></td>
+        <td><%= p.user.username %></td>
+        <td>
+          <span class="actions">
+            <%= link_to 'show', blog_post_path(p) %> |
+            <%= link_to 'edit', edit_admin_blog_post_path(p) %> |
+            <%= link_to 'delete', confirm_destroy_admin_blog_post_path(p) %>
+          </span>
+        </td>
+    </tr>
+  <% end %>
+  <% else %>
+    <tr><td><b>No result found! Please refine your search.</b></td></tr>
+  <% end %>
+</table>
+
+
+<%= will_paginate @posts, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<%= render 'tags' %>
+
+
+<%= content_for :js do %>
+  <script>
+    (function () {
+        var app = {},
+            status = 'status_id',
+            type = 'type_id';
+        function init() {
+            $('#' + status).change(onFilterChange);
+            $('#' + type).change(onFilterChange);
+        }
+        function onFilterChange(e) {
+            var pairs = window.location.search.split('?').join('').split('&'),
+                keys = {},
+                pair;
+            for (var i = 0; i < pairs.length; ++i) {
+                pair = pairs[i].split('=');
+                keys[pair[0]] = pair[1];
+            }
+            keys[status] = $('#' + status).val();
+            keys[type] = $('#' + type).val();
+            window.location = window.location.pathname + '?' + serialize(keys);
+        }
+        function serialize(obj) {
+            var str = [];
+            for(var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
+        }
+        $(init);
+        return app;
+    }());
+  </script>
+<% end %>

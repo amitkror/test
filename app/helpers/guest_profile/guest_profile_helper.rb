@@ -1,0 +1,2 @@
+module GuestProfile::GuestProfileHelper
+end

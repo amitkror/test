@@ -1,0 +1,10 @@
+<% title "Edit #{@resource.name}" %>
+
+<% content_for :body_id do %> id="profile resources"<% end %>
+<% content_for :body_class do %> class="centered"<% end %>
+
+<%= render "header" %>
+
+<p>Your edits will be published as soon as you click submit. There’s no undo button, so check your work carefully.</p>
+
+<%= render "form", resource: @resource %>

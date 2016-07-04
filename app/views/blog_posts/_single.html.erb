@@ -1,0 +1,16 @@
+<h1><%= link_to p.title, blog_post_path(p) %></h1>
+<div class="info">
+	<span>by <%= p.user.username %></span><br/>
+	<span class="caption"><%= p.created_at.to_date.strftime('%D') %></span>
+</div>
+<% unless p.tags.blank? %>
+	<%= render 'tags', p: p %>
+<% end %>
+<% unless p.tagline.blank? %>
+	<p><%= p.tagline %></p>
+<% else %>
+    <%= truncate(p.body, :length => 250, :omission => " " , :escape => false).html_safe %>...
+<% end %>
+<div class="actions">
+	<%= link_to 'Read more', blog_post_path(p) %>
+</div>

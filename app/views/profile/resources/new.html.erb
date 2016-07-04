@@ -1,0 +1,10 @@
+<% title "Add a resource" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered"<% end %>
+
+<%= render "header" %>
+
+<p>Select the type of resource to add and fill out as many fields as you can. We’ll review and approve all additions before they get published, but please doublecheck for accuracy, spelling, and grammar.</p>
+
+<%= render "form", resource: @resource %>

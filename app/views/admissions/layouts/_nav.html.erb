@@ -1,0 +1,37 @@
+<nav id="menu">
+  <ul>
+    <li class="head">College Line</li>
+    <li><%= link_to "Events", admin_events_path, class: (admin_on_class admin_events_path) %></li>
+    <li><%= link_to "FAQs", admin_faqs_path, class: (admin_on_class admin_faqs_path) %></li>
+    <li><%= link_to "Glossary", admin_glossary_terms_path, class: (admin_on_class admin_glossary_terms_path) %></li>
+    <li><%= link_to "Organizations", admin_organizations_path, class: (admin_on_class admin_organizations_path) %></li>
+    <li><%= link_to "Resources", admin_resources_path, class: (admin_on_class admin_resources_path) %></li>
+    <li class="head">CMS</li>
+    <li><%= link_to "Assets", admin_assets_path, class: (admin_on_class admin_assets_path) %></li>
+    <li><%= link_to "Pages", admin_pages_path, class: (admin_on_class admin_pages_path) %></li>
+    <li><%= link_to "Campaign PPC", admin_campaign_ppcs_path, class: (admin_on_class admin_campaign_ppcs_path) %></li>
+    <li><%= link_to 'Blog Posts', admin_blog_posts_path, class: (admin_on_class admin_blog_posts_path) %></li>
+    <li><%= link_to "Promos", admin_promo_instances_path, class: (admin_on_class admin_promo_instances_path) %></li>
+    <li class="head">User Submissions</li>
+    <li><%= link_to "Comments", admin_comments_path, class: (admin_on_class admin_comments_path) %></li>
+    <li><%= link_to "Folders", admin_folders_path, class: (admin_on_class admin_folders_path) %></li>
+    <!--  -->
+    <li><%= link_to "Public Folders", admin_folder_recommendations_path, class: (admin_on_class admin_folder_recommendations_path) %></li>
+    <!--  -->
+    <li><%= link_to "Contact Us", admin_contact_submissions_path, class: (admin_on_class admin_contact_submissions_path) %></li>
+    <li><%= link_to "Questions", admin_questions_path, class: (admin_on_class admin_questions_path) %></li>
+    <li><%= link_to "Guest Questions", admin_guest_questions_path, class: (admin_on_class admin_guest_questions_path) %></li>
+    <li><%= link_to "Suggestions", admin_resource_suggestions_path, class: (admin_on_class admin_resource_suggestions_path) %></li>
+    <li class="head">Scholarships</li>
+    <li><%= link_to "Scholarships", admin_scholarships_path, class: (admin_on_class admin_scholarships_path) %></li>
+    <li><%= link_to "Submissions", admin_scholarship_submissions_path, class: (admin_on_class admin_scholarship_submissions_path) %></li>
+    <li class="head">Site Settings</li>
+    <li><%= link_to "Avatars", admin_system_avatars_path, class: (admin_on_class admin_system_avatars_path) %></li>
+    <li><%= link_to "Audiences", admin_audiences_path, class: (admin_on_class admin_audiences_path) %></li>
+    <li><%= link_to "Forums", admin_forums_path, class: (admin_on_class admin_forums_path) %></li>
+    <li><%= link_to "Phases", admin_phases_path, class: (admin_on_class admin_phases_path) %></li>
+    <li><%= link_to "Settings", edit_admin_site_setting_path(1), class: (admin_on_class edit_admin_site_setting_path(1)) %></li>
+    <li><%= link_to "Users", admin_users_path, class: (admin_on_class admin_users_path) %></li>
+    <li><%= link_to "Contests", admin_contests_path, class: (admin_on_class admin_contests_path) %></li>
+  </ul>
+</nav>

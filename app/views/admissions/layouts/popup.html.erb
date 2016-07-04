@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+  <title><%= content_for?(:title) ? yield(:title) : " NYC College Line" %></title>
+  <%= csrf_meta_tag %>
+  <%= javascript_include_tag 'libs/modernizr.min' %>
+  <%= stylesheet_link_tag 'admin/admissions' %>
+</head>
+<body class="popup">
+  <%= yield %>
+  <%= render 'shared/javascripts' %>
+  <%= yield :js %>
+  <%= javascript_include_tag 'admin/application' %>
+</body>
+</html>

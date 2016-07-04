@@ -1,0 +1,27 @@
+<section id="questions">
+  <h1>My questions</h1>
+  <ul>
+  <% if @guest_questions.includes(:adviser, :last_commenter, :guest_user).each do |q| %>
+    <li class="<%= cycle("", "alt") %>">
+      <%= link_to question_avatar(q), guest_profile_guest_question_path(q) + "?secret_code=#{@guest_user.secret_code}" %>
+      <div class="details">
+        <%= link_to truncate(q.question, length: 50, separator: ' '), guest_profile_guest_question_path(q) + "?secret_code=#{@guest_user.secret_code}" %>
+        <span>
+          Asked by <strong><%= q.guest_user.email %></strong> on <%= l q.created_at %>
+          <% unless q.answered %>
+            <br/>Waiting for reply | submitted <%= time_ago_in_words q.created_at %> ago
+          <% end %>
+          <% if q.last_commenter %>
+            <br/>Last commented by <strong><%= user_username q.last_commenter %></strong> <%= time_ago_in_words q.last_commented_at %> ago
+          <% end %>
+        </span>
+      </div>
+      <% if q.new_comment_for_user %>
+        <%= link_to '<i class="icon comment">New Comment</i>'.html_safe, guest_profile_guest_question_path(q) + "?secret_code=#{@guest_user.secret_code}#comments" %>
+      <% end %>
+    </li>
+  <% end.empty? %>
+    <li><p class="caption">You haven't asked any questions yet.</p></li>
+  <% end %>
+  </ul>
+</section>

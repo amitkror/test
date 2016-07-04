@@ -1,0 +1,15 @@
+var $comments = $('#comments'),
+    $comment = $('#comment-<%= @comment.id %>');
+
+$comment
+    .slideUp(200, function(){
+        $comment.remove();
+        var len = $comments.find('li').length;
+        $comments
+            .find('.count')
+            .text(len + ' Comment' + (len !== 1 ? 's' : ''));
+        $('#thread-count')
+            .find('span')
+            .text(len);
+    });
+

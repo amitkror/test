@@ -1,0 +1,10 @@
+<%
+if local_assigns[:forum_id].nil?
+  path = new_forum_thread_path
+else
+  path = new_forum_thread_path(forum_id: local_assigns[:forum_id])
+end
+%>
+<div class="block new-thread">
+  <%= link_to '<i class="icon bubble"></i>Start a new forum thread'.html_safe, path %>
+</div>

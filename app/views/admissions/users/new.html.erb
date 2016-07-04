@@ -1,0 +1,43 @@
+<% if @partial_user == 'partial' %>
+  <% title "New Partial User Registration" %>
+
+  <%= nested_form_for [:admin, @user], html: { autocomplete: :off } do |f| %>  
+
+  <%#= render 'shared/errors', m: @user %>
+  <% if @user.errors.any? %>
+  <div id="errors" class="message error">    
+    <ul>
+      <%# @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <%# end %>
+    </ul>
+  </div>
+  <% end %>
+  <%= render 'admissions/shared/action_buttons', m: @user, cancel_path: admin_users_path, delete_path: @user.new_record? ? nil : confirm_destroy_admin_user_path(@user) %>
+
+  <p><%= f.label :email %>
+    <%= f.text_field :email, required: 'required' %> <span class="required">*</span>
+    <%= f.hidden_field :status_id, :readonly => true %>
+    <%= f.hidden_field :role_id, :readonly => true %>
+    <%= hidden_field_tag :utm, 'partial' %>    
+  </p>
+
+  <p><%= f.label :zipcode %>
+      <%= f.text_field :zipcode %></p>
+
+  <p><%= f.label :random_password %>
+    <%= f.text_field :password, :readonly => true %><span class="required">*</span><br/>
+    <span class="hint indent">At least 8 characters.</span>
+    <%= f.hidden_field :password_confirmation, :readonly => true %>
+  </p>
+
+  <% end %>
+
+  <%= content_for :js do %>
+    <%= javascript_include_tag "libs/jquery.tokeninput", "admin/users" %>
+  <% end %>
+
+<% else %>
+  <% title "New User" %>
+  <%= render 'form', user: @user %>
+<% end %>

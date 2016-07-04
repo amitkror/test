@@ -1,0 +1,22 @@
+<div class="form-group">
+  <label>Notifications</label>
+  <span class="hint">Send me an email when:</span>
+  <%= f.fields_for :user_settings do |us| %>
+  <ul>
+    <li>
+      <%= us.check_box :notify_folder_update, class: "custom" %>
+      <%= us.label :notify_folder_update, "A resource in my folders gets updated", class: "check" %></li>
+    <li>
+      <%= us.check_box :notify_resource_comments, class: "custom" %>
+      <%= us.label :notify_resource_comments, "Someone posts on a thread after me", class: "check" %></li>
+    <li>
+      <%= us.check_box :notify_thread_comments, class: "custom" %>
+      <%= us.label :notify_thread_comments, "Comments on a resource in my folders", class: "check" %></li>
+    <% if current_user.admin? || current_user.blogger? %>  
+      <li>
+        <%= us.check_box :notify_blog_comments, class: "custom" %>
+        <%= us.label :notify_blog_comments, "Someone comments on my blog post", class: "check" %></li>
+    <% end %>  
+  </ul>
+  <% end %>
+</div>

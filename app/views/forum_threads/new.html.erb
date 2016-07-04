@@ -1,0 +1,31 @@
+<% title "Start a new thread : #{@page.title}" %>
+
+<%= content_for :header do %>
+<h1><%= @page.title %></h1>
+<% end %>
+
+<div class="dotted">
+  <hr/>
+  <%= form_for @forum_thread, html: { class: "default clearfix" } do |f| %>
+    <%= render 'shared/errors', m: @forum_thread %>
+    <p>
+      <span class="header">Start a new thread, <%= current_user.username %></span>
+      <span class="logout">(Not you? <%= link_to "Log out", destroy_user_session_path, method: 'delete' %>)</span>
+    </p>
+    <%= user_avatar_small(current_user) %>
+    <fieldset>
+      <%= select :forum_thread, :forum_id,
+              Forum.active.ordered.collect { |l| [l.name, l.id] },
+              { include_blank: 'Select topic' },
+              { class: 'custom-select' } %>
+      <%= f.text_field :name, placeholder: "Subject", required: true %>
+      <%= f.text_area :message, placeholder: "Enter message", required: true %>
+      <button class="green" type="submit">Submit</button>
+    </fieldset>
+  <% end %>
+</div>
+
+<% content_for :aside do %>
+<%= render "promos/search_resources" %>
+<%= render "shared/promos", promos: @page.promos %>
+<% end %>

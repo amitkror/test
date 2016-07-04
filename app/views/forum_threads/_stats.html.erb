@@ -1,0 +1,16 @@
+<%
+  show_count = local_assigns[:show_count].nil? ? false : show_count
+%>
+<p class="thread-stats">
+  Created by <strong><%= user_username t.user %></strong>
+  <time datetime="<%= t.created_at %>" class="created"><%= time_ago_in_words t.created_at %> ago</time>
+  <% unless t.last_commenter.blank? %>
+   | Last post by <strong><%= user_username t.last_commenter %></strong>
+   <time datetime="<%= t.last_commented_at %>"><%= time_ago_in_words t.last_commented_at %> ago</time>
+  <% end %>
+  <% if show_count %>
+  <span class="count">
+   | <%= link_to pluralize(t.comments_count, 'post'), forum_forum_thread_path(t.forum, t, anchor: "comments") %>
+  </span>
+  <% end %>
+</p>

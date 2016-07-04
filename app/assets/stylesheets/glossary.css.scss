@@ -1,0 +1,109 @@
+@import '_config.scss',
+        '_mixins.scss';
+
+#letters {
+  height:36px;
+  margin:0;
+  padding:0 0 20px;
+
+  li {
+    background:none;
+    display:inline;
+    margin:0;
+    padding:0;
+  }
+
+  a,
+  .sep {
+    display:block;
+    float:left;
+    height:17px;
+    line-height:17px;
+  }
+
+  a {
+    border:0;
+    font-size:17px;
+    font-weight:700;
+  }
+
+  .sep {
+    color:#8a8989;
+    font-size:13px;
+    margin:0 3px;
+  }
+}
+
+#glossary {
+  border-top:1px dashed #c9c9c9;
+  padding-top:2px;
+
+  hr {
+    clear:left;
+    margin-bottom:10px;
+  }
+
+  h2 {
+    color:#424242;
+    font-size:68px;
+    float:left;
+    line-height:1;
+    padding:0 0 10px;
+    width:76px;
+  }
+
+  ul {
+    float:left;
+    margin:0;
+    padding:0;
+    width:596px;
+  }
+
+  li {
+    background:none;
+    border-top:1px dashed #c9c9c9;
+    line-height:1.46;
+    padding:10px 0;
+
+    &:first-child {
+      border-top:none;
+    }
+  }
+
+  strong {
+    font-size:17px;
+  }
+}
+
+#back-to-top {
+  background:#4c4c4c;
+  background:rgba(0,0,0,0.7);
+  border:none;
+  color:#fff;
+  font-weight:700;
+  height:122px;
+  left:740px;
+  margin-bottom:30px;
+  opacity:0;
+  padding:18px 0 0;
+  text-align:center;
+  text-transform:uppercase;
+  width:122px;
+  z-index:9999;
+  @include border-radius(5px);
+  @include transition;
+  @include transition-property(#{"background-color, opacity"});
+
+  &:hover {
+    background:#7f7f7f;
+    background:rgba(0,0,0,0.5);
+  }
+
+  .icon {
+    margin:0 auto 10px;
+  }
+
+  &.on {
+    opacity:1;
+  }
+}

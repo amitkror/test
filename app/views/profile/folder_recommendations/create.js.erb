@@ -1,0 +1,7 @@
+$('#feature-folder-popup').html('<%= j render @template %>');
+
+$('#feature-folder-popup a.close').click(function(){
+    $('#feature-folder-popup').empty();
+    $('#folder-share-mask').removeClass('open');
+    $('body').css('overflow','auto');
+});

@@ -1,0 +1,43 @@
+<% title "Scholarships" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_scholarship_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @scholarships %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @scholarships, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th><%= sortable_header("name") %></th>
+    <th><%= sortable_header("end_date", "End date", true) %></th>
+    <th><%= sortable_header("voting_start_date", "Voting start date") %></th>
+    <th><%= sortable_header("voting_end_date", "Voting end date") %></th>
+    <th>Status</th>
+    <th></th>
+  </tr>
+  <% @scholarships.each do |scholarship| %>
+  <tr<%= cycle(""," class='alt'") %>>
+    <td><%= link_to scholarship.name, edit_admin_scholarship_path(scholarship) %></td>
+    <td><%= l scholarship.end_date %></td>
+    <td><%= l scholarship.voting_start_date unless scholarship.voting_start_date.blank? %></td>
+    <td><%= l scholarship.voting_end_date unless scholarship.voting_end_date.blank? %></td>
+    <td><%= scholarship.status_s %></td>
+    <td>
+      <span class="actions">
+      <%= link_to 'show', scholarship_path(scholarship) %> |
+      <%= link_to 'edit', edit_admin_scholarship_path(scholarship) %> |
+      <%= link_to 'delete', confirm_destroy_admin_scholarship_path(scholarship) %></span>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @scholarships, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

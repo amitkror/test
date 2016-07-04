@@ -1,0 +1,10 @@
+<div class="form-group">
+  <label>EMAIL COMMUNICATION</label>
+  <span class="hint">Sign up here to receive targeted email communications by group.</span> 
+  <% Newsletter.active.select("id, name").each do |s| %>
+    <label class="check" id="newsletter-<%= s.id %>">
+      <%= check_box_tag :newsletter_ids, s.id, current_user.has_newsletter?(s.id),
+            class: "custom newsletter", name: 'user[newsletter_ids][]' %>
+      <%= s.name %></label>
+<% end %> 
+</div>

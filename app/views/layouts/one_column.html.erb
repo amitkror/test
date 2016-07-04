@@ -1,0 +1,30 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<%= render 'shared/head' %>
+<%= yield :more_head %>
+</head>
+<body<%= yield :body_id %><%= yield :body_class %>>
+<div id="layout">
+  <%= render 'shared/header' %>
+  <%= render 'shared/search_form' %>
+  <div id="content" class="clearfix">
+    <% if notice %><p class="message notice"><%= notice %></p><% end %>
+    <% if alert %><p class="message alert"><%= alert %></p><% end %>
+    <header id="content-top">
+      <%= yield :header %>
+    </header>
+    <article class="col-3">
+      <%= yield %>
+    </article>
+  </div>
+</div>
+<%= render 'shared/footer' %>
+<%= render 'shared/javascripts' %>
+<%= yield :js %>
+<%= render 'shared/toolbar' %>
+</body>
+</html>

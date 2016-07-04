@@ -1,0 +1,19 @@
+<% if instance.url == "#" %>
+<div class="block blue tweet">
+<% else %>
+<a href="<%= instance.url %>" class="block blue tweet">
+<% end %>
+  <i class="picon divet"></i>
+  <p class="quote r">
+    <%= instance.copy %>
+  </p>
+  <div class="user">
+    <strong><%= instance.title %></strong><br/>
+    @<%= instance.misc_text.gsub('@', '') %>
+  </div>
+  <i class="picon tweet"></i>
+<% if instance.url == "#" %>
+  </div>
+<% else %>
+  </a>
+<% end %>

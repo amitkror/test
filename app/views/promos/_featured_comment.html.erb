@@ -1,0 +1,26 @@
+<% linked = instance.url != "#" %>
+<% unless linked %>
+<div class="block blue feature-comment">
+<% else %>
+<a href="<%= instance.url %>" class="block blue feature-comment">
+<% end %>
+  <i class="picon divet"></i>
+  <p class="quote">
+    <%= instance.copy %>
+  </p>
+  <div class="user">
+    <% unless instance.image_uid.blank? %>
+      <%= image_tag(instance.image.thumb('75x75#').url, alt: instance.misc_text) %>
+    <% else %>
+      <img src="/assets/icons/unassigned.gif" alt="" />
+    <% end %>
+    <p class="detail">
+      <strong><%= instance.title %></strong><br/>
+      <%= instance.misc_text %>
+    </p>
+  </div>
+<% unless linked %>
+  </div>
+<% else %>
+  </a>
+<% end %>

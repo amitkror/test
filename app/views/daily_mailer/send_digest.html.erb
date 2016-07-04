@@ -1,0 +1,68 @@
+<% if @updated_resources.any? %>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+
+  <tr><td height="40" style="border-collapse:collapse;"></td></tr>
+  <tr>
+    <td valign="top" style="border-collapse:collapse;">
+      <h4 style="font-family:sans-serif;font-size:20px;line-height:1;margin:0;padding:0 0 10px;color:#424242 !important;">Your Updated Resources</h4>
+    </td>
+  </tr>
+
+  <% @updated_resources.each do |object| %>
+    <%= render "link_to_object", url: resource_url(object), title: object.name, teaser: object.teaser_or_body %>
+  <% end %>
+</table>
+
+<% end %>
+
+<% if @commented_resources.any? %>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+
+  <tr><td height="40" style="border-collapse:collapse;"></td></tr>
+  <tr>
+    <td valign="top" style="border-collapse:collapse;">
+      <h4 style="font-family:sans-serif;font-size:20px;line-height:1;margin:0;padding:0 0 10px;color:#424242 !important;">Comments on Your Resources</h4>
+    </td>
+  </tr>
+
+  <% @commented_resources.each do |object| %>
+    <%= render "link_to_object", url: resource_url(object), title: object.name, teaser: object.teaser_or_body %>
+  <% end %>
+</table>
+
+<% end %>
+
+<% if @threads.any? %>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+
+  <tr><td height="40" style="border-collapse:collapse;"></td></tr>
+  <tr>
+    <td valign="top" style="border-collapse:collapse;">
+      <h4 style="font-family:sans-serif;font-size:20px;line-height:1;margin:0;padding:0 0 10px;color:#424242 !important;">Comments on your threads</h4>
+    </td>
+  </tr>
+
+  <% @threads.each do |object| %>
+    <%= render "link_to_object", url: forum_forum_thread_url(object.forum, object), title: object.name, teaser: object.last_comment %>
+  <% end %>
+</table>
+
+<% end %>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+
+    <tr><td bgcolor="#d7d7d7" height="1" style="background:#d7d7d7;height:1px;border-collapse:collapse;"></td></tr>
+
+    <tr><td height="20" style="border-collapse:collapse;"></td></tr>
+
+    <tr>
+      <td valign="top" style="border-collapse:collapse;">
+        <p style="color:#424242;font-family:sans-serif;font-size:13px;">If you no longer want to receive these notifications, update your notification preferences <a href="<%= root_url %>profile/settings" style="color:#2bc1dc">here</a></p>
+      </td>
+    </tr>
+
+    <tr><td height="20" style="border-collapse:collapse;"></td></tr>
+</table>

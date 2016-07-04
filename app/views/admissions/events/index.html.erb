@@ -1,0 +1,77 @@
+<% title "Events" %>
+
+<div class="controls">
+  <%= link_to "export", admin_events_path(format: 'csv'), class: 'button', title: 'export to csv' %>
+  <%= link_to "add new", new_admin_event_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @events %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @events, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<p>
+  <label for="status_id">Status:</label> <%= select_tag :status_id, options_for_select(Event::STATUSES, @status_id), prompt: "Show all" %></p>
+
+<table class="index-list">
+  <tr>
+
+    <th><%= sortable_header("name", "") %></th>
+    <th><%= sortable_header("status_id", "Status") %></th>
+    <th><%= sortable_header("start_datetime", "Start Date", true) %></th>
+    <th></th>
+
+  </tr>
+  <% @events.each do |event| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to event.name, edit_admin_event_path(event) %></td>
+  <td><%= event.status_s %></td>
+  <td><%= l event.start_datetime %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'show', event_path(event) %> |
+    <%= link_to 'edit', edit_admin_event_path(event) %> |
+    <%= link_to 'delete', confirm_destroy_admin_event_path(event) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @events, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>
+
+<%= content_for :js do %>
+  <script>
+    (function () {
+        var app = {},
+            status = 'status_id';
+        function init() {
+            $('#' + status).change(onFilterChange);
+        }
+        function onFilterChange(e) {
+            var pairs = window.location.search.split('?').join('').split('&'),
+                keys = {},
+                pair;
+            for (var i = 0; i < pairs.length; ++i) {
+                pair = pairs[i].split('=');
+                keys[pair[0]] = pair[1];
+            }
+            keys[status] = $('#' + status).val();
+            window.location = window.location.pathname + '?' + serialize(keys);
+        }
+        function serialize(obj) {
+            var str = [];
+            for(var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
+        }
+        $(init);
+        return app;
+    }());
+  </script>
+<% end %>

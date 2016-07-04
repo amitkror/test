@@ -1,0 +1,27 @@
+<% title @campaign_ppc.title %>
+
+<% content_for :header do %>
+    <h2 class='title'><%= @campaign_ppc.title %></h2>
+<% end %>
+
+<% content_for :toolbar do %>
+    |	<%= link_to 'Edit this Page', edit_admin_campaign_ppc_path(@campaign_ppc) %>
+<% end %>
+<br/>
+<h1><%= @campaign_ppc.title %></h1>
+
+<%# unless @campaign_ppc.image.blank? %>
+    <%#= image_tag @campaign_ppc.image.thumb('250x250#').url, class: 'featured' %>
+<%# end %>
+
+<% unless @campaign_ppc.body.blank? %>
+    <div class="blog-body"><%= @campaign_ppc.body.html_safe %></div>
+<% end %>
+
+<div class="info">
+  <%= render partial: 'shared/addthis' %>
+</div>
+
+<% content_for :js do %>
+    <script src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-503676452e9c1b7a"></script>
+<% end %>

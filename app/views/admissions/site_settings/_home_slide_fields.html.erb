@@ -1,0 +1,11 @@
+<div class="indent">
+  <%= f.label :order, class: "inline" %> <%= f.text_field :order, class: 'micro order' %>
+  <%= f.file_field :image %> <%= f.link_to_remove "Remove" %>
+<% unless f.object.new_record? %>
+  <p>
+    <%= image_tag f.object.image.thumb("120x48#").url unless f.object.image_uid.blank? %></p>
+<% end %>
+  <p>
+    <%= f.label :url, class: "inline" %>
+    <%= f.text_field :url %></p>
+</div>

@@ -1,0 +1,26 @@
+<%= form_for [:admin, @folder] do |f| %>
+
+  <%= render 'shared/errors', m: @folder %>
+
+  <div>
+    <%= f.label :is_featured, "Feature this folder." %>
+    <%= f.check_box :is_featured %>
+  </div>
+  <br/>
+  <div>
+    <%= f.label :description, "Public description" %>
+    <%= f.text_area :description %>
+  </div>
+  <br/>
+  <div>
+    <%= f.label :slug, "Optional: enter string to convert into a URL Slug." %>
+    <%= f.text_field :slug %>
+  </div>
+
+  <%= hidden_field_tag :edit_location, "recommendation"%>
+
+  <div>
+    <%= f.submit "Save Folder" %> | <%= link_to "Delete this recommendation", [:admin, @recommendation], method: :delete, data: { confirm: 'This will remove the recommendation from the system.' } %> | <%= link_to "Cancel and go back", admin_folder_recommendations_url %>
+  </div>
+
+<% end %>

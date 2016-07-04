@@ -1,0 +1,14 @@
+<article class="featured-folder">
+		<h1><%= link_to f.name, folder_path(f.id, f.slug) %></h1>
+	<span>Shared by <strong><%= f.user.username %></strong></span> | <%= f.updated_at.strftime("last updated %B %d, %Y") %><br/>
+	
+	<%= link_to "Save a copy", clone_profile_folder_path(f.id), {:class => "icon bookmark tip", :title => 'Save a Copy'} %>
+
+	<p>
+    <%= f.description.html_safe %>&nbsp;
+    <span class="actions">
+      <%= link_to "Read&nbsp;more".html_safe, folder_path(f.id, f.slug) %>
+    </span>
+  </p>
+
+</article>

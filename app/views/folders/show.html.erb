@@ -1,0 +1,40 @@
+<% title @folder.name %>
+
+<% if user_signed_in? %>
+	<%= link_to "Save a copy", clone_profile_folder_path(@folder.id), {remote: false, :class => "icon bookmark tip", :title => 'Save a Copy'} %>
+<% else %>
+	<%= link_to "Log in or Sign Up", new_user_session_path, {remote: false, :class => "icon bookmark blue tip", :title => 'Log in or Sign Up'} %>
+<% end %>
+
+<% content_for :aside do %>
+	<%= render 'promos/sign_in' %>
+	<%= render 'promos/save_a_copy' %>
+	<%= render 'promos/featured_public_folders' %>
+<% end %>
+
+
+<div class="public-folder">
+
+	<h1><%= @folder.name %></h1>
+
+	<div class="info">
+		<span class="caption">Shared by <strong><%= @folder.user.username %></strong> | <%= @folder.updated_at.strftime("last updated %B %d, %Y") %><br/></span>
+	</div>
+
+	<%= render partial: 'shared/addthis' %>
+
+	<p><%= @folder.description %></p>
+
+	<% @folder.bookmarks.each do |b| %>
+	  <%= render "resources/bookmark", r: b.resource unless b.resource.blank? %>
+	<% end %>
+
+	<% content_for :js do %>
+		<script>
+			var addthis_config = {"data_track_addressbar":false},
+		    TITLE = '<%= @folder.name %>';
+		</script>
+		<script src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-503676452e9c1b7a"></script>
+	<% end %>
+
+</div>

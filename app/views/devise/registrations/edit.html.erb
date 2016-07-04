@@ -1,0 +1,25 @@
+<h1>Edit <%= resource_name.to_s.humanize %></h1>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "default", method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <%= f.label :email %><br />
+  <%= f.email_field :email, type: "email", required: "required", autofocus: "autofocus" %>
+
+  <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+  <%= f.password_field :password, autocomplete: "off", required: "required" %>
+
+  <%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation, required: "required" %>
+
+  <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <%= f.password_field :current_password, required: "required" %>
+
+  <button type="submit">Update</button>
+<% end %>
+
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>.</p>
+
+<%= link_to "Back", :back %>

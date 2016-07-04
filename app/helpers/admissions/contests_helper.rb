@@ -1,0 +1,2 @@
+module Admissions::ContestsHelper
+end

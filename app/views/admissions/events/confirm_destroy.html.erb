@@ -1,0 +1,8 @@
+<% title "Delete #{@event.name}"%>
+
+<%= form_for :event, url: admin_event_path(@event), html: { method: :delete } do |f| %>
+  <h3>Are you sure you want to permanently destroy <%= @event.name %>?</h3>
+  <p>
+    <button type="submit">Destroy</button> or <%= link_to "cancel", admin_events_path %>
+  </p>
+<% end %>

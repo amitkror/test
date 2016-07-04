@@ -1,0 +1,36 @@
+<% title "Contact Submissions" %>
+
+<div class="controls">
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @contact_submissions %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @contact_submissions, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Title</th><th>Name</th><th>Email</th><th>Created at</th><th></th>
+  </tr>
+  <% @contact_submissions.each do |contact_submission| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to truncate(contact_submission.title, length: 50), admin_contact_submission_path(contact_submission) %></td>
+  <td><%= link_to truncate(contact_submission.name, length: 50), admin_contact_submission_path(contact_submission) %></td>
+  <td><%= contact_submission.email %></td>
+  <td><%= l contact_submission.created_at %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'show', admin_contact_submission_path(contact_submission) %> |
+    <%= link_to 'delete', admin_contact_submission_path(contact_submission),
+        confirm: "Are you sure?", method: "delete", remote: "true" %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @contact_submissions, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

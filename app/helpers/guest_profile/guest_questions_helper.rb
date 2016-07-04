@@ -1,0 +1,2 @@
+module GuestProfile::GuestQuestionsHelper
+end

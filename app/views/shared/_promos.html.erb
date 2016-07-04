@@ -1,0 +1,7 @@
+<aside>
+<% promos.each do |promo| %>
+  <% unless promo.promo_instance.blank? %>
+    <%= render "promos/" + (get_promo_control promo), instance: promo.promo_instance %>
+  <% end %>
+<% end %>
+</aside>

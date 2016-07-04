@@ -1,0 +1,24 @@
+<% title "#{@guest_question.question} : My messages" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered suggest-ask question"<% end %>
+
+<%= render "header" %>
+
+<h1 class='count'>My messages</h1>
+<% if @guest_user %>
+  <a href="<%= guest_profile_root_path + "?secret_code=#{@guest_user.secret_code}" %>" class="back-link"><i class="ico-left"></i> Back to all questions</a>
+<% end %>
+
+<%= render "question", question: @guest_question %>
+
+<% unless current_user %>
+  <article id="bottom-account-block" class="block create-account">
+    <a class="clearfix" href="<%= new_user_registration_path %>">
+      <h1>Create an account</h1>
+      <p>Save your full message history</p>
+      <p>Save & organize resources</p>
+      <p>Post & comment on forums</p>
+    </a>
+  </article>
+<% end %>

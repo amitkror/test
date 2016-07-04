@@ -1,0 +1,55 @@
+<% title "My questions" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered suggest-ask"<% end %>
+
+<%= content_for :header_caption do %>These are questions that people have asked you using the "Ask an Adviser" tool. Do your best to respond to each question within 48 hours. To stop receiving questions, or to change what type of questions we send you, please <a href="mailto:info@nyccollegeline.org">email us</a>.<% end %>
+<%#= render "profile/shared/nav" %>
+
+<div id="referral-contests">
+  <% @contests.each do |contest| %>
+    <div class="contest">
+      <div class="contest-details">
+        <h3><%= contest.name %></h3>
+        <h6><strong><%= contest.start_date.strftime("%B %d, %Y") %> - <%= contest.end_date.strftime("%B %d, %Y") %></strong></h6>
+        <p><%= contest.body.html_safe %></p>
+      </div>
+
+      <div class="ref-wrap">
+        <div class="referral-details">
+          <span class="error"></span>
+          <% if !current_user.is_entrant?(contest.id) %>
+            <% hidden = "hidden" %>
+            <form action="<%= admin_referral_codes_url %>" class="generate">
+              <input type="hidden" name="referral_code[contest_id]" value="<%= contest.id %>">
+              <input type="hidden" name="referral_code[user_id]" value="<%= current_user.id %>">
+              <h5><%= contest.generate_text %></h5>
+              <input class="code" name="referral_code[code]" type="text" value="" placeholder="unique code">
+              <br>
+              <button class="button gen-button">Generate</button>
+            </form>
+          <% end %>
+            <div class="post-generate <%= hidden %>">
+              <h5>1. <%= contest.bullet_1 %></h5>
+              <input disabled class="ref-url" name="referral_code[code]" type="text" value="<%= new_user_registration_url %>?c=<%= contest.name.delete(" ") %>&ref=<%= current_user.referral_code(contest.id) %>">
+              <br>
+              <button class="copy-code" data-clipboard-text="">Copy To Clipboard</button>
+              <h5>2. <%= contest.bullet_2 %></h5>
+              <div class="social">
+              </div>
+              <a href="<%= new_profile_contest_referral_email_path(contest) %>" class="button green ovly" data-height="593" data-width="666"><i class="ico ico-mail"></i><p>EMAIL</p></a>
+              <h5>3. <%= contest.bullet_3 %></h5>
+            </div>
+        </div>
+        <h6 class="referral-count">MY REFERRALS: <span><%= current_user.referrals.where({contest_id: contest.id}).count %> Students referred</span></h6>
+        <p>
+          <%= contest.sub_text %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= content_for :js do %>
+  <%= javascript_include_tag 'app/contests' %>
+<% end %>

@@ -1,0 +1,147 @@
+<%= nested_form_for [:admin, page] do |f| %>
+
+  <%= render 'shared/errors', m: page %>
+
+  <div class="controls">
+    <% unless page.new_record? || page.locked %>
+      <%= link_to 'delete', confirm_destroy_admin_page_path(page), class: 'button danger' %>&nbsp;&nbsp;
+    <% end %>
+    <%= link_to "cancel", admin_pages_path, class: 'button' %>&nbsp;&nbsp;
+    <% unless page.new_record? %>
+      <%= link_to "view", page.absolute_url, class: 'button', target: '_blank' %>&nbsp;&nbsp;
+    <% end %>
+    <%= button_tag "save", class: "action" %>
+  </div>
+
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title, required: 'required' %> <span class="required">*</span></p>
+
+  <p>
+    <%= f.label :short_title %>
+    <%= f.text_field :short_title %><br/>
+    <span class="hint indent">This is what appears in the menu. It will default to the title if left blank.</span></p>
+
+  <% unless page.locked %>
+  <p>
+      <%= f.label :status_id %>
+      <%= select :page, :status_id, Page::STATUSES %></p>
+
+  <p>
+      <%= f.label :parent_id, "Parent" %>
+      <%= f.select :parent_id, pages, {include_blank: '-- Select a parent --'}, class: 'chosen' %></p>
+
+  <% else %>
+  <p class="hint indent">This page is special, so it's locked.  You can't change the permalink or the parent.</p>
+  <% end %>
+
+  <p><%= f.label :page_type_id %>
+      <%= select :page, :page_type_id, Page::PAGE_TYPES %></p>
+
+  <div class="phase-fields">
+    <p>
+      <%= f.label :teaser %>
+      <%= f.text_area :teaser, class: 'small' %></p>
+  </div>
+
+  <p>
+    <%= f.label :copy %>
+    <%= f.text_area :copy, class: 'tinymce' %></p>
+
+  <hr/>
+
+  <div class="phase-fields">
+
+    <p>
+    <%= f.label :resources_title %>
+    <%= f.text_field :resources_title %></p>
+
+    <p>
+    <%= f.label :resources_subtitle %>
+    <%= f.text_field :resources_subtitle %></p>
+
+    <p>
+      <label>Resources</label>
+      <span class="hint">Drag and drop to re-order</span><br/></p>
+
+    <ul id="resources-list" class="nested-list">
+    <%= f.fields_for :page_resources, wrapper_tag: 'li' %></ul>
+
+    <p class="indent" data-target="#resources-list">
+      <%= f.link_to_add "Add A Resource", :page_resources, class: 'button small' %></p>
+    <hr/>
+  </div>
+
+  <div class="phase-fields">
+    <p>
+      <label>FAQ(s)</label>
+      <span class="hint">Drag and drop to re-order</span><br/></p>
+
+    <ul id="faqs-list" class="nested-list">
+      <%= f.fields_for :page_faqs, wrapper_tag: 'li' %>
+    </ul>
+
+    <p class="indent" data-target="#faqs-list">
+      <%= f.link_to_add "Add an FAQ", :page_faqs, class: 'button small' %>
+    </p>
+    <hr/>
+  </div>
+
+  <div class="two-column-fields phase-fields">
+    <p>
+      <label>Promos</label>
+      <span class="hint">All pages can have their own unique promos.
+        If none are set, it will default to the nearest parent page with a set of promos.<br/>
+        Drag and drop to re-order</span></p>
+
+    <ul id="promos-list" class="nested-list">
+      <%= f.fields_for :promo_connections, wrapper_tag: 'li' %></ul>
+
+    <p class="indent" data-target="#promos-list">
+      <%= f.link_to_add "Add a Promo", :promo_connections, class: 'button small', id: 'add-promo' %></p>
+    <hr/>
+  </div>
+
+  <p>
+    <%= f.label :meta_description %>
+    <%= f.text_area :meta_description, class: 'small' %>
+    <span class="hint indent">Please include a meta description of the page. This is what shows up in google search results and the like.<br/>
+    Try and limit it to 120 characters.</span><br/>
+  </p>
+
+  <% unless page.locked %>
+  <p>
+    <%= f.label :permalink, "URL" %>
+    / <%= f.text_field :permalink, class: 'permalink' %><br/>
+    <span class="hint indent">Leave this blank to have the url generated from the title and do not use an existing URL<br/>
+    Please only include letters, numbers, and dashes.</span>
+  </p>
+  <% end %>
+
+  <fieldset>
+    <legend>Advanced</legend>
+    <div class="form-fields">
+      <p><%= f.label :in_main_nav %>
+          <%= f.check_box :in_main_nav %>
+          <%= f.label :in_sub_nav %>
+          <%= f.check_box :in_sub_nav %>
+          <%= f.label :order %>
+          <%= f.text_field :order, class: 'micro' %></p>
+
+      <p><%= f.label :redirect %>
+          <%= f.text_field :redirect %></p>
+    </div>
+  </fieldset>
+
+<div class="controls bottom">
+  <%= button_tag "save", class: "action" %>&nbsp;&nbsp;
+  <%= link_to "cancel", admin_pages_path, class: 'button' %>&nbsp;&nbsp;
+  <% unless page.new_record? || page.locked %>
+    <%= link_to 'delete', confirm_destroy_admin_page_path(page), class: 'button danger' %>
+  <% end %>
+</div>
+<% end %>
+
+<%= content_for :js do %>
+  <%= javascript_include_tag 'admin/page' %>
+<% end %>

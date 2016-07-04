@@ -1,0 +1,20 @@
+<%= form_for [:admin, comment] do |f| %>
+
+  <%= render 'shared/errors', m: comment %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: comment,
+      cancel_path: admin_comments_path,
+      delete_path: confirm_destroy_admin_comment_path(comment) %>
+
+  <p class="indent">
+    Comment by: <strong><%= link_to comment.user_username, edit_admin_user_path(comment.user) %></strong>
+    on <%= l comment.created_at %>
+    <br/>
+    Comment on <%= comment.commentable_type %>: <%= comment.commentable_id %>
+  </p>
+  
+  <div class="indent">
+    <%= simple_format comment.content %>
+  </div>
+<% end %>

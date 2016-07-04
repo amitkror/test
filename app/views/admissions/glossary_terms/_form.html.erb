@@ -1,0 +1,19 @@
+<%= form_for [:admin, glossary_term] do |f| %>
+
+  <%= render 'shared/errors', m: glossary_term %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: glossary_term,
+      cancel_path: admin_glossary_terms_path,
+      delete_path: glossary_term.new_record? ? nil : confirm_destroy_admin_glossary_term_path(glossary_term) %>
+
+  <p><%= f.label :name %>
+      <%= f.text_field :name, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :definition %>
+      <%= f.text_area :definition %> <span class="required">*</span></p>
+
+  <p><%= f.label :url %>
+      <%= f.text_field :url %><br/><span class="hint indent">Include 'http://' if linking to another site.</span></p>
+
+<% end %>

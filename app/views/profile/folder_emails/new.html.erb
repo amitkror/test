@@ -1,0 +1,34 @@
+<% title "Email your folder" %>
+
+<section id="folder-email">
+
+  <% if notice %><p class="message notice"><%= notice %></p><% end %>
+  <% if alert %><p class="message alert"><%= alert %></p><% end %>
+
+  <h5>Email the folder, "<%= @folder.name %>"</h5>
+  <p>Send a quick and easy email with all the links in this folder.  You can send this to anyone, even if they don't have an account on NYC College Line.</p>
+
+  <%= render 'shared/errors', m: @folder_email %>
+
+  <%= form_for [:profile, @folder, @folder_email], html: { class: 'default' } do |f| %>
+
+    <%= f.text_field :recipient, placeholder: "Recipient email", required: "required" %>
+    <p class="hint">Separate emails with a comma (',').</p>
+    <%= f.text_field :subject, placeholder: "Subject", required: "required" %>
+    <%= f.text_area :message, placeholder: "Add a personal message (optional)" %>
+    <p>
+      <label><%= f.check_box :cc_me, class: 'custom' %> Send me a copy of this email</label>
+    </p>
+    <button class="green large" type="submit">Send</button>
+    <%= f.hidden_field :over %>
+  <% end %>
+</section>
+
+<% content_for :js do %>
+  <script type="text/javascript">
+    $('form').submit(function() {
+      $('form').css('display', 'none');
+      $('body').css('overflow','auto');
+    });
+  </script>
+<% end %>  

@@ -1,0 +1,6 @@
+<% unless user_signed_in? %>
+<div class="block sign-in-resource forum sign-in">
+  <i class="picon sign-in-forum"></i>
+  <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "log in", new_user_session_path %> to comment on forums
+</div>
+<% end %>

@@ -1,0 +1,21 @@
+<ul class="nav nav-tabs" id="myTabs" role="tablist">
+  <li role="presentation"><a href="<%= profile_root_path %>" class="<%= profile_root_on %>">My folders</a></li>
+  <li role="presentation"><a href="<%= profile_settings_path %>" class="<%= on_class profile_settings_path %>">Settings</a></li>
+  <li role="presentation" ><a href="<%= new_profile_resource_suggestion_path %>" class="<%= on_class profile_resource_suggestions_path %>">Suggest a resource</a></li>
+  <% if current_user.verified? %>
+      <li role="presentation" ><a href="<%= profile_advisers_path %>" class="<%= on_class profile_advisers_path %>">My Questions</a></li>
+      <li role="presentation" ><a href="<%= profile_resources_path %>" class="<%= on_class profile_resources_path %>">My Resources</a></li>
+  <% else %>
+      <li role="presentation" ><a href="<%= new_profile_question_path %>" class="<%= on_class profile_questions_path %>">Ask an adviser</a></li>
+  <% end %>
+  <li role="presentation"><a href="<%= profile_forum_threads_path %>" class="<%= on_class profile_forum_threads_path %>">My Forums</a></li>
+  <% if Contest.where(is_active: true).count > 0 %>
+      <li role="presentation"><a href="<%= profile_contests_path %>" class="<%= on_class profile_contests_path %>">Contest</a></li>
+  <% end %>
+</ul>
+
+<% content_for :js do %>
+  <script type="text/javascript">
+    
+  </script>
+<% end %>  

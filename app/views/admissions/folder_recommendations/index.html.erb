@@ -1,0 +1,56 @@
+<% title "Public Folder Submissions" %>
+
+<%= render 'shared/per_page' %>
+
+<h5>Submissions</h5>
+
+<div class="pagination-info">
+  <%= page_entries_info @recommendations %>
+</div><br>
+
+<%= will_paginate @recommendations, :param_name => 'recommendation_page', previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<%= form_tag admin_folder_recommendations_path, method: 'get' do %>
+  <strong>Status: </strong><%= select_tag "folderSubmissionStatus", options_for_select([ ["Public", "true"], ["Non-Public", "false"], "All" ], params[:folderSubmissionStatus] || "All") %>
+  <%#= submit_tag "Filter" %>
+<% end %>
+
+<table class="index-list">
+  <tr>
+    <th>User</th>
+    <th>Folder Name</th>
+    <th>Date</th>
+    <th>Public?</th>
+    <th>Links</th>
+  </tr>
+  <% @recommendations.each do |r| %>
+    <% unless r.folder.nil? %>
+      <tr<%= cycle(""," class='alt'") %>>
+        <td><%= r.folder.user.username %></td>
+        <td><%= link_to r.folder.name, admin_folder_recommendation_path(r) %></td>
+        <td><%= r.created_at.strftime("%B %d, %Y") %></td>
+        <td><%= r.folder.is_featured? ? 'yes' : 'no' %></td>
+        <td><%= link_to "Edit", admin_folder_recommendation_path(r) %> | <%= link_to "Delete", admin_folder_recommendation_path(r), method: :delete, data: { confirm: 'This will remove the recommendation from the system and make the related folder private.' } %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+
+<%= content_for :js do %>
+  <script>
+    (function () {
+        var app = {},
+            scholarship = 'folderSubmissionStatus';
+        function init() {
+            $('#' + scholarship).change(onFilterChange);
+        }
+        function onFilterChange(e) {
+            // console.log(this);
+            $(this).closest('form').submit();
+        }
+        $(init);
+        return app;
+    }());
+  </script>
+<% end %>

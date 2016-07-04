@@ -1,0 +1,21 @@
+<% linked = instance.url != "#" %>
+<% unless linked %>
+<div class="block blue hover">
+<% else %>
+<a href="<%= instance.url %>" class="block blue hover">
+<% end %>
+  <i class="picon divet"></i>
+  <% unless instance.image_uid.blank? %>
+    <%= promo_image instance, '246x500', true %>
+  <% else %>
+    <img src="/assets/icons/unassigned.gif" alt="" />
+  <% end %>
+  <%= instance.copy.html_safe %>
+  <% if linked %>
+    <span><%= instance.misc_text.blank? ? "Learn more" : instance.misc_text %><i class="picon harrow"></i></span>
+  <% end %>
+<% unless linked %>
+  </div>
+<% else %>
+  </a>
+<% end %>

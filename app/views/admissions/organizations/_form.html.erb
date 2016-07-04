@@ -1,0 +1,32 @@
+<%= form_for [:admin, organization] do |f| %>
+
+  <%= render 'shared/errors', m: organization %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: organization,
+      cancel_path: admin_organizations_path,
+      delete_path: organization.new_record? ? nil : confirm_destroy_admin_organization_path(organization) %>
+
+  <p><%= f.label :name %>
+      <%= f.text_field :name, required: 'required' %> <span class="required">*</span></p>
+
+  <p>
+    <%= f.label :type_id %>
+    <%= select :organization, :type_id, Organization::TYPES %></p>
+
+  <p>
+    <%= f.label :permalink, "URL" %>
+    / <%= f.text_field :permalink, class: 'permalink' %><br/>
+    <span class="hint indent">Leave this blank to have the url generated from the title and do not use an existing URL<br/>
+    Please only include letters, numbers, and dashes.</span>
+  </p>
+
+  <% unless organization.new_record? %>
+  <p class="indent"><strong>Resources from this organization</strong></p>
+  <ul class="indent">
+  <% organization.resources.each do |r| %>
+    <li><%= link_to r.name, edit_admin_resource_path(r) %></li>
+  <% end %>
+  </ul>
+  <% end %>
+<% end %>

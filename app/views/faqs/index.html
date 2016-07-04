@@ -1,0 +1,209 @@
+<%
+title @page.title
+meta_description @page.meta
+%>
+
+<% content_for :body_id do %> id="faq"<% end %>
+
+<%= content_for :header do %>
+<h1><%= @page.title %></h1>
+<%= copy @page.copy %>
+<nav id="faq-nav" class="clearfix">
+    <ul>
+        <% main_nav.each do |p| %>
+        <li>
+            <a href="#<%= p.permalink %>"><%= p.short_title %></a>
+            <ul>
+                <% child_nav(p).each do |c| %>
+                <% if c.faqs.active.any? %>
+                <li><a href="#<%= c.permalink %>"><%= c.short_title %></a></li>
+                <% end %>
+                <% end %>
+            </ul>
+        </li>
+        <% end %>
+        <% if Faq.orphans.active.any? %>
+        <li><a href="#general">General FAQ</a></li>
+        <% end %>
+    </ul>
+</nav>
+
+<div id="interior-search-form" class="faq clearfix">
+    <span class="msg"></span> <input id="faq-query" name="faq-query" type="search" placeholder="Search FAQs" value="" x-webkit-speech />
+    <button type="submit" title="Search"><i class="ico-search"></i></button>
+</div>
+
+<% end %>
+
+<% faqs = [] %>
+
+<section id="faqs" class="dotted">
+  <% if @cookies_arry.present? %>
+    <% @cookies_arry.each do |p| %>
+      <% record = Page.find_by_permalink(p) %>
+      <hr id="<%= record.permalink %>" />
+      <h2><%= record.short_title %></h2>
+      <% child_nav(record).each do |c| %>
+        <% if c.faqs.active.any? %>
+          <h3 id="<%= c.permalink %>"><%= c.short_title %></h3>
+          <ul>
+          <% if current_user.present? %>
+            <% c.faqs.active.each do |i| %>
+              <% if i.pages.where(:in_main_nav => true).any? %>
+
+                <% faqs << i %>
+                <li>
+                  <% faq =  @audience_ids &  i.audience_ids %>
+                  <% if  !faq.empty? %>
+                    <a href="#" id="faq-<%= i.id %>" class="faq"><%= i.question %></a>
+                    <div><%= i.answer.html_safe %></div>
+                  <% end %>
+                </li>
+              <% end %>
+            <% end %>
+         
+            <% c.faqs.active.each do |i| %>
+              <% if i.pages.where(:in_main_nav => true).any? %>
+
+                <% faqs << i %>
+                <li>
+                  <% faq =  @audience_ids &  i.audience_ids %>
+                  <% if  faq.empty? %>
+                    <a href="#" id="faq-<%= i.id %>" class="faq"><%= i.question %></a>
+                    <div><%= i.answer.html_safe %></div>
+                  <% end %>
+                </li>
+              <% end %>
+            <% end %>
+          <% else %>
+            <% c.faqs.active.each do |i| %>
+              <% if i.pages.where(:in_main_nav => true).any? %>
+      
+                <% faqs << i %>
+                <li>
+                  <a href="#" id="faq-<%= i.id %>" class="faq"><%= i.question %></a>
+                  <div><%= i.answer.html_safe %></div>
+                </li>
+              <% end %> 
+            <% end %>
+          <% end %>
+          </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% main_nav.each do |p| %>
+    <% if (!@str.include? p.permalink) %>
+      <hr id="<%= p.permalink %>" />
+      <h2><%= p.short_title %></h2>
+      <% child_nav(p).each do |c| %>
+        <% if c.faqs.active.any? %>
+          <h3 id="<%= c.permalink %>"><%= c.short_title %></h3>
+          <ul>
+          <% if current_user.present? %>
+            <% c.faqs.active.each do |i| %>
+              <% if i.pages.where(:in_main_nav => true).any? %>
+
+                <% faqs << i %>
+                <li>
+                  <% faq =  @audience_ids &  i.audience_ids %>
+                  <% if  !faq.empty? %>
+                    <a href="#" id="faq-<%= i.id %>" class="faq"><%= i.question %></a>
+                    <div><%= i.answer.html_safe %></div>
+                  <% end %>
+                </li>
+              <% end %>
+            <% end %>
+         
+            <% c.faqs.active.each do |i| %>
+              <% if i.pages.where(:in_main_nav => true).any? %>
+
+                <% faqs << i %>
+                <li>
+                  <% faq =  @audience_ids &  i.audience_ids %>
+                  <% if  faq.empty? %>
+                    <a href="#" id="faq-<%= i.id %>" class="faq"><%= i.question %></a>
+                    <div><%= i.answer.html_safe %></div>
+                  <% end %>
+                </li>
+              <% end %>
+            <% end %>
+          <% else %>
+            <% c.faqs.active.each do |i| %>
+              <% if i.pages.where(:in_main_nav => true).any? %>
+      
+                <% faqs << i %>
+                <li>
+                  <a href="#" id="faq-<%= i.id %>" class="faq"><%= i.question %></a>
+                  <div><%= i.answer.html_safe %></div>
+                </li>
+              <% end %> 
+            <% end %>
+          <% end %>
+          </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if Faq.orphans.active.any? %>
+    <hr id="general" />
+    <h2>General FAQ</h2>
+    <ul>
+      <% Faq.orphans.active.each do |i| %>
+        <% faqs << i %>
+        <li>
+          <a href="#" id="faq-<%= i.id %>" class="faq"><%= i.question %></a>
+          <div><%= i.answer.html_safe %></div>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</section>
+
+<a href="#" id="back-to-top" data-target="#faq-nav"><i class="icon airplane"></i>Back to Top</a>
+
+<% content_for :aside do %>
+<%= render "shared/promos", promos: @page.promos %>
+<% end %>
+
+<% content_for :toolbar do %>
+| <a href="<%= edit_admin_page_path(@page) %>">Edit this page</a>
+<% end %>
+
+<% content_for :more_head do %>
+<%= stylesheet_link_tag 'nyc-college-line/jquery-ui-1.8.23.custom.css', media: 'all' %>
+<% end %>
+
+<% content_for :js do %>
+<script>
+    var FAQ_SOURCE = [<% faqs.each_with_index do |faq, idx| %><%= ',' if idx != 0 %>{ label: '<%= truncate faq.question, length: 60, separator: ' ' %>', value: 'faq-<%= faq.id %>'}<% end %>];
+</script>
+<script type="text/javascript">
+    var current_user = <%= current_user.present? %>;
+    var $es
+    var on = 'on'
+    $('#faqs .faq').on('click', function() {
+        if(current_user == true){
+
+            $es = $(this);
+            if (!$es.hasClass(on)) {
+                document.cookie = 'signin_faq=' + $es.attr('id');
+            }
+        }
+        else{
+            $es = $(this);
+            if (!$es.hasClass(on)) {
+                document.cookie = 'faq=' + $es.attr('id');
+            }
+
+        }
+    });
+
+
+
+
+</script>
+
+<%= javascript_include_tag 'libs/jquery-ui-1.9.0.custom.min', 'app/faq' %>
+<% end %>

@@ -1,0 +1,9 @@
+<p class="indent">
+  <span class="handle"></span>
+  <%= f.label :order, class: "inline" %> <%= f.text_field :order, class: 'micro order' %>
+  <%= f.select :faq_id,
+    options_from_collection_for_select(Faq.super_skinny, :id, :question, f.object.faq_id),
+    {},
+    class: 'chosen', data: { url: admin_faqs_path } %>
+  <a href="#" class="edit-chosen">Edit</a> - <%= f.link_to_remove "Remove" %>
+</p>

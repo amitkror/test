@@ -1,0 +1,26 @@
+<% unless @message.blank? %>
+<table width="500" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tr><td height="40" style="border-collapse:collapse;"></td></tr>
+  <tr><td bgcolor="#d7d7d7" height="1" style="background:#d7d7d7;height:1px;border-collapse:collapse;"></td></tr>
+</table>
+<% end %>
+
+<% @updated.each_with_index do |r, idx| %>
+<table width="500" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <% if idx != 0 %>
+  <tr><td bgcolor="#d7d7d7" height="1" style="background:#d7d7d7;height:1px;border-collapse:collapse;"></td></tr>
+  <% end %>
+  <tr><td height="80" style="border-collapse:collapse;"></td></tr>
+  <tr>
+    <td valign="top" style="border-collapse:collapse;">
+      <h4 style="font-family:sans-serif;font-size:36px;line-height:1.3;margin:0;padding:0 0 30px;color:#2bc1dc !important;"><a href="<%= resource_url(b.resource) %>" style="text-decoration:none;color:#2bc1dc !important;"><%= b.resource_name %></a></h4>
+      <p style="margin:0 0 16px;color:#424242;font-family:sans-serif;font-size:13px;line-height:1.46;padding:0;">
+        <%= b.resource_teaser %>
+      </p>
+      <a href="<%= resource_url(b.resource) %>" class="button" style="background:#b0d24a;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;height:28px;line-height:28px;padding:0 10px;text-decoration:none;text-transform:uppercase;color:#464646 !important;">GO TO <%= b.resource_name %></a>
+    </td>
+  </tr>
+  <tr><td height="80" style="border-collapse:collapse;"></td></tr>
+</table>
+<% end %>
+

@@ -1,0 +1,51 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  date:
+    formats:
+      default: "%m.%d.%Y"
+      date: "%B %d, %Y"
+      short: "%b %d, %Y"
+      news: "%d %B %Y"
+      month_only: "%B"
+      headline: "%B %d"
+  time:
+    formats:
+      admin_short: "%m/%d/%y %I:%M %p"
+      default: "%b %d, %Y. %I:%M %p"
+      date: "%B %d, %Y"
+      short: "%b %d, %Y"
+      news: "%d %B %Y"
+      full: "%B %d, %Y %l:%M %p"
+      ampm: "%l:%M %p"
+
+  devise:
+    sessions:
+      user:
+        guest_user: 'Oops, your account hasnt been activated yet. Please <a href="/users/register/signup">Sign Up</a> first!'
+
+  activerecord:
+    attributes:
+      resource_suggestion:
+        accepts_tos: "Terms and conditions"
+      user:
+        login: "Username or email"
+        accepts_tos: "Terms and conditions"
+    models:
+      forum:
+        zero: "Topics"
+        one: "Topic"
+        few: "Topics"
+        other: "Topics"
+      forum_thread:
+        zero: "Forums"
+        one: "Forum"
+        few: "Forums"
+        other: "Forums"
+    errors:
+      models:
+        user:
+          attributes:
+            accepts_tos:
+              blank: "must be accepted"

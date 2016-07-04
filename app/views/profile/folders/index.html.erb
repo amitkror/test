@@ -1,0 +1,64 @@
+<% content_for :body_id do %> id="profile"<% end %>
+
+<% if @show_message %>
+  <% content_for :header do %>
+  <section id="profile-setup-wrap">
+    <div id="profile-setup" class="clearfix">
+      <h2>You've set up your profile&ndash;great!</h2>
+      <div class="left">
+        <strong>Now you can:</strong>
+        <ul>
+          <li>Save and organize resources from NYC College Line into your folders</li>
+          <li>Comment on pages throughout the site</li>
+          <li>Ask an adviser for personalized help</li>
+          <li>Post in the forums, and more!</li>
+        </ul>
+        <p>
+          Get started with a common search, like <a href="/search?q=tutoring">tutoring</a>, <a href="/search?q=internships">internships</a>, or <a href="/search?q=financial aid">financial aid</a>, or browse local programs by borough: <a href="/search?bor=1">Bronx</a> <span class="sep">|</span> <a href="/search?bor=2">Brooklyn</a> <span class="sep">|</span> <a href="/search?bor=3">Manhattan</a> <span class="sep">|</span> <a href="/search?bor=4">Queens</a> <span class="sep">|</span> <a href="/search?bor=5">Staten Island</a>
+        </p>
+      </div>
+      <div class="right">
+        <%= image_tag("profile-setup-bkmrk.png", alt: "Tip") %>
+        <strong>TIP:</strong> to save a resource, click the "save"<br/>
+        button to add it to your folders.
+      </div>
+    </div>
+  </section>
+  <% end %>
+<% end %>
+
+<% content_for :header do %>
+  <%#=  render "profile/shared/nav" %>
+<% end %>
+
+<%= content_for :header_caption1 do %>Save resources from around the site and organize them here. Just look for the “save” button to save a resource in one or multiple folders. The sky is the limit!<% end %>
+
+<div role="tabpanel" class="tab-pane active" id="lfolder">
+    <div class="lfolder">
+      <%= render 'profile/folder_recommendations/ajax_block', :format => 'block' %>
+    </div>  
+      <% @folders.to_enum.with_index(1).each do |folder, i| %>
+        <%= render "folder", folder: folder %>
+      <% end %>
+      <div id="folder-new" class="folder lfolder">
+        <%= image_tag "createfolder.png" %>
+        <div class="details foldesc folnew">
+          <a href="#" class="change">Create new folder</a>
+        </div>
+        <%= form_for [:profile, @folder], html: { class: "newfrom edit" }, remote: true do |f| %>
+          <%= f.text_field :name, placeholder: "enter new folder name", class: "small form-control" %><br/>
+          <p class="actions">
+            <a href="#" class="button muted cancel">Cancel</a>
+            <button class="green" type="submit">OK!</button>
+          </p>
+        <% end %>
+      </div> 
+</div>  
+
+
+
+
+<%= content_for :js do %>
+  <%= javascript_include_tag 'app/folders' %>
+  
+<% end %>

@@ -1,0 +1,79 @@
+<%
+  title @page.title
+  meta_description @page.meta
+  %>
+<% content_for :body_id do %> id="search"<% end %>
+<%= form_for @search_form, url: global_search_path, role: 'search' do |f| %>
+<section id="search-form">
+  <input id="q" name="q" type="search" placeholder="Search hand-picked resources for getting into and staying in college" value="<%= @search_form.q %>" x-webkit-speech />
+  <i class="ico-search"></i>
+  <button type="submit"><i class="ir">Search</i></button>
+</section>
+<% end %>
+<div id="content" class="clearfix">
+  <% if notice %>
+  <p class="message notice"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+  <p class="message alert"><%= alert %></p>
+  <% end %>
+  <header id="content-top">
+    <h1>We found
+      <span class="total"><%= pluralize @size, 'result' %></span>
+      <a class="tgt-link" href="/global-search?q=<%= @keyword_str %>"></a>       
+    </h1>
+  </header>
+  <div id="mobile-tabs" class="mobile-only-b">
+    <%#= select_tag "mobile-search-type", options_for_select(SearchForm::OPTIONS, params[:type]), class: "mobile-only-b custom-select" %>
+    <select name="mobile-search-type" id="mobile-search-type" class="mobile-only-b custom-select" style="font-size: 16px; opacity: 0; width: 385px;">
+        <option value="">Show all resources</option>
+        <option value="1">Programs</option>
+        <option value="2">Websites</option>
+        <option value="3">Videos</option>
+        <option value="4">Tutorials</option>
+        <option value="5">Documents</option>
+        <option value="6" selected>All Searches</option>
+      </select>
+  </div>
+  <article class="col-4">
+    <nav id="tabs" class="no-mobile">
+      <ul>
+        <li><a style="padding-top: 19px;" href="/search?q=<%= @keyword_str %>">All<br>Resources</a></li>
+        <li><a data-type="1" href="/search?q=<%= @keyword_str %>&amp;type=1"><i class="ico ico-program"></i>Programs</a></li>
+        <li><a data-type="2" href="/search?q=<%= @keyword_str %>&amp;type=2"><i class="ico ico-website"></i>Websites</a></li>
+        <li><a data-type="3" href="/search?q=<%= @keyword_str %>&amp;type=3"><i class="ico ico-video"></i>Videos</a></li>
+        <li><a data-type="4" href="/search?q=<%= @keyword_str %>&amp;type=4"><i class="ico ico-tutorial"></i>Tutorials</a></li>
+        <li><a data-type="5" href="/search?q=<%= @keyword_str %>&amp;type=5"><i class="ico ico-document"></i>Documents</a></li>
+        <li><a style="padding-top: 19px;" class="on" href="/global-search?q=<%= @keyword_str %>">All<br>Searches</a></li>
+      </ul>
+    </nav>
+    <div id="loading">
+      Fetching results<br/>
+      <%= image_tag("loader.gif", alt: "Loading") %>
+    </div>
+    <section id="search-results">
+      <% @array.each do |record| %>            
+      <article class="resource-bookmark">
+        <h1><%= link_to record_title(record), record_link(record) %></h1>
+        <p>
+          <strong><%= record.class %></strong>&nbsp;&nbsp;|&nbsp; <%=record_body(record) %>&nbsp;
+          <span class="actions">
+          <%= link_to "Read&nbsp;more".html_safe, record_link(record) %>&nbsp;&nbsp;
+          </span>
+        </p>
+        <a href="#" class="icon bookmark bookmark-tip" title="<%= record.id %>" data-remote="true" data-tip-class="bookmark">Bookmark</a>
+      </article>
+      <% end %>
+      <%= will_paginate @array %>      
+    </section>
+    <% if @array.empty? %>
+    <section id="no-results"<%= 'class="display"'.html_safe  %>>
+      <%= copy @page.copy %>
+    </section>
+    <% end %>
+  </article>
+</div>
+
+<% content_for :js do %>
+  <%= javascript_include_tag 'app/search' %>
+<% end %>

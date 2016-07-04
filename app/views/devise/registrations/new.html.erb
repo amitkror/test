@@ -1,0 +1,72 @@
+<% title "Sign up!" %>
+
+<% content_for :body_class do %> class="centered"<% end %>
+
+<% content_for :more_head do %>
+  <script type="text/javascript">
+   var RecaptchaOptions = {
+      theme : 'clean'
+   };
+   </script>
+<% end %>
+
+<p class="clearfix no-mobile" id="sign-up-icons">
+  <i class="sicon save">Save &amp; organize resources</i>
+  <i class="sicon ask">Ask an adviser</i>
+  <i class="sicon post">Post and comment on forums</i>
+</p>
+
+<h1>Learn More!</h1>
+<% if @contest_copy %>
+  <p>Signing up for NYC College Line gives you access to:</p>
+  <ul>
+    <li>Free scholarship money and prizes all-year long</li>
+    <li>Your very own live NYC College Adviser - ask questions 24/7; and</li>
+    <li>Financial Aid Info, Free test programs and more throughout New York City!</li>
+  </ul>
+  <p>Let’s get started…</p>
+<% else %>
+  <p>All you need is an email address.</p>
+<% end %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "default" }) do |f| %>
+  <%= devise_error_messages! %>
+  <%= flash[:alert] %>
+
+  <%= f.text_field :username, class: "medium", placeholder: "username", required: "required", autofocus: "autofocus" %><br/>
+
+  <span class="hint offset">Create a unique name!</span><br/>
+
+  <%= f.email_field :email, class: "medium", placeholder: "email", type: "email", required: "required" %><br/>
+  <%= f.text_field :zipcode, class: "medium", placeholder: "zipcode", required: "required" %><br/>
+
+  <%= f.label :password, class: 'placeholder' %>
+  <%= f.password_field :password, class: "medium", placeholder: "password", required: "required" %><br/>
+
+  <span class="hint offset">Password must be a minimum of 8 characters.</span><br/>
+
+  <%= f.label :password_confirmation, class: 'placeholder' %>
+  <%= f.password_field :password_confirmation, class: "medium", placeholder: "password confirmation", required: "required" %><br/>
+
+  <p class="tos">
+    <label><%= f.check_box :accepts_tos, checked: true, class: "custom" %> I am at least 13 years of age and agree to the</label><br/> <a href="/terms-of-use">terms and conditions</a>
+  </p>
+
+  <%= recaptcha_tag(:ajax, display: { theme: 'clean' }).html_safe %>
+
+  <p class="clearfix">
+    <button class="green large" type="submit">Learn More</button>
+  </p>
+
+  <p class="bottom">
+    Do you work at a NYC-based college readiness or success program? <a href="/contact-us">Contact us</a>
+    to get a verified account and be added to our listings!
+  </p>
+
+  <p class="already">
+  <%- if controller_name != 'sessions' %>
+    Already a member? <%= link_to "Sign in here", new_session_path(resource_name) %><br/>
+  <% end -%>
+  </p>
+
+
+<% end %>

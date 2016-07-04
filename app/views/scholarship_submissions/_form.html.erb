@@ -1,0 +1,80 @@
+<%= form_for [scholarship, scholarship_submission], html: { class: "default scholarship" } do |f| %>
+  <hr/>
+  <%= render 'shared/errors', m: scholarship_submission %>
+
+  <%= f.text_field :first_name, placeholder: "First name", required: 'required' %>
+  <%= f.text_field :last_name, placeholder: "Last name", required: 'required' %>
+
+  <p>
+    <%= f.text_field :high_school, placeholder: scholarship.high_school_label, required: 'required' %> <br/>
+    <% if scholarship.show_or_label %>
+      <label><%= f.check_box :not_currently_enrolled, class: 'custom' %><%= scholarship.or_label_text %></label>
+    <% end %>
+  </p>
+
+  <%= select :scholarship_submission, :year_in_school,
+              student_years,
+              { include_blank: 'Year in school' },
+              { class: 'custom-select' } %>
+
+  <%= f.email_field :email, placeholder: "Email address", required: 'required' %>
+  <%= f.text_field :phone, placeholder: "Phone number", required: 'required' %>
+
+  <%= select :scholarship_submission, :state,
+              us_states,
+              { include_blank: 'What state do you live in?' },
+              { class: 'custom-select' } %>
+  <p>
+    <label><%= f.check_box :of_age_or_consent, class: 'custom' %> I am under 18 and have parental permission to participate OR I am 18 years old or older </label></p>
+
+  <p>
+    <label>What is your month and year of birth?</label><br/>
+    <%= select_month(Date.today,
+      { field_name: :birth_month, prefix: :scholarship_submission },
+      { class: 'custom-select small inline' }) %>
+    <%= select_year(Date.today,
+      { start_year: Time.now.year, end_year: Time.now.year - 40, field_name: :birth_year, prefix: :scholarship_submission },
+      { class: 'custom-select small inline' }) %></p>
+
+  <p><%= select_from_text scholarship.submission_format, :scholarship_submission, :submission_format %></p>
+
+  <p><%= select_from_text scholarship.submission_prompt, :scholarship_submission, :submission_prompt %></p>
+
+  <% if scholarship.show_upload %>
+    <p class="file-upload">
+      <span class="mobile-upload-tag">Upload File</span>
+      <%= f.file_field :document, class: "custom-file-input" %>
+      <%= f.hidden_field :retained_document %>
+      <span class="indent hint scholarship-upload-hint">(1) Images should be hi-resolution file but under 10 MBs.<br/>
+      (2) Name your file this way: last name_first name_two-digit month two-digit year.jpg, For example: Doe_John_0911.jpg</span></p>
+    <br>
+    <p>
+      <br/>
+      <br/>
+     <span class="indent hint scholarship-upload-hint-mobile" style="display: none">(1) Images should be hi-resolution file but under 10 MBs.<br/>
+      (2) Name your file this way: last name_first name_two-digit month two-digit year.jpg, For example: Doe_John_0911.jpg</span></p>
+    </p>
+  <% end %>
+
+
+  <% if scholarship.show_video_url %>
+    <%= f.text_field :video_url, placeholder: "Link to video" %>
+  <% end %>
+
+  <% if scholarship.show_title %>
+    <%= f.text_field :title, placeholder: scholarship.title_label %>
+  <% end %>
+
+  <%= f.text_area :description, placeholder: scholarship.description_instructions, required: 'required' %>
+
+  <div id="conditions" class="dark"><%= scholarship.terms.html_safe %></div>
+
+  <hr/>
+
+  <p>
+    <label><%= f.check_box :agree_to_terms, class: 'custom' %>I have read and agree to the Official Rules of this contest. </label></p>
+
+  <p>
+    <button class="green" type="submit" onclick="clicky.log(this.href, 'Scholarship', 'Submit')">Submit</button></p>
+
+<% end %>

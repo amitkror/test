@@ -1,0 +1,68 @@
+<%= form_for [:admin, contest] do |f| %>
+  <%= render 'shared/errors', m: contest %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: contest,
+      cancel_path: admin_contests_path,
+      delete_path: contest.new_record? ? nil : confirm_destroy_admin_contest_path(contest) %>
+
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :start_date %>
+    <%= f.date_select :start_date %>
+  </p>
+
+  <p>
+    <%= f.label :end_date %>
+    <%= f.date_select :end_date %>
+  </p>
+
+  <p>
+    <%= f.label :body %>
+    <%= f.text_area :body, class: 'tinymce' %>
+  </p>
+
+  <p>
+    <%= f.label :generate_text %>
+    <%= f.text_field :generate_text %>
+  </p>
+
+  <p>
+    <%= f.label :bullet_1 %>
+    <%= f.text_field :bullet_1 %>
+  </p>
+
+  <p>
+    <%= f.label :bullet_2 %>
+    <%= f.text_field :bullet_2 %>
+  </p>
+
+  <p>
+    <%= f.label :bullet_3 %>
+    <%= f.text_field :bullet_3 %>
+  </p>
+
+  <p>
+    <%= f.label :sub_text %>
+    <%= f.text_area :sub_text %>
+  </p>
+
+  <p>
+    <%= f.label :is_active %>
+    <%= f.check_box :is_active %>
+  </p>
+
+  <p>
+    <%= f.label :email_trigger_count %>
+    <%= f.number_field :email_trigger_count %>
+  </p>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: contest,
+      cancel_path: admin_contests_path,
+      delete_path: contest.new_record? ? nil : confirm_destroy_admin_contest_path(contest) %>
+<% end %>

@@ -1,0 +1,40 @@
+<% title "Resource Suggestions" %>
+
+<div class="controls">
+  <%= link_to "export", admin_resource_suggestions_path(format: 'csv'), class: 'button', title: 'export to csv' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @resource_suggestions %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @resource_suggestions, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th><%= sortable_header("title") %></th>
+    <th width="100"><%= sortable_header("type_id", "Type") %></th>
+    <th width="50"><%= sortable_header("was_used", "Used") %></th>
+    <th width="100"><%= sortable_header("created_at", "Date Suggested", true) %></th>
+    <th width="100"></th>
+  </tr>
+  <% @resource_suggestions.each do |resource_suggestion| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to resource_suggestion.title, edit_admin_resource_suggestion_path(resource_suggestion) %></td>
+  <td><%= resource_suggestion.type_s %></td>
+  <td><%= resource_suggestion.was_used %></td>
+  <td><%= l resource_suggestion.created_at %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'edit', edit_admin_resource_suggestion_path(resource_suggestion) %> |
+    <%= link_to 'delete', confirm_destroy_admin_resource_suggestion_path(resource_suggestion) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @resource_suggestions, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

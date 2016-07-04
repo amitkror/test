@@ -1,0 +1,8 @@
+<% title "Confirm Destroy " + @promo_instance.title %>
+
+<%= form_for :promo_instance, url: admin_promo_instance_path(@promo_instance), html: { method: :delete } do |f| %>
+  <h3>Are you sure you want to permanently destroy <%= @promo_instance.title %>?</h3>
+  <p>
+    <%= button_tag "Destroy" %> or <%= link_to "cancel", admin_promo_instances_path %>
+  </p>
+<% end %>

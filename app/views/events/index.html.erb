@@ -1,0 +1,56 @@
+<% title @page.title %>
+<% meta_description @page.meta %>
+
+<% content_for :body_id do %> id="events"<% end %>
+
+<% content_for :header do %>
+
+  <h1><%= @page.title %></h1>
+
+  <%= copy @page.copy %>
+
+<% end %>
+
+<ul class="event-list">
+<% if @events.each do |e| %>
+  <li>
+    <article>
+      <a href="<%= event_path(e) %>">
+      <h1><%= e.name %></h1>
+        <time datetime="<%= e.start_datetime %>"><%= event_duration e %></time>
+        <% unless e.location.blank? %>
+          <span class="pipe">|</span>
+          <%= e.location %>
+        <% end %>
+      </a>
+    </article>
+  </li>
+<% end.empty? %>
+  <li><article class="no-results">There are currently no events scheduled.  Check back later to see what's happening.</article></li>
+<% end %>
+</ul>
+
+<%= will_paginate @events,
+  previous_label: "<i class='ico-left'></i> Previous",
+  next_label: "Next <i class='ico-right'></i>" %>
+
+<% content_for :aside do %>
+
+  <%= render "events/calendar" %>
+  <%= render "promos/search_resources" %>
+  <%= render "shared/promos", promos: @page.promos %>
+
+<% end %>
+
+<% content_for :toolbar do %>
+  | <a href="<%= edit_admin_page_path(@page) %>">Edit this page</a> -
+  <a href="<%= new_admin_event_path %>">Add an event</a>
+<% end %>
+
+<% content_for :more_head do %>
+<%= stylesheet_link_tag 'nyc-college-line/jquery-ui-1.8.23.custom.css', media: 'all' %>
+<% end %>
+
+<% content_for :js do %>
+<%= javascript_include_tag 'libs/jquery-ui-1.9.0.custom.min', 'app/events' %>
+<% end %>

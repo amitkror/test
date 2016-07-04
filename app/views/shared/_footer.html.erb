@@ -1,0 +1,188 @@
+<% 
+about = Page.where(:permalink => 'about').first 
+help = Page.where(:permalink => 'help').first
+%>
+
+<div id="foot-wrap">
+  <footer>
+    <section class="col about">
+      <strong><a href="/about">About NYC College Line</a></strong><br/>
+      NYC College Line will help you stay organized from exploration to graduation. The site was created by Graduate NYC!, CUNY, NYC DOE, and Goddard Riverside. <%= link_to 'More...', page_path(about) unless about.blank? %>
+      
+    </section>
+    <section class="col contact">
+      <strong>Contact</strong><br/>
+      16 Court Street<br/>
+      Brooklyn, NY<br/>
+      <span class="e">info/nyccollegeline//org</span>
+    </section>
+    <section class="col connect">
+      <strong>Connect</strong><br/>
+      <a href="http://www.facebook.com/NYCCollegeLine">Facebook</a><br/>
+      <a href="https://twitter.com/NYCCollegeLine">Twitter</a><br/>
+      <a href="http://nyccollegeline.tumblr.com">Tumblr</a><br/>
+      <%= link_to 'Blog', blog_posts_path %><br/>
+      <a href="<%= root_url %>feed?format=rss">RSS Feed</a> 
+    </section>
+    <section class="col languages">
+      <strong>Languages</strong><br/>
+      <% if Page.where("absolute_url = '/languages'").exists? %>
+        <% child_nav(Page.find_by_absolute_url("/languages", select: "id, ancestry")).each do |p| %>
+        <%= link_to p.short_title,  p.absolute_url, class: on_class(p.absolute_url) %><br/>
+        <% end %>
+      <% end %>
+    </section>
+    <section class="col more">
+      <strong>More</strong><br/>
+      <span id="translate"><a href="#">Translate site</a><br/></span>
+      <div id="google_translate_element"></div>
+      <div><a href="/glossary">Glossary</a></div>
+      <%= link_to 'Help', page_path(help) unless help.blank? %><br/><br/>
+      <span class="copyright">&copy; Copyright <%= DateTime.now.strftime("%Y") %>. All rights reserved.
+      <a href="/terms-of-use">Terms of Use</a> &amp; <a href="/privacy-policy">Privacy Policy</a></span><br/><br/>
+      <a href="http://www.blenderbox.com" class="ir bbox">Site by Blenderbox</a>
+    </section>
+  </footer>
+  <div class="sub-footer">
+    <div class="inner">
+      <a href="http://www.cuny.edu" class="ir cuny">CUNY University of New York</a>
+      <a href="http://schools.nyc.gov" class="ir nyc-ed">NYC Department of Education</a>
+      <a href="http://gradnyc.com" class="ir grad-nyc">Graduate NYC! College Readiness &amp; Success</a>
+      <a href="http://goddard.org" class="ir goddard">Goddard Riverside Community Center</a>
+    </div>
+  </div>
+</div>
+<!-- pop up -->
+<div id='popup-display' style="display: none">
+<div id='aaa-popup-fade2' style='position: fixed; z-index: 99; left: 0; top:0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);'></div>
+<div class="custom-modal-dialog">  
+  <div id="aaapopup">
+    <div class="custom-modal-left">
+      <div id="abc"></div>
+      <%= image_tag 'sidebar_blue.png' %>
+    </div>
+    <div class="custom-modal-right">
+      <div class="rightpanel">
+        <a class="nyc-close" id='aaa-close' href="javascript:;">X</a>
+        <h3>Ask an adviser</h3>
+        <h5> Staffed by live, trained NYC college advisers</h5>
+        <p> Do you have questions about getting into or graduating from college? Or one about financial aid or a unique family situation. Ask your question here, and you'll receive an email within 48 years, notifying you that an adviser has confidentially answered your question.</p>
+        <%= form_for GuestQuestion.new, url: build_guest_profile_guest_questions_path, html: { class: "newpopup",:id => "aaa-popup" } do |f| %>
+        <div><textarea id="question_question" name="question[question]" placeholder="Question" rows="5" required="required"></textarea></div>
+        <div class="qmailzip">
+          <div class="qemail">
+            <input type="email" required="required" name="guest_user[email]" placeholder="Your email address">
+          </div>
+          <div class="qzip">
+            <input type="text" required="required" name="guest_user[zipcode]" placeholder="ZIP code">
+          </div>
+        </div>
+       <div id="recaptcha1" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
+        <p class="tos">
+          <label><%= f.check_box :accepts_tos, :required => true, checked: true %> I agree to the </label> <a href="/terms-of-use" target="_blank">terms and conditions</a>
+        </p>
+        <button class="green" type="submit">Submit</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Monika popup -->
+<div id='aaa-popup-fade1' style='position: fixed; z-index: 99; left: 0; top:0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);'></div>
+<div class="custom-modal-signup">
+  <div id="aaapopup">
+    <div class="custom-modal-left"><%= image_tag 'signup_img.jpg' %></div>
+    <div class="custom-modal-right">
+      <div class="rightpanel">
+        <a class="nyc-close" id='signup-close' href="javascript:;">X</a>
+        <h3>Sign Up</h3>
+        <h6> All you need is an email address.</h6>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "newpopup", :id => "signup-popup" }) do |f| %>
+        <div><input id="q_user" type="text" name="user[username]" placeholder="Username*" required>
+          <span class="hint offset">Create a unique name!</span>
+        </div>
+        <div class="qmailzip">
+          <div class="qemail">
+            <input id="signup_email" type="email" name="user[email]" placeholder="Your email address*" required>
+          </div>
+          <div class="qzip">
+            <input id="signup_zipcode" type="text" name="user[zipcode]" placeholder="Zipcode*" required>
+          </div>
+        </div>
+        <div class="qpassword">
+          <div class="qemail">
+            <input id="signup_pwd" type="password" name="user[password]" placeholder="Password*" required>
+          </div>
+          <div class="qzip">
+            <input id="signup_cpwd" type="password" name="user[password_confirmation]" placeholder="Confirm password*" required>
+          </div>
+          <span class="hint offset">Password must be a minimum of 8 characters.</span>
+        </div>
+        <p class="tos">
+          <label><%= f.check_box :accepts_tos, :required => true, :required => true, checked: true %> I am at least 13 years of age and agree to the</label> <a href="/terms-of-use" target="_blank">terms and conditions</a>
+        </p>
+         <%= recaptcha_tag(:ajax, display: { theme: 'clean' }).html_safe %>  
+        <button class="green" type="submit">Submit</button>
+        <div class="already">
+          Already a member? <a href="/login">Sign in here</a><br>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Monika popup -->
+
+<% content_for :js do %>
+  <% if !current_user.present? %>  
+    <%= javascript_include_tag 'app/main' %>
+  <% end %>
+  <%= javascript_include_tag 'app/home' %>
+
+  <script src="https://www.google.com/recaptcha/api.js?onload=myCallBack&render=explicit" async defer></script>
+    
+    <script>
+      var recaptcha1;
+      var verifyCallback = function() {
+        console.log("callback is working")
+        var response = grecaptcha.getResponse();
+
+        alert(response);
+      };
+    
+       var myCallBack = function() {
+        //Render the recaptcha1 on the element with ID "recaptcha1"
+        recaptcha1 = grecaptcha.render('recaptcha1', {
+          'sitekey' : '6LfZjh8TAAAAALYXGhmicWvvqjqMcf_CyDOamzFQ', //Replace this with your 
+          'theme' : 'light',
+          'callback' : verifyCallback
+
+        });
+      };
+    </script>
+
+  <!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+  <script>
+    $("#aaa-popup").validate({
+      submitHandler: function (form) {
+        var response = grecaptcha.getResponse();
+        //recaptcha failed validation
+        if (response.length == 0) {
+          $('p #recaptcha-error').show();
+          return false;
+        }
+          //recaptcha passed validation
+        else {
+          $('#recaptcha-error').hide();
+          return true;
+        }
+      }
+    });
+  </script> -->
+<% end %>
+
+<!-- Monika popup -->
+

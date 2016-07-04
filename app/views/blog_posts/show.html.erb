@@ -1,0 +1,56 @@
+<% _title = "The Access to Success (A2S) blog" %>
+
+<% title _title %>
+
+<% content_for :body_id do %> id="blog" class="single"<% end %>
+
+<% content_for :header do %>
+  <h2 class="big">What's Keeping Us Up At Night</h2>
+  <h2 class='title'><%= _title %></h2>
+  <h6>Inside the hearts & minds of NYC College Advisers</h6>
+<% end %>
+
+<% content_for :toolbar do %>
+|	<%= link_to 'Edit this blog post', edit_admin_blog_post_path(@blog_post) %>
+<% end %>
+
+<h1><%= @blog_post.title %></h1>
+
+<div class="info">
+	<span>by <%= @blog_post.user.username %></span><br/>
+	<span class="caption"><%= @blog_post.created_at.to_date.strftime('%D') %></span>
+	<% unless @blog_post.user.bio.blank? %>
+		<div class="bio">
+			<div class="left">
+				<%= user_avatar_small(@blog_post.user) %>
+			</div>
+			<div class="right">
+				<%= @blog_post.user.bio.html_safe %>
+			</div>
+		</div>
+	<% end %>
+	<%= render 'tags', p: @blog_post %>
+	<%= render partial: 'shared/addthis' %>
+</div>
+
+<% unless @blog_post.image.blank? %>
+	<%= image_tag @blog_post.image.thumb('250x250#').url, class: 'featured' %>
+<% end %>
+<% unless @blog_post.body.blank? %>
+	<div class="blog-body"><%= @blog_post.body.html_safe %></div>
+<% end %>
+
+<%= render "comments/list", commentable: @blog_post %>
+
+<div class="back-nav">
+	<i class="ico-left"></i><%= link_to "Back to all blog posts", blog_posts_path %>
+</div>
+
+<% content_for :aside do %>
+	<%= render 'category_block' %>
+	<%= render 'archive_block' %>
+<% end %>
+
+<% content_for :js do %>
+<script src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-503676452e9c1b7a"></script>
+<% end %>

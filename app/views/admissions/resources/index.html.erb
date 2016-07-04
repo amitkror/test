@@ -1,0 +1,84 @@
+<% title "Resources" %>
+
+<div class="controls">
+  <%= link_to "export", admin_resources_path(format: 'csv'), class: 'button', title: 'export to csv' %>
+  <%= link_to "add new", new_admin_resource_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @resources %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @resources, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<p>
+  <label for="status_id">Status:</label> <%= select_tag :status_id, options_for_select(Resource::STATUSES, @status_id), prompt: "Show all" %>&nbsp;&nbsp;&nbsp;
+  <label for="type_id">Type:</label> <%= select_tag :type_id, options_for_select(Resource::TYPES, @type_id), prompt: "Show all" %></p>
+
+<table class="index-list">
+  <tr>
+    <th><%= sortable_header("name", "", true) %></th>
+    <th><%= sortable_header("type_id", "Type") %></th>
+    <th><%= sortable_header("status_id", "Status") %></th>
+    <th><%= sortable_header("updated_at", "Last edited") %></th>
+    <th><%= sortable_header("last_editor_id", "Last edited by") %></th>
+    <th><%= sortable_header("bookmarks_count", "Saves") %></th>
+  </tr>
+  <% @resources.each do |resource| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to truncate(resource.name, length: 50), edit_admin_resource_path(resource) %></td>
+  <td><%= resource.type_s %></td>
+  <td><%= resource.status_s %></td>
+  <td><%= l resource.updated_at, format: :admin_short %></td>
+  <td><%= resource.last_editor_username %></td>
+  <td><%= resource.bookmarks_count %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'show', resource_path(resource) %> |
+    <%= link_to 'edit', edit_admin_resource_path(resource) %> |
+    <%= link_to 'delete', confirm_destroy_admin_resource_path(resource) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @resources, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>
+
+<%= content_for :js do %>
+  <script>
+    (function () {
+        var app = {},
+            status = 'status_id',
+            type = 'type_id';
+        function init() {
+            $('#' + status).change(onFilterChange);
+            $('#' + type).change(onFilterChange);
+        }
+        function onFilterChange(e) {
+            var pairs = window.location.search.split('?').join('').split('&'),
+                keys = {},
+                pair;
+            for (var i = 0; i < pairs.length; ++i) {
+                pair = pairs[i].split('=');
+                keys[pair[0]] = pair[1];
+            }
+            keys[status] = $('#' + status).val();
+            keys[type] = $('#' + type).val();
+            window.location = window.location.pathname + '?' + serialize(keys);
+        }
+        function serialize(obj) {
+            var str = [];
+            for(var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
+        }
+        $(init);
+        return app;
+    }());
+  </script>
+<% end %>

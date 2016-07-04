@@ -1,0 +1,6 @@
+$('#folder-<%= @folder.id %>').fadeTo(150, 0, function(){
+    $('#folder-<%= @folder.id %>').remove();
+});
+<% if current_user.folders.length == 2 %>
+  $('.folder .delete').hide();
+<% end %>

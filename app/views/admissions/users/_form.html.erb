@@ -1,0 +1,155 @@
+<%= nested_form_for [:admin, user], html: { autocomplete: :off } do |f| %>
+
+  <%= render 'shared/errors', m: user %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: user,
+      cancel_path: admin_users_path,
+      delete_path: user.new_record? ? nil : confirm_destroy_admin_user_path(user) %>
+
+  <p>
+    <%= f.label :status_id, "Status" %>
+    <%= select :user, :status_id, User::STATUSES %><br/>
+    <span class="hint indent">Inactive users cannot login</span></p>
+
+  <p><%= f.label :email %>
+      <%= f.text_field :email, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :username %>
+      <%= f.text_field :username %><br/>
+    <span class="hint indent">Maximum 20 characters.</span></p>
+
+  <p><%= f.label :zipcode %>
+      <%= f.text_field :zipcode %></p>
+
+  <p>
+    <%= f.label :role_id %>
+    <%= select :user, :role_id, User::ROLES %></p>
+
+  <p><%= f.label :password %>
+    <%= f.password_field :password %> <% if user.new_record? %><span class="required">*</span><% end %><br/>
+    <span class="hint indent">At least 8 characters.</span></p>
+
+  <p><%= f.label :password_confirmation, "Confirmation" %>
+    <%= f.password_field :password_confirmation %> <% if user.new_record? %><span class="required">*</span><% end %></p>
+
+  <p><%= f.label :system_avatar_id %>
+      <%= select :user, :system_avatar_id,
+            SystemAvatar.super_skinny.collect { |l| [l.name, l.id] },
+            { include_blank: '- Select an avatar' },
+            { class: 'chosen' } %></p>
+
+  <p><%= f.label :custom_avatar %>
+    <% unless user.custom_avatar_uid.blank? %>
+      <%= admin_thumb(user.custom_avatar) %>
+      <label><%= f.check_box :remove_custom_avatar %> Remove?</label>
+    <% end %>
+    <%= f.file_field :custom_avatar %>
+    <%= f.hidden_field :retained_custom_avatar %></p>
+
+  <p>
+    <%= f.label :bio, "Short Bio" %>
+    <%= f.text_area :bio, class: "tinymce limited"  %>
+  </p>
+
+  <hr/>
+  <p class="indent">
+      <%= f.check_box :set_up_profile %>
+      <%= f.label :set_up_profile, class: "inline" %></p>
+
+  <p class="indent">
+      <%= f.check_box :accepts_tos %>
+      <%= f.label :accepts_tos, class: "inline" %></p>
+
+  <div class="adviser-fields">
+    <p class="indent">
+      <%= f.check_box :is_adviser %>
+      <%= f.label :is_adviser, "College Line adviser", class: "inline" %></p>
+
+    <p>
+      <%= f.label :verified_type_id, "Label for rollover" %>
+      <%= select :user, :verified_type_id, User::VERIFIED_TYPES %></p>
+
+    <p><%= f.label :resource_tokens, "Assigned resources" %>
+      <%= f.text_field :resource_tokens, "data-pre" => resource_data(user) %></p>
+  </div>
+
+  <div class="indent">
+    <strong>Audiences</strong>
+    <ul class="check-list clearfix">
+    <% Audience.select("id, name").each do |s| %>
+      <li><label><%= check_box_tag "user[audience_ids][]",
+                  s.id, user.has_audience?(s.id) %> <%= s.name %></label></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <p><%= f.label :borough_id %>
+    <%= select :user, :borough_id,
+          Borough.settings.collect { |l| [l.name, l.id] },
+          { include_blank: '- Select a borough' },
+          { class: 'chosen' } %></p>
+  <hr/>
+
+  <p><%= f.label user.username.capitalize + "'s Folders and Saved Resources:" %>
+    <div class="indent">
+
+      <% user.folders.each do |folder| %>
+
+        <p><strong> <%= folder.name %> </strong></p>
+
+        <p> Resources belonging to this folder: </p>
+
+        <% unless resources.nil? %>
+          <% resources.each do |resource| %>
+            <p> <%= link_to resource.name, resource_path(resource.permalink) %> </p>
+          <% end %>
+        <% end %>
+      <hr/>
+    <% end %>
+    </div>
+    </p>
+  </p>
+
+  <p><%= f.label user.username.capitalize + "'s Referrals:" %>
+    <div class="indent">
+      <% unless user.referred.empty? %>
+        <% user.referred.each do |u| %>
+          <% contest = u.referral.contest.blank? ? "Deleted Conetest" : u.referral.contest.name %>
+
+          <p><strong> <%= contest %>: </strong><%= u.username %></p>
+
+        <% end %>
+      <% end %>
+      <hr/>
+    </div>
+  </p>
+</p>
+
+  <hr/>
+
+  <%= f.fields_for :user_settings do |us| %>
+  <div class="indent">
+    <p>
+      <strong>Notifications Settings</strong>
+    </p>
+    <p>
+      <%= us.check_box :notify_folder_update %>
+      <%= us.label :notify_folder_update, "A resource in my folders gets updated", class: "inline" %></p>
+    <p>
+      <%= us.check_box :notify_resource_comments %>
+      <%= us.label :notify_resource_comments, "Someone comments on a thread after me", class: "inline" %></p>
+    <p>
+      <%= us.check_box :notify_thread_comments %>
+      <%= us.label :notify_thread_comments, "Someone comments on a resource in my folders", class: "inline" %></p>
+    <!--p>
+      <%#= us.check_box :notify_question_assignments %>
+      <%#= us.label :notify_question_assignments, "A question is assigned to me", class: "inline" %></p-->
+  </div>
+  <% end %>
+
+<% end %>
+
+<%= content_for :js do %>
+  <%= javascript_include_tag "libs/jquery.tokeninput", "admin/users" %>
+<% end %>

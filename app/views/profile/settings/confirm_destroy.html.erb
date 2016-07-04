@@ -1,0 +1,15 @@
+<% title "We hate to see you go!" %>
+
+<section id="destroy-account">
+  <%= form_for current_user, url: profile_settings_path, html: { method: :delete }, remote: true do |f| %>
+    <h2>We hate to see you go!</h2>
+    <p>Deactivating your account will lorem ipsum.</p>
+    <button class="large red" type="submit">Delete my account</button>
+    <a href="#" class="button green large" id="cancel-button">Cancel</a>
+  <% end %>
+</section>
+<%= content_for :js do %>
+<script>
+$('#cancel-button').click(function(){ window.parent.OVRLY.cleanup(); });
+</script>
+<% end %>

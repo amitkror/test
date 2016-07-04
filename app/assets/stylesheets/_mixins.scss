@@ -1,0 +1,107 @@
+/* Font stuff */
+@mixin sans-regular {
+  font-family:'Open Sans', sans-serif;
+  font-weight:400;
+}
+@mixin sans-bold {
+  font-weight:700;
+}
+@mixin serif {
+  font-family:Georgia, serif;
+}
+
+/* Alphabetical mixins */
+@mixin block-bg {
+  background:#fff;
+  background:rgba(255, 255, 255, 0.8);
+}
+@mixin border-radius($radius:4px) {
+-webkit-border-radius:$radius;
+   -moz-border-radius:$radius;
+        border-radius:$radius;
+}
+
+@mixin box-shadow($shadow:0px 0px 8px 0px rgba(4, 4, 5, .5)) {
+-webkit-box-shadow:$shadow;
+   -moz-box-shadow:$shadow;
+        box-shadow:$shadow;
+}
+
+@mixin font-face($name, $file) {
+  font-family:$name;
+  src:url('../fonts/#{$file}.eot');
+  src:url('../fonts/#{$file}.eot?#iefix') format('embedded-opentype'),
+      url('../fonts/#{$file}.woff') format('woff'),
+      url('../fonts/#{$file}.ttf') format('truetype');
+/*      url('../fonts/#{$file}.svg##{$name}') format('svg');*/
+  font-weight:normal;
+  font-style:normal;
+}
+
+@mixin gradient($begin, $end, $bpercent:0%, $epercent:100%) {
+  background:$begin;
+  background:-moz-linear-gradient(top, $begin $bpercent, $end $epercent);
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,$begin), color-stop($epercent,$end));
+  background:-webkit-linear-gradient(top, $begin $bpercent,$end $epercent);
+  background:-o-linear-gradient(top, $begin $bpercent,$end $epercent);
+  background:-ms-linear-gradient(top, $begin $bpercent,$end $epercent);
+  background:linear-gradient(top, $begin $bpercent,$end $epercent);
+  filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$begin}', endColorstr='#{$end}',GradientType=0 );
+}
+
+@mixin gradient-rl($begin, $end, $bpercent:0%, $epercent:100%) {
+  background:$begin;
+  background:-moz-linear-gradient(left, $begin $bpercent, $end $epercent);
+  background:-webkit-gradient(linear, top left, top right, color-stop(0%,$begin), color-stop($epercent,$end));
+  background:-webkit-linear-gradient(left, $begin $bpercent,$end $epercent);
+  background:-o-linear-gradient(left, $begin $bpercent,$end $epercent);
+  background:-ms-linear-gradient(left, $begin $bpercent,$end $epercent);
+  background:linear-gradient(left, $begin $bpercent,$end $epercent);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$begin}', endColorstr='#{$end}',GradientType=1 );
+}
+
+@mixin inset-box-shadow ($shadow:1px 1px 4px 2px rgba(107, 107, 107, 0.3)){
+  @include box-shadow(inset #{$shadow});
+}
+
+@mixin no-shadow { @include box-shadow(none); }
+
+@mixin rotate($deg:90deg) {
+-webkit-transform:rotate($deg);
+   -moz-transform:rotate($deg);
+     -o-transform:rotate($deg);
+        transform:rotate($deg);
+}
+
+@mixin sprite($width, $height, $x-offset, $y-offset) {
+  background-position: $x-offset $y-offset;
+  height: $height;
+  width: $width;
+}
+
+@mixin transition($time:.15s, $ease-function:ease-in, $properties:all) {
+  @include transition-function($ease-function);
+  @include transition-property($properties);
+  @include transition-time($time);
+}
+
+@mixin transition-function($ease-function:ease-in) {
+-webkit-transition-timing-function:$ease-function;
+   -moz-transition-timing-function:$ease-function;
+     -o-transition-timing-function:$ease-function;
+        transition-timing-function:$ease-function;
+}
+
+@mixin transition-property($properties:all) {
+-webkit-transition-property:$properties;
+   -moz-transition-property:$properties;
+     -o-transition-property:$properties;
+        transition-property:$properties;
+}
+
+@mixin transition-time($time:.15s) {
+-webkit-transition-duration:$time;
+   -moz-transition-duration:$time;
+     -o-transition-duration:$time;
+        transition-duration:$time;
+}

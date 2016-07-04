@@ -1,0 +1,61 @@
+<% title "My questions" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered suggest-ask"<% end %>
+
+<%= content_for :header_caption do %>These are questions that people have asked you using the "Ask an Adviser" tool. Do your best to respond to each question within 48 hours. To stop receiving questions, or to change what type of questions we send you, please <a href="mailto:info@nyccollegeline.org">email us</a>.<% end %>
+<%#= render "profile/shared/nav" %>
+
+<div class="per-page">
+  Show: <%= per_page 10 %> <%= per_page 20 %> <%= per_page 50 %>
+</div>
+
+<%= will_paginate @questions, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+<section id="questions"><br>
+  <div class="lheading">My questions</div>
+  <ul>
+  <% if @questions.each do |q| %>
+    <li class="<%= cycle("", "alt") %>">
+      <% if q.is_a?(Question) %>
+        <%= link_to user_avatar_small(q.user), profile_adviser_path(q) %>
+        <div class="details">
+          <%= link_to truncate(q.question, length: 50, separator: ' '), profile_adviser_path(q) %>
+          <span>
+              Asked by <strong><%= q.user_username %></strong> <%= l q.created_at %>
+            <% if q.last_commenter %>
+              <br/>Last commented by <strong><%= q.last_commenter_username %></strong> <%= time_ago_in_words q.last_commented_at %> ago
+            <% end %>
+          </span>
+        </div>
+        <% if q.new_for_adviser %>
+          <%= link_to '<i class="icon question">New Question</i>'.html_safe, profile_adviser_path(q) %>
+        <% elsif q.new_comment_for_adviser %>
+          <%= link_to '<i class="icon">New Comment</i>'.html_safe, profile_adviser_path(q, anchor: "comments") %>
+        <% end %>
+      <% else %>
+        <%= link_to image_tag(SystemAvatar.first.image.thumb("75x75#").url), guest_profile_guest_question_path(q) %>
+        <div class="details">
+          <%= link_to truncate(q.question, length: 50, separator: ' '), guest_profile_guest_question_path(q) %>
+          <span>
+              Asked by <strong><%= q.guest_user.email %></strong> <%= l q.created_at %>
+            <% if q.last_commenter %>
+              <br/>Last commented by <strong><%= q.last_commenter_username %></strong> <%= time_ago_in_words q.last_commented_at %> ago
+            <% end %>
+          </span>
+        </div>
+        <% if q.new_for_adviser %>
+          <%= link_to '<i class="icon question">New Question</i>'.html_safe, guest_profile_guest_question_path(q) %>
+        <% elsif q.new_comment_for_adviser %>
+          <%= link_to '<i class="icon">New Comment</i>'.html_safe, guest_profile_guest_question_path(q, anchor: "comments") %>
+        <% end %>
+      <% end %>
+    </li>
+  <% end.empty? %>
+    <li><p class="caption">There are no questions assigned to you.</p></li>
+  <% end %>
+
+  </ul>
+</section>
+<%= will_paginate @questions, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>

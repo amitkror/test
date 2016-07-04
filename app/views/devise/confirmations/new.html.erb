@@ -1,0 +1,28 @@
+<% title "Send Confirmation" %>
+
+<% content_for :body_class do %> class="centered"<% end %>
+
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { class: "default", method: :post }) do |f| %>
+
+  <h1>Welcome!</h1>
+  <%= devise_error_messages! %>
+
+  <% if current_user %>
+    <p>
+      A verification email has been sent to <b><%= current_user.email %></b>.
+      Please check your email and follow the link to create your account and log in.
+    </p>
+
+  <% end %>
+
+  <p>Did your confirmation email not come through? Enter your information below and we'll send you another one.</p>
+
+  <%= f.text_field :login, class: "medium", placeholder: "email or username", required: "required", autofocus: "autofocus" %>
+
+  <p class="clearfix">
+    <button class="green large" type="submit">Send <i class="ico-right"></i></button>
+  </p>
+
+  <%= render "devise/shared/links" %>
+
+<% end %>

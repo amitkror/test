@@ -1,0 +1,52 @@
+
+.lt-ie9 {
+
+  #layout {
+    min-height:1px;
+  }
+
+  #login input,
+  #signup input {
+    line-height:26px;
+  }
+
+  #search-form input {
+    line-height:46px;
+  }
+
+  form.default {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="url"],
+    textarea {
+      line-height:30px;
+      &.medium {
+        line-height:40px;
+      }
+      &.small {
+        line-height:30px;
+      }
+    }
+  }
+}
+
+.lt-ie8 {
+  header {
+    z-index:200;
+  }
+  #content {
+    z-index:199;
+  }
+  #search-form input {
+    width:766px;
+  }
+  #home #search-form input {
+    width:530px;
+  }
+  #home #search-form .ico-search {
+    display:none;
+  }
+}
+
+

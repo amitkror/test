@@ -1,0 +1,115 @@
+<%= form_for [:admin, scholarship_submission] do |f| %>
+
+  <%= render 'shared/errors', m: scholarship_submission %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: scholarship_submission,
+      cancel_path: admin_scholarship_submissions_path,
+      delete_path: scholarship_submission.new_record? ? nil : confirm_destroy_admin_scholarship_submission_path(scholarship_submission) %>
+
+  <p>
+    <%= f.label :scholarship_id %>
+    <%= select :scholarship_submission, :scholarship_id,
+      Scholarship.skinny.collect { |s| [s.name, s.id] }, class: 'chosen' %></p>
+
+  <h5 class="indent">Voting</h5>
+
+  <p><%= f.label :selected_entry %>
+      <%= f.check_box :selected_entry %><br/>
+      <span class="hint indent">Check if the submission is up for voting</span></p>
+
+  <p><%= f.label :order %>
+      <%= f.text_field :order, class: "micro" %></p>
+
+  <p><%= f.label :title %>
+      <%= f.text_field :title %></p>
+
+  <p><%= f.label :video_embed %>
+      <%= f.text_field :video_embed %>
+      <span class="hint indent">If the submission is a video entry, enter the embed code here.<br/>
+        <strong>SET THE WIDTH TO 575px on the 'custom width' option.</strong></span></p>
+
+  <p><%= f.label :thumbnail %>
+    <% unless scholarship_submission.thumbnail_uid.blank? %>
+      <%= admin_thumb(scholarship_submission.thumbnail) %>
+      <label><%= f.check_box :remove_thumbnail %> Remove?</label>
+    <% end %>
+    <%= f.file_field :thumbnail %>
+    <%= f.hidden_field :retained_thumbnail %><br/>
+    <span class="indent hint">575x325px</span>
+  </p>
+
+  <p>
+      <%= f.label :school_type_id %>
+      <%= select :scholarship_submission, :school_type_id, ScholarshipSubmission::SCHOOL_TYPES %></p>
+
+  <hr/>
+
+  <h5 class="indent">User submitted data</h5>
+
+  <p><%= f.label :first_name %>
+      <%= f.text_field :first_name, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :last_name %>
+      <%= f.text_field :last_name, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :email %>
+      <%= f.email_field :email, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :phone %>
+      <%= f.text_field :phone, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :high_school %>
+      <%= f.text_field :high_school, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :year_in_school %>
+      <%= f.select :year_in_school, student_years %></p>
+
+  <p><%= f.label :agree_to_terms %>
+      <%= f.check_box :agree_to_terms, required: 'required' %>
+      <%= f.label :of_age_or_consent %>
+      <%= f.check_box :of_age_or_consent, required: 'required' %></p>
+
+  <p><%= f.label :not_currently_enrolled %>
+      <%= f.check_box :not_currently_enrolled %></p>
+
+  <p><%= f.label :birth_month %>
+      <%= select_month(scholarship_submission.new_record? ? Date.today : Date.new(scholarship_submission.birth_year.to_i, scholarship_submission.birth_month.to_i),
+        field_name: :birth_month,
+        prefix: :scholarship_submission) %>
+
+      <%= f.label :birth_year %>
+      <%= select_year(Date.new(scholarship_submission.birth_year.to_i),
+            start_year: Time.now.year - 10,
+            end_year: Time.now.year - 60,
+            field_name: :birth_year,
+            prefix: :scholarship_submission) %></p>
+
+  <p><%= f.label :submission_format %>
+      <%= f.text_field :submission_format %></p>
+
+  <p><%= f.label :submission_prompt %>
+      <%= f.text_field :submission_prompt %></p>
+
+  <p><%= f.label :state %>
+      <%= f.select :state, us_states %></p>
+
+  <p><%= f.label :description %>
+      <%= f.text_area :description, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :video_url %>
+      <%= f.text_field :video_url %></p>
+
+  <p><%= f.label :document %>
+    <% unless scholarship_submission.document_uid.blank? %>
+      <%= admin_thumb(scholarship_submission.document, '100x75', scholarship_submission.document.remote_url.gsub('http://http://', 'http://')) %>
+      <label><%= f.check_box :remove_document %> Remove?</label>
+    <% end %>
+    <%= f.file_field :document %>
+    <%= f.hidden_field :retained_document %>
+    <span class="indent hint">(1) images should be hi-resolution file but under 10 MBs.<br/>
+    (2) Name your file this way: last name_first name_two-digit month two-digit year.jpg, For example: Doe_John_0911.jpg</span>
+  </p>
+
+
+<% end %>

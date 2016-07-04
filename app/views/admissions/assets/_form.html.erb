@@ -1,0 +1,38 @@
+<%= nested_form_for [:admin, asset] do |f| %>
+  <%= render 'shared/errors', m: asset %>
+  <%= render 'admissions/shared/action_buttons',
+      m: asset,
+      cancel_path: admin_assets_path,
+      delete_path: asset.new_record? ? nil : confirm_destroy_admin_asset_path(asset) %>
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title %></p>
+
+  <p>
+    <%= f.label :alt, "Caption" %>
+    <%= f.text_field :alt %>
+    <span class="hint indent">Captions will be displayed in galleries.</span></p>
+
+  <% unless asset.new_record? %>
+  <p class="indent">
+    <%= link_to asset_thumb(asset), asset.attachment.url, target: '_blank' %> <%= asset.attachment_name %>
+  </p>
+  <% end %>
+  <p>
+    <%= f.label :attachment %>
+    <%= f.file_field :attachment %>
+    <%= f.hidden_field :retained_attachment %><br/>
+    <span class="hint indent">Images are automatically resized.</span>
+  </p>
+  <hr/>
+  <label>Link</label><br/>
+  <span class="hint indent">You can link to a url or to a page when using this image in a gallery. If you link to a page, it will take precedence.</span>
+
+  <p>
+      <%= f.label :page_id, "Page" %>
+      <%= f.select :page_id, pages, {include_blank: '-- Select a page --'}, class: 'chosen' %></p>
+
+  <p>
+    <%= f.label :link %>
+    <%= f.text_field :link %></p>
+<% end %>

@@ -1,0 +1,26 @@
+<%
+title @page.title
+meta_description @page.meta
+%>
+
+<%= content_for :header do %>
+<h1><%= @page.title %></h1>
+<% end %>
+<h3>Apply for one of the following open scholarships:</h3>
+<section id="kids">
+  <% @scholarships.each do |s| %>
+    <article><h1><%= link_to s.name, scholarship_path(s) %></h1></article>
+  <% end %>
+</section>
+
+<%= copy @page.copy %>
+
+<% unless @page.one_column? %>
+  <% content_for :aside do %>
+    <%= render "shared/promos", promos: @promos %>
+  <% end %>
+<% end %>
+
+<% content_for :toolbar do %>
+  | <a href="<%= edit_admin_page_path(@page) %>">Edit this page</a>
+<% end %>

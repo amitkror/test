@@ -1,0 +1,59 @@
+.guest-header {
+  img {
+    float: left;
+    padding: 0 10px 10px 0;
+  }
+
+  h3 {
+    color: $dark-gray;
+    word-break: break-all;
+    padding: 0;
+  }
+
+  .text {
+    float: right;
+    width: 500px;
+  }
+}
+
+#profile #question {
+  > .guest-image {
+    float: left;
+  }
+
+  > #thread.guest-thread {
+    float: right;
+  }
+}
+
+#new_guest_question {
+  margin-bottom: 50px;
+}
+
+
+#guest-profile {
+  form {
+    textarea {
+      display: block;
+    }
+
+    input[type="email"], input[name="guest_user[zipcode]"] {
+      background: none;
+      border: 1px solid $lightgray;
+      box-shadow: inset -1px 1px 4px $lightgray;
+      width: 200px;
+      border-radius: 5px;
+    }
+
+    input[type="email"] {
+      display: block;
+      float: left;
+      width: 320px;
+    }
+
+    input[name="guest_user[zipcode]"] {
+      width: 120px;
+      margin-left: 20px;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+#folder-email {
+  padding:25px 30px;
+
+  h5 {
+    padding:0 0 4px;
+  }
+
+  p {
+    line-height:1.46;
+    margin-right:30px;
+  }
+
+  h5,
+  h5 + p {
+    margin-left:6px;
+  }
+}
+
+#destroy-account {
+  padding:30px 58px 0;
+
+  h2,
+  h2 + p {
+    margin-left:40px;
+  }
+
+  p {
+    line-height:1.46;
+    margin-right:30px;
+    padding-bottom:60px;
+  }
+}

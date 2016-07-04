@@ -1,0 +1,8 @@
+<% title "Delete #{@forum.name}"%>
+
+<%= form_for :forum, url: admin_forum_path(@forum), html: { method: :delete } do |f| %>
+  <h3>Are you sure you want to permanently destroy <%= @forum.name %>?</h3>
+  <p>
+    <button type="submit">Destroy</button> or <%= link_to "cancel", admin_forums_path %>
+  </p>
+<% end %>

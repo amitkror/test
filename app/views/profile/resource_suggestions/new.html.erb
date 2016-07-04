@@ -1,0 +1,49 @@
+<% title "Suggest a resource" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered suggest-ask"<% end %>
+
+<%= content_for :header_caption do %>Want to suggest a program or something new for the website? Here is your chance!  Fill out this form, and our team will review it and post it as soon as humanly possible. <% end %>
+<%#=  render "profile/shared/nav" %>
+<div role="tabpanel" id="lsuggest">
+  <div class="col-xs-12 col-md-8">
+    <div class="lheading">Suggest a resource</div>
+    <%= form_for [:profile, @resource_suggestion], :id => "lsrcform" do |f| %>
+      <%= render 'shared/errors', m: @resource_suggestion %>
+        <div class="form-group">
+          <%= select :resource_suggestion, :type_id,
+          ResourceSuggestion::TYPES,
+          { include_blank: 'Select type' },
+          { class: 'form-control' } %>
+        </div> 
+        <div class="form-group">
+          <div class="docUpload btn btn-success">
+            <span>Upload File</span>
+              <%= f.file_field :attachment, title: "UPLOAD FILE", class: "imgupload" %>  
+            </div>
+        </div>
+        <div class="form-group">
+          <%= f.text_field :link, placeholder: "Link", class: 'form-control' %>        
+        </div><br>
+        <div class="form-group">
+          <%= f.text_field :title, placeholder: "Resource Title", class: 'form-control' %>        
+        </div>
+        <div class="form-group">
+          <%= f.text_area :description, placeholder: "Description *", required: "required", cols: "30", rows: "5", class: "form-control"  %>       
+        </div>
+        <div class="form-group">
+          
+            <label><%= f.check_box :accepts_tos, checked: true, class: 'custom' %> I agree to the </label> <a href="/terms-of-use">terms and conditions</a>
+          
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    
+    <% end %>
+  </div>
+</div>    
+
+
+
+ 

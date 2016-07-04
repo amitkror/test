@@ -1,0 +1,34 @@
+<% title "Contests" %>
+
+<div class="controls">
+  <%= link_to "add new", new_admin_contest_path, class: 'button', title: 'add new' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @contests %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @contests, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+
+<table class="index-list">
+  <tr>
+    <th>Name</th><th></th>
+  </tr>
+  <% @contests.each do |contest| %>
+  <tr<%= cycle(""," class='alt'") %>>
+  <td><%= link_to "#{contest.name}", edit_admin_contest_path(contest) %></td>
+  <td>
+    <span class="actions">
+    <%= link_to 'entrants', admin_contest_path(contest) %> |
+    <%= link_to 'edit', edit_admin_contest_path(contest) %> |
+    <%= link_to 'delete', confirm_destroy_admin_contest_path(contest) %></span>
+  </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @contests, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>

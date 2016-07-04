@@ -1,0 +1,7 @@
+span.custom-check {
+  background:url(image-path('forms.png')) 0 -224px no-repeat; display:inline-block;
+  float:left; height:15px; margin-right:10px; width:15px;
+  &.hover { opacity:0.8; }
+  &.checked { background-position:0 -200px; }
+}
+input.custom { display:none; }

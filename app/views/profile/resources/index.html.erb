@@ -1,0 +1,40 @@
+<% title "My resources" %>
+
+<% content_for :body_id do %> id="profile"<% end %>
+<% content_for :body_class do %> class="centered resources"<% end %>
+
+<%= render "header" %>
+
+<p>
+  <strong>ADD A RESOURCE</strong><br/>
+  <em>Create a listing for a program, website, video, lesson, or document.<br/>
+  Want to add an event? <a href="<%= new_profile_resource_suggestion_path %>">Suggest a Resource here</a>.</em>
+</p>
+
+<p class="add-resource">
+  <a href="<%= new_profile_resource_path %>" class="button green">Add a resource</a>
+</p>
+
+<h1 class="count">My Resources <span>(<%= pluralize @resources.size, "Item" %>)</span></h1>
+<ul class="resource-list">
+<% if @resources.each do |r| %>
+  <li>
+  <article class="resource-bookmark">
+    <div class="type clearfix">
+      <i class="ico ico-<%= r.type_s %> tip" title="<%= r.type_s %>" data-tip-class="type"></i>
+    </div>
+    <h1><%= link_to r.name, r %></h1>
+    <% unless (r.active? || r.hidden?) %> <span class="status"><%= r.status_s %></span><% end %>
+    <p>
+      <strong><%= r.type_s.upcase %></strong>&nbsp;&nbsp;|&nbsp; <%= r.teaser %>&nbsp;
+      <span class="actions">
+        <a href="<%= resource_path(r) %>">View</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<%= edit_profile_resource_path(r) %>">Edit</a>
+      </span>
+    </p>
+  </article>
+  </li>
+<% end.empty? %>
+<li>
+  <p class="caption">You have no resources assigned to you yet.</p></li>
+<% end %>
+</ul>

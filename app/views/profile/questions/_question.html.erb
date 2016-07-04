@@ -1,0 +1,9 @@
+<section id="question">
+
+<%= user_avatar_small(question.user) %>
+<div id="thread">
+  <p class="caption">Question asked by <strong><%= user_username question.user %></strong> <% unless question.topic.blank? %>| Posted about '<%= question.topic_name %>'<% end %> on <%= l question.created_at %></p>
+  <%= simple_format question.question %>
+  <%= render "comments/list", commentable: question, placeholder: "Reply", button: "Submit" %>
+</div>
+</section>

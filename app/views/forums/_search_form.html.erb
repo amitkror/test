@@ -1,0 +1,5 @@
+<% q = local_assigns[:q].nil? ? "" : local_assigns[:q] %>
+<%= form_tag search_forums_path, id: 'interior-search-form', role: 'search' do |f| %>
+  <input id="q" name="q" type="search" placeholder="Search forum" value="<%= q %>" x-webkit-speech />
+  <button type="submit" title="Search"><i class="ico-search"></i></button>
+<% end %>

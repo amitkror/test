@@ -1,0 +1,17 @@
+<%
+bottom ||= false
+view_path ||= ""
+%>
+<div class="controls<%= " bottom" if bottom %>">
+  <% unless m.new_record? || delete_path.blank? %>
+    <%= link_to 'delete', delete_path, class: 'button danger' %>&nbsp;&nbsp;
+  <% end %>
+
+  <%= link_to "cancel", cancel_path, class: 'button' %>&nbsp;&nbsp;
+
+  <% unless m.new_record? || view_path.blank? %>
+    <%= link_to "view", view_path, class: 'button', target: '_blank' %>&nbsp;&nbsp;
+  <% end %>
+
+  <button class="action" type="submit">save</button>&nbsp;&nbsp;
+</div>

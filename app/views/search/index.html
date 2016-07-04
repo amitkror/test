@@ -1,0 +1,158 @@
+<%
+title @page.title
+meta_description @page.meta
+%>
+
+<% content_for :body_id do %> id="search"<% end %>
+
+<%= form_for @search_form, url: global_search_path, role: 'search' do |f| %>
+  <section id="search-form">
+    <input id="q" name="q" type="search" placeholder="Search hand-picked resources for getting into and staying in college" value="<%= @search_form.q %>" x-webkit-speech />
+    <i class="ico-search"></i>
+    <button type="submit"><i class="ir">Search</i></button>
+  </section>
+  <div id="content" class="clearfix">
+    <% if notice %><p class="message notice"><%= notice %></p><% end %>
+    <% if alert %><p class="message alert"><%= alert %></p><% end %>
+
+    <header id="content-top">
+      <h1>We found
+        <% unless @search_form.phase_id.blank? %>
+          <span class="total" data-phase="<%= @search_form.phase.name %>"><%= pluralize @results.total, "#{@search_form.phase.name} result" %></span><br/>
+        <% else %>
+          <span class="total"><%= pluralize @results.total, 'result' %></span>
+          <a class="tgt-link" href="/global-search?q=<%= @keyword_str %>"></a>
+        <% end %>
+        
+        <% unless @search_form.organization.blank? %>
+          for <%= @search_form.organization.name %><br/>
+        <% end %>
+
+        <% unless @search_form.phase_id.blank? && @search_form.org.blank? %>
+          <a href="#" id="remove-filters">Show all results</a>
+        <% end %>
+      </h1>
+    </header>
+
+    <div id="mobile-tabs" class="mobile-only-b">
+      <%#= select_tag "mobile-search-type", options_for_select(SearchForm::OPTIONS, params[:type]), class: "mobile-only-b custom-select" %>
+      <select name="mobile-search-type" id="mobile-search-type" class="mobile-only-b custom-select" style="font-size: 16px; opacity: 0; width: 385px;">
+        <option value="">Show all resources</option>
+        <option value="1">Programs</option>
+        <option value="2">Websites</option>
+        <option value="3">Videos</option>
+        <option value="4">Tutorials</option>
+        <option value="5">Documents</option>
+        <option value="6">All Searches</option>
+      </select>      
+    </div>
+
+    <aside class="col-1 filters">
+      <%= f.hidden_field :type %>
+      <%= f.hidden_field :org %>
+      <%= f.hidden_field :phase_id %>
+
+      <h3 class="mobile-only-b">Filter by <i class="ico-plus"></i></h3>
+
+      <div class="filter no-mobile">
+        <h2>Filters</h2>
+        <p>
+          Edit your results by selecting filters below.
+        </p>
+        <a href="#" class="clear-all">Clear all filters</a>
+      </div>
+    <div class="filter no-mobile">
+      <h3>Popular</h3>
+      <ul>
+        <% SearchForm::POPULAR.each do |f| %>
+        <li>
+          <label><%= check_box_tag :popular_ids, f[:id], @search_form.has_popular?(f[:id]), name: 'search_form[popular_ids][]' %><i class="ico ico-<%= f[:class] %>"></i> <%= f[:name] %></label></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="filter first">
+      <h3>Borough</h3>
+      <ul>
+        <li><label><input type="checkbox" class="all"<%= " checked='checked'" unless @search_form.borough_ids.any? %> />All</label></li>
+        <% Borough.filters.each do |f| %>
+        <li>
+          <label><%= check_box_tag :borough_ids, f.id, @search_form.has_borough?(f.id),
+                        name: 'search_form[borough_ids][]' %><%= f.name %></label></li>
+        <% end %>
+        </ul>
+    </div>
+    <div class="filter">
+      <h3>Subjects</h3>
+      <% open = @search_form.subject_ids.any? %>
+      <ul>
+        <li><label><input type="checkbox" class="all"<%= " checked='checked'" unless open %> />All</label></li>
+        <% Subject.ordered.each_with_index do |f, idx| %>
+        <% if idx == 3 %></ul><ul class="more <%= "open" if open %>"><% end %>
+        <li>
+          <label><%= check_box_tag :subject_ids, f.id, @search_form.has_subject?(f.id),
+                        name: 'search_form[subject_ids][]' %><span class="name"><%= f.name.titleize %></span></label></li>
+        <% end %>
+      </ul>
+      <a href="#" class="show-more">Show <%= open ? "less" : "more" %></a>
+    </div>
+    <div class="filter last">
+      <h3>Audiences</h3>
+      <% open = @search_form.audience_ids.any? %>
+      <ul>
+        <li><label><input type="checkbox" class="all"<%= " checked='checked'" unless open %> />All</label></li>
+        <% Audience.filters.ordered.each_with_index do |f, idx| %>
+        <% if idx == 3 %></ul><ul class="more <%= "open" if open %>"><% end %>
+        <li>
+          <label><%= check_box_tag :audience_ids, f.id, @search_form.has_audience?(f.id),
+                        name: 'search_form[audience_ids][]' %><span class="name"><%= f.name_plural %></span></label></li>
+        <% end %>
+      </ul>
+      <a href="#" class="show-more">Show <%= open ? "less" : "more" %></a>
+    </div>
+    <div class="filter no-mobile">
+      <h3>Languages</h3>
+      <% open = @search_form.language_ids.any? %>
+      <ul>
+        <li><label><input type="checkbox" class="all"<%= " checked='checked'" unless open %> />All</label></li>
+        <% Language.ordered.each_with_index do |f, idx| %>
+        <% if idx == 3 %></ul><ul class="more <%= "open" if open %>"><% end %>
+        <li>
+          <label><%= check_box_tag :language_ids, f.id, @search_form.has_language?(f.id), name: 'search_form[language_ids][]' %><%= f.name %></label></li>
+        <% end %>
+      </ul>
+      <a href="#" class="show-more">Show <%= open ? "less" : "more" %></a>
+    </div>
+    </aside>
+    <article class="col-2">
+      <nav id="tabs" class="no-mobile">
+        <ul>
+          <%= tab_nav(@tab_path, @search_form.type) %>
+          <li><a href="/global-search?q=<%= @keyword_str %>">All<br>Searches</a></li>
+        </ul>
+      </nav>
+      <div id="loading">
+        Fetching results<br/>
+        <%= image_tag("loader.gif", alt: "Loading") %>
+      </div>
+      <section id="search-results">
+      <% unless @results.hits.empty? %>
+        <%= render "results", link_path: @link_path, results: @results %>
+      <% end %>
+      </section>
+
+      <section id="no-results"<%= ' class="display"'.html_safe if @results.hits.empty? %>>
+        <%= copy @page.copy %>
+      </section>
+
+    </article>
+  </div>
+<% end %>
+
+<% content_for :js do %>
+<%= javascript_include_tag 'app/search' %>
+<% end %>
+
+<% content_for :toolbar do %>
+  | <a href="<%= edit_admin_page_path(@page) %>">Edit this page</a>
+<% end %>
+

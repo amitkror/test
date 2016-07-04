@@ -1,0 +1,8 @@
+<p>
+<% unless f.object.new_record? %>
+  <%= asset_thumb(f.object) %>
+<% end %>
+  <%= f.text_field :title, class: "small", placeholder: "title" %>
+  <%= f.hidden_field :order, class: "micro order" %> <%= f.link_to_remove "Remove" %><br/>
+  <%= f.file_field :attachment %>
+</p>

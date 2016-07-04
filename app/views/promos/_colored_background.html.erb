@@ -1,0 +1,14 @@
+<% linked = instance.url != "#" %>
+<% unless linked %>
+<div class="block block-color block-<%= instance.color %>">
+<% else %>
+<a href="<%= instance.url %>" class="block block-color block-<%= instance.color %>">
+<% end %>
+  <%= instance.misc_text %><br/>
+  <%= image_tag(instance.image.thumb('208x800').url, alt: instance.title) %><br/>
+  <span><%= instance.copy.html_safe %></span>
+<% unless linked %>
+  </div>
+<% else %>
+  </a>
+<% end %>

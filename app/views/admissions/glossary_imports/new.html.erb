@@ -1,0 +1,11 @@
+<% title "Import glossary terms" %>
+
+<h1>Import glossary terms</h1>
+
+<%= form_for [:admin, @glossary_import] do |f| %>
+  <%= render 'shared/errors', m: @glossary_import %>
+  <p>
+    <%= f.file_field :attachment, class: 'attachment' %><br />
+    <%= f.hidden_field :retained_attachment %></p>
+  <button type="submit">Save</button>
+<% end %>

@@ -1,0 +1,21 @@
+<% title "Send unlock instructions" %>
+
+<% content_for :body_class do %> class="centered"<% end %>
+
+<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { class: "default", method: :post }) do |f| %>
+
+  <h1>Send again</h1>
+
+  <%= devise_error_messages! %>
+
+  <p>Did you get locked our of your account? Enter your information below and we'll email you instructions on how to unlock your account.</p>
+
+  <%= f.text_field :login, class: "medium", placeholder: "email or username", required: "required", autofocus: "autofocus" %>
+
+  <p class="clearfix">
+    <button class="green large" type="submit">Send <i class="ico-right"></i></button>
+  </p>
+
+  <%= render "devise/shared/links" %>
+<% end %>
+

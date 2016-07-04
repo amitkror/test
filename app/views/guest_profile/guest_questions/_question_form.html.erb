@@ -1,0 +1,11 @@
+<%= form_for [:guest_profile, @guest_question], html: { class: "default" } do |f| %>
+
+  <%= f.text_area :question, placeholder: "Question *", required: "required" %>
+  <input type="email" name="guest_user[email]" placeholder="Your email address">
+  <input type="text" name="guest_user[zipcode]" placeholder="ZIP code">
+
+  <p class="tos">
+    <label><%= f.check_box :accepts_tos, checked: true, class: 'custom' %> I agree to the </label> <a href="/terms-of-use">terms and conditions</a></p>
+
+  <button class="green" type="submit">Submit</button>
+<% end %>

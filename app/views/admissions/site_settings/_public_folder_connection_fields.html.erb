@@ -1,0 +1,13 @@
+<p class="indent">
+  <%= f.label :order, class: "inline" %> <%= f.text_field :order, class: 'micro order' %>
+  <%#= f.select :promo_instance_id,
+    options_from_collection_for_select(PromoInstance.ordered, :id, :title, f.object.promo_instance_id),
+    {},
+    class: 'chosen', data: { url: admin_promo_instances_path } %>
+    <%#= f.text_field :order %>
+		<%= f.select :folder_id, 
+		 	options_from_collection_for_select(Folder.featured, :id, :name, f.object.folder_id),
+		 	{},
+		 	class: 'chosen', data: { url: admin_promo_instances_path } %>
+   <a href="#" class="edit-chosen">Edit</a> - <%= f.link_to_remove "Remove" %>
+</p>

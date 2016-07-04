@@ -1,0 +1,9 @@
+<div class="gallery-select">
+  <label>Photos</label>
+  <a href="/admissions/galleries/browse" class="button small select">Select a gallery</a>
+  <p class="indent">
+    <span class="image"><%= link_to asset_thumb(m.gallery.thumb), edit_admin_gallery_path(m.gallery), target: "_blank" unless m.gallery.blank? %></span>
+    <a href="#" class="remove-gallery<%= ' on' unless m.gallery.blank? %>" id="remove-gallery">remove</a>
+  </p>
+  <%= f.hidden_field :gallery_id %>
+</div>

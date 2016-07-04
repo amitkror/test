@@ -1,0 +1,23 @@
+<%= form_for [:admin, system_avatar] do |f| %>
+
+  <%= render 'shared/errors', m: system_avatar %>
+
+  <%= render 'admissions/shared/action_buttons',
+      m: system_avatar,
+      cancel_path: admin_system_avatars_path,
+      delete_path: nil %>
+
+  <p><%= f.label :name %>
+      <%= f.text_field :name, required: 'required' %> <span class="required">*</span></p>
+
+  <p><%= f.label :order %>
+      <%= f.text_field :order %></p>
+
+  <p><%= f.label :image %>
+    <% unless system_avatar.image_uid.blank? %>
+      <%= admin_thumb(system_avatar.image, "150x150#") %>
+    <% end %>
+    <%= f.file_field :image %>
+    <%= f.hidden_field :retained_image %></p>
+
+<% end %>

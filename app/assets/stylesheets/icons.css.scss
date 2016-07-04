@@ -1,0 +1,132 @@
+@import '_config.scss',
+        '_mixins.scss';
+
+.ir,
+.icon,
+.picon,
+.sicon,
+.ficon {
+  background:transparent url(image-path('ui.png')) no-repeat; border:0;
+  color:transparent; display:block; font: 0/0 a; text-shadow:none;
+}
+
+.ir {
+  &.cuny { background-position:0 -275px; height:68px; width:123px; }
+  &.goddard { background-position:-575px -275px; height:68px; width:190px; }
+  &.grad-nyc { background-position:-275px -275px; height:68px; width:271px; }
+  &.nyc-ed { background-position:-150px -275px; height:68px; width:110px; }
+}
+
+.ir.bbox {
+  background-position:0 -225px; height:15px; text-indent:-9999em; width:121px;
+
+  &:hover { background-position:0 -250px; }
+}
+// Icons
+.icon {
+  //background-image:url(image-path('icons.png'));
+  /*
+  &.program {
+    background-position:0 0; height:24px; width:16px;
+    &:hover { background-position:0 -100px; }
+  }
+  &.website {
+    background-position:-25px 0; height:23px; width:22px;
+    &:hover { background-position:-25px -100px; }
+  }
+  &.video {
+    background-position:-50px 0; height:18px; width:23px;
+    &:hover { background-position:-50px -100px; }
+  }
+  &.tutorial {
+    background-position:-75px 0; height:24px; width:23px;
+    &:hover { background-position:-75px -100px; }
+  }
+  &.document {
+    background-position:-100px 0; height:21px; width:17px;
+    &:hover { background-position:-100px -100px; }
+  }
+  &.expert {
+    background-position:-175px -51px; height:18px; width:35px;
+    &:hover { background-position:-175px -100px; }
+  }
+  &.comments {
+    background-position:-150px -51px; height:22px; width:22px;
+    &:hover { background-position:-150px -100px; }
+  }
+  &.helpful {
+    background-position:-125px -51px; height:22px; width:19px;
+    &:hover { background-position:-125px -100px; }
+  }
+  &.event {
+    background-position:-225px -51px; height:22px; width:22px;
+    &:hover { background-position:-225px -100px; }
+  }
+  */
+  &.bookmark {
+    background-position:-100px -425px; height:45px; position:absolute; right:10px; top:-11px; width:53px; z-index:100;
+    &.on { background-position:-175px -425px; height:81px; width:53px; }
+    &:active { top:-10px; }
+  }
+  //&.close { background-position:-159px -135px; height:50px; width:50px; }
+  //&.s-close { background-position:-220px -145px; height:25px; width:25px; }
+  //&.email { background-position:-119px -143px; height:29px; width:38px; }
+  //&.down-arr { background-position:0 -400px; height:9px; width:17px; }
+  &.verified { background-position:-75px -350px; display:inline-block; height:23px; margin-bottom:-5px; width:23px; }
+  &.l-verified { background-position:0 -350px; display:inline-block; height:62px; margin-left:16px; width:62px; }
+  /* gray arrow */
+  //&.gr-arr { background-position:-200px -325px; height:13px; width:6px; }
+  /* green */
+  //&.g-arr { background-position:0 -325px; height:10px; width:5px; }
+  /* large green */
+  //&.g-arr-l { background-position:-200px -350px; height:19px; width:11px; }
+  /* blue */
+  //&.b-arr { background-position:-25px -325px; height:10px; width:5px; }
+  /* prev/next green */
+  //&.g-arr-n { background-position:-50px -350px; height:31px; width:16px; }
+  //&.g-arr-p { background-position:-0 -350px; height:31px; width:16px; }
+  /* blue reverse */
+  //&.b-arr-back { background-position:-125px -325px; height:10px; width:5px; }
+  /* large dark */
+  //&.ld-arr { background-position:-175px -350px; height:19px; width:10px; }
+  /* pink arrow */
+  //&.p-arr { background-position:-150px -325px; height:13px; width:9px; }
+  /* pagination arrows */
+  //&.w-arr-n { background-position:-100px -325px; height:10px; width:6px; }
+  //&.w-arr-p { background-position:-75px -325px; height:10px; width:6px; }
+  &.airplane { background-position:0 -425px; height:42px; width:88px; }
+  &.bubble { background-position:0 -475px; height:37px; width:46px; }
+}
+
+// Folder Icons
+.ficon {
+  background-image:url(image-path('icons/folders.png')); height:230px; width:318px;
+  &.new { background-position:-384px 0; }
+  &.featured {
+    background-position: bottom left;
+  }
+}
+
+// Promo Icons
+.picon {
+  background-image:url(image-path('promos.png'));
+  &.arr { background-position:0 -420px; height:97px; width:97px; }
+  &.divet { background-position:-100px -700px; height:48px; width:47px; }
+  &.harrow { background-position:0 -700px; height:77px; width:77px; }
+  //&.helpful { background-position:-222px -420px; height:55px; width:73px; }
+  &.search-resources { background-position:0 -215px; height:190px; width:209px; }
+  &.sign-in { background-position:-222px -525px; height:95px; width:129px; }
+  &.sign-in-forum { background-position:0 -525px; height:151px; width:151px; }
+  &.tweet { background-position:-150px -700px; height:62px; width:90px; }
+  &.why-signup { background-position:0 0; height:206px; width:209px; }
+}
+
+// Signup Icons
+.sicon {
+  background-color:#c9e6eb; background-image:url(image-path('signup.png'));
+  float:left; height:220px; margin-left:13px; width:215px;
+  &:first-child { margin:0; }
+  &.save { background-position:0 0; }
+  &.ask { background-position:-228px 0; }
+  &.post { background-position:-456px 0; }
+}

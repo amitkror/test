@@ -1,0 +1,72 @@
+<% title "Folders" %>
+
+<div class="controls">
+  <%= link_to "export", admin_folders_path(format: 'csv'), class: 'button', title: 'export to csv' %>
+</div>
+
+<div class="pagination-info">
+  <%= page_entries_info @folders %>
+</div>
+
+<%= render 'shared/per_page' %>
+
+<%= will_paginate @folders, previous_label: '&lt; previous',
+      next_label: 'next &gt;' %>
+<p>
+  <label for="role_id">Type:</label> <%= select_tag :role_id, options_for_select(User::ROLES, @role_id), prompt: "Show all" %>
+</p>
+
+<table class="index-list">
+  <tr>
+    <th><%= sortable_header("users.username", "User") %></th>
+    <th>Folder Name</th>
+    <th><%= sortable_header("bookmarks_count", "Number of Resources")%></th>
+    <th width="160"><%= sortable_header("folders.created_at", "Date", true) %></th>
+    <th width="140">Public?</th>
+  </tr>
+
+  <% @folders.each do |folder| %>
+    <tr<%= cycle(""," class='alt'") %>>
+        <td><%= link_to folder.user.username, edit_admin_user_path(folder.user) %></td>
+        <td><%= folder.name %></td>
+        <td><%= folder.bookmarks.count %> </td>
+        <td><%= l folder.created_at %></td>
+        <td><%= folder.is_featured ? 'Yes' : 'No' %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @folders, previous_label: '&lt; previous',
+    next_label: 'next &gt;' %>
+
+<%= content_for :js do %>
+  <script>
+    (function () {
+        var app = {},
+            role = 'role_id';
+        function init() {
+            $('#' + role).change(onFilterChange);
+        }
+        function onFilterChange(e) {
+            var pairs = window.location.search.split('?').join('').split('&'),
+                keys = {},
+                pair;
+            for (var i = 0; i < pairs.length; ++i) {
+                pair = pairs[i].split('=');
+                keys[pair[0]] = pair[1];
+            }
+            keys[role] = $('#' + role).val();
+            window.location = window.location.pathname + '?' + serialize(keys);
+        }
+        function serialize(obj) {
+            var str = [];
+            for(var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
+        }
+        $(init);
+        return app;
+    }());
+  </script>
+<% end %>

@@ -1,0 +1,132 @@
+
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+}
+.tooltip {
+  position: absolute;
+  z-index: 1030;
+  display: block;
+  visibility: visible;
+  padding: 5px;
+  font-size: 12px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.tooltip.in {
+  opacity: 1.0;
+}
+.tooltip.top {
+  margin-top: -3px;
+}
+.tooltip.right {
+  margin-left: 3px;
+}
+.tooltip.bottom {
+  margin-top: 3px;
+}
+.tooltip.left {
+  margin-left: -3px;
+}
+.tooltip-inner {
+  background-color: #000000;
+  color: #fff;
+  font-weight:700;
+  height:23px;
+  line-height:23px;
+  padding:0 6px;
+  text-align:center;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.tooltip.top .tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px 5px 0;
+  border-top-color: #000000;
+}
+.tooltip.right .tooltip-arrow {
+  top: 50%;
+  left: 0;
+  margin-top: -5px;
+  border-width: 5px 5px 5px 0;
+  border-right-color: #000000;
+}
+.tooltip.left .tooltip-arrow {
+  top: 50%;
+  right: 0;
+  margin-top: -5px;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #000000;
+}
+.tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 0 5px 5px;
+  border-bottom-color: #000000;
+}
+
+.fade {
+  opacity:0;
+     -o-transition:opacity 0.15s linear 0s;
+   -moz-transition:opacity 0.15s linear 0s;
+-webkit-transition:opacity 0.15s linear 0s;
+        transition:opacity 0.15s linear 0s;
+}
+.fade.in { opacity:1; }
+
+.tooltip.bookmark, .tip.blue {
+  .tooltip-inner { background-color:#2bc1dc; }
+  &.top {
+    .tooltip-arrow { border-top-color:#2bc1dc; }
+  }
+  &.left {
+    .tooltip-arrow { border-left-color:#2bc1dc; }
+  }
+  &.right {
+    .tooltip-arrow { border-right-color:#2bc1dc; }
+  }
+}
+
+.tooltip.type {
+  .tooltip-inner { background-color:#e7335b; line-height:23px; padding:0 6px; }
+  &.top {
+    .tooltip-arrow { border-top-color:#e7335b; }
+  }
+  &.left {
+    .tooltip-arrow { border-left-color:#e7335b; }
+  }
+  &.right {
+    .tooltip-arrow { border-right-color:#e7335b; }
+  }
+}
+
+.tooltip.verified {
+  .tooltip-inner { background-color:#b0d24a; color:#084307; }
+  &.top {
+    .tooltip-arrow { border-top-color:#b0d24a; }
+  }
+  &.left {
+    .tooltip-arrow { border-left-color:#b0d24a; }
+  }
+  &.right {
+    .tooltip-arrow { border-right-color:#b0d24a; }
+  }
+}

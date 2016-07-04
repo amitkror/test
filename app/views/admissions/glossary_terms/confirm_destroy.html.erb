@@ -1,0 +1,8 @@
+<% title "Delete #{@glossary_term.name}"%>
+
+<%= form_for :glossary_term, url: admin_glossary_term_path(@glossary_term), html: { method: :delete } do |f| %>
+  <h3>Are you sure you want to permanently destroy <%= @glossary_term.name %>?</h3>
+  <p>
+    <button type="submit">Destroy</button> or <%= link_to "cancel", admin_glossary_terms_path %>
+  </p>
+<% end %>

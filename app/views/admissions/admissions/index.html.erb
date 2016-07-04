@@ -1,0 +1,80 @@
+<h1>Welcome.</h1>
+
+<strong>Recent Suggested Resources</strong>
+<ul class="admindex">
+<% if ResourceSuggestion.ordered.limit(10).each do |rs| %>
+<li><%= link_to rs.title, edit_admin_resource_suggestion_path(rs) %> suggested by <strong><%= rs.user_username %></strong> on <%= l rs.created_at %></li>
+<% end.empty? %>
+  <li>There are no suggested resources yet.</li>
+<% end %>
+</ul>
+<p>
+  <%= link_to "See all suggested resources", admin_resource_suggestions_path %>
+</p>
+<hr/>
+<!--  -->
+<strong>Recent Suggested Folders</strong>
+<ul class="admindex">
+<% if FolderRecommendation.order("created_at DESC").limit(10).each do |r| %>
+<% next if r.folder.nil? %>
+<li><%= link_to r.folder.name, admin_folder_recommendation_path(r) %> suggested by <strong><%= r.folder.user.username %></strong> on <%= l r.created_at %></li>
+<% end.empty? %>
+  <li>There are no suggested resources yet.</li>
+<% end %>
+</ul>
+<p>
+  <%= link_to "See all suggested folders", admin_folder_recommendations_path %>
+</p>
+<!--  -->
+
+<hr/>
+<strong>Recent Questions</strong>
+<ul class="admindex">
+<% if Question.ordered.limit(10).includes(:user, :adviser).each do |q| %>
+<li>
+  <%= link_to q.question, edit_admin_question_path(q) %> asked by <strong><%= q.user_username %></strong>
+  on <%= l q.created_at %>.
+  <% unless q.adviser.blank? %>
+    Assigned to <strong><%= q.adviser_username %></strong>
+  <% else %>
+    Not assigned yet.
+  <% end %>
+</li>
+<% end.empty? %>
+  <li>There are no questions yet.</li>
+<% end %>
+</ul>
+<p>
+  <%= link_to "See all questions", admin_questions_path %>
+</p>
+
+<hr/>
+
+<strong>Recent Contact Submissions</strong>
+<ul class="admindex">
+<% if ContactSubmission.ordered.limit(10).each do |c| %>
+<li><%= link_to c.title, admin_contact_submission_path(c) %> by <strong><%= c.name %></strong> on <%= l c.created_at %></li>
+<% end.empty? %>
+  <li>There are no contact submissions yet.</li>
+<% end %>
+</ul>
+<p>
+  <%= link_to "See all contact submissions", admin_contact_submissions_path %>
+</p>
+
+<hr/>
+
+<strong>Recent Resources from Verified Users</strong>
+<ul class="admindex">
+<% if Resource.suggested.ordered.limit(10).each do |r| %>
+<li>
+  <%= link_to r.name, resource_path(r) %>
+  <% if r.users.any? %>by <strong><%= r.users.first.username %></strong> <% end %>
+  on <%= l r.created_at %></li>
+<% end.empty? %>
+  <li>There are no resources suggested by verified users yet.</li>
+<% end %>
+</ul>
+<p>
+  <%= link_to "See all resources suggested by verified users", admin_resources_path(status_id: 4) %>
+</p>

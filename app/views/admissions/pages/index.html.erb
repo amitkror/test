@@ -1,0 +1,18 @@
+<% title "Pages" %>
+
+<div class="controls">
+  <a href="#" id="order-button" class="button disabled">update order</a>
+  <%= link_to "add new", new_admin_page_path, class: 'button', title: 'add new' %>
+</div>
+<p class="hint">Drag and drop the pages to re-order.  Locked pages can't have their parent changed.</p>
+<p><a href="#" class="expand-all">expand all</a> | <a href="#" class="collapse-all">collapse all</a></p>
+<ul class="sitemap">
+  <% @pages.each do |page| %>
+  <%= render "list_item", page: page %>
+  <% end %>
+</ul>
+
+<%= content_for :js do %>
+  <script>ORDER_URL = '<%= update_order_admin_pages_path %>';</script>
+  <%= javascript_include_tag 'admin/pages' %>
+<% end %>

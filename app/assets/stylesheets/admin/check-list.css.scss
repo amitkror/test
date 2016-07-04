@@ -1,0 +1,28 @@
+@import '../_mixins.scss',
+        'admixins.css.scss';
+
+.check-list {
+  margin:6px 0 16px 1px; padding:0;
+  li {
+    background:none; float:left; margin:0 0 0 -1px; padding:0; position:relative; z-index:0;
+    &:hover { z-index:20; }
+  }
+  input { display:none; }
+  label {
+    @include gradient(#F5F5F5, #F1F1F1, 40%, 70%);
+    border:solid 1px rgb(216, 216, 216);
+    border:solid 1px rgba(0, 0, 0, 0.0976562);
+    color:#666; cursor:pointer; display:inline-block; font-size:12px;
+    font-weight:bold; outline:none; line-height:100%; padding:6px 10px 7px;
+    text-align:center; text-decoration:none; text-shadow:white 0px 1px 0px;
+    width:auto; margin:0;
+    @include transition(border-color, ease-in, 0.218s);
+    &:hover {
+      background-image:-webkit-gradient(linear, 0% 40%, 0% 70%, from(rgb(245, 245, 245)), to(rgb(241, 241, 241)));
+      border-color:rgb(165, 165, 165); border-color:rgba(59, 59, 59, 0.421875);
+      box-shadow:0 1px 1px rgba(0, 0, 0, 0.1); color:#333;
+    }
+    &:active, &.on { @include box-shadow(inset 0px 0px 10px 0px rgba(25, 23, 18, 0.25)); }
+    &.on { background:rgba(25, 23, 18, 0.15); color:#333; text-shadow:none; }
+  }
+}
